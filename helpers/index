@@ -1,2 +1,2 @@
-for f in $HOME/.dotfiles/aliases/*; do source $f; done
-for f in $HOME/.dotfiles/functions/*; do source $f; done
+for f in $HOME/.helpers/aliases/*; do source $f; done
+for f in $HOME/.helpers/functions/*; do source $f; done
