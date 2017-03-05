@@ -1,0 +1,2 @@
+for f in $HOME/.dotfiles/aliases/*; do source $f; done
+for f in $HOME/.dotfiles/functions/*; do source $f; done

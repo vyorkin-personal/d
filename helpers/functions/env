@@ -1,0 +1,14 @@
+# lazily load heavy stuff
+function x() {
+  if [ -f ~/.bashhub/bashhub.zsh ]; then
+      source ~/.bashhub/bashhub.zsh
+  fi
+
+  source /usr/share/nvm/init-nvm.sh
+  source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+  [[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+
+  eval "$(thefuck --alias)"
+  eval "$(rbenv init -)"
+}

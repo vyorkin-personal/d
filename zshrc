@@ -49,4 +49,4 @@ export PATH="$HOME/.rbenv/bin:$HOME/.local/bin:$PATH"
 export GOPATH="$HOME/go"
 
 # load custom functions & aliases
-source $HOME/.dotfiles/index
+source $HOME/.helpers/index
