@@ -80,7 +80,6 @@ cask 'kitematic'
 cask 'dropbox'
 cask 'transmission'
 
-cask 'totalspaces'
 cask 'slate'
 cask 'amethyst'
 cask 'showyedge'
@@ -101,6 +100,7 @@ cask 'teamviewer'
 
 cask 'vlc'
 cask 'wireshark'
+cask 'tunnelblick'
 
 cask 'postgres'
 cask 'pg-commander'
