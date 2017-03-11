@@ -1,0 +1,34 @@
+set visualbell                " no sounds
+
+" window size
+set lines=42
+set columns=170
+
+set guioptions+=e
+set guioptions+=c             " use console dialogs instead of gui popups
+set guioptions-=m
+set guioptions-=r
+set guioptions-=R
+set guioptions-=b
+set guioptions-=l
+set guioptions-=L
+set guioptions-=T
+
+set guicursor+=n-v-c:blinkon0
+
+set showtabline=0             " never show line with tab page labels
+set noballooneval             " dont show this crazy distracting thing
+
+if has("gui_gtk2")
+  set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline\ Plus\ Nerd\ File\ Types:h12
+elseif has("gui_macvim")
+  set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline\ Plus\ Nerd\ File\ Types:h12
+elseif has("gui_win32")
+  set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline\ Plus\ Nerd\ File\ Types:h12
+endif
+
+" set transparency=20
+
+" start in fullscreen mode
+" set fuopt=maxhorz,maxvert,background:Normal
+" set fu

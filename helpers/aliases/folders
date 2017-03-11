@@ -7,7 +7,7 @@ alias work='cd ~/projects/work'
 alias play='cd ~/projects/play'
 alias gith='cd ~/projects/github'
 
-## my
-alias dots='cd ~/projects/github/dots'
-alias dotsecrets='cd ~/projects/github/dotsecrets'
-alias blog='cd ~/projects/github/vyorkin.github.io'
+# my
+alias dots='cd ~/.dotfiles'
+alias dotsecrets='cd ~/projects/dotsecrets'
+alias blog='cd ~/projects/vyorkin.github.io'

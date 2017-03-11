@@ -1,0 +1,98 @@
+config defaultToCurrentScreen true
+
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+
+config secondsBetweenRepeat 0.1
+config checkDefaultsOnLoad true
+config focusCheckWidthMax 3000
+
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows true
+config windowHintsSpread true
+config windowHintsSpreadPadding 12
+config windowHintsSpreadSearchWidth 40
+config windowHintsSpreadSearchHeight 40
+
+config switchIconPadding 2
+config switchBackgroundColor 0;0;0;0.7
+config switchSelectedPadding 2
+config switchIconSize 4
+config switchShowTitles true
+config switchFontSize 8
+config switchRoundedCornerSize 2
+config undoOps move,resize
+
+config keyboardLayout qwerty
+
+# misc aliases
+
+alias showHintsLeftHand hint AOEUIYQJKX
+alias showNormalHint hint AOEUIDHTNSYXFBPKGMCW
+
+# positions
+
+alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
+
+alias lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+
+alias rightmost     move screenOriginX+screenSizeX*0.75;screenOriginY screenSizeX/4;screenSizeY
+alias rightless     move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/4;screenSizeY
+
+alias leftmost      move screenOriginX;screenOriginY screenSizeX/4;screenSizeY
+alias leftless      move screenOriginX+screenSizeX/4;screenOriginY screenSizeX/4;screenSizeY
+
+alias center        move screenOriginX+((screenSizeX-windowSizeX)/2);screenOriginY+((screenSizeY-windowSizeY)/2) windowSizeX;windowSizeY
+alias small         move screenOriginX+80;screenOriginY+50 screenSizeX-160;screenSizeY-100
+alias tiny    move screenOriginX+180;screenOriginY+140 screenSizeX-360;screenSizeY-280
+
+# app aliases
+
+alias browser 'Google Chrome'
+alias editor 'Emacs'
+alias terminal 'iTerm2'
+
+alias hyper ctrl;alt;cmd
+
+# common bindings
+
+bind z:${hyper} undo
+
+bind n:${hyper} throw next
+
+# app bindings
+
+bind q:${hyper} focus 'Telegram'
+bind b:${hyper} focus 'Helium'
+bind e:${hyper} focus ${browser}
+bind f:${hyper} focus ${editor}
+bind x:${hyper} focus 'Xcode'
+bind g:${hyper} focus 'Gitter'
+bind i:${hyper} focus ${terminal}
+bind o:${hyper} focus 'Finder'
+bind s:${hyper} focus 'Slack'
+bind p:${hyper} focus 'Skype'
+bind t:${hyper} focus 'Discord'
+bind r:${hyper} focus 'Preview'
+bind v:${hyper} focus 'VirtualBox VM'
+bind w:${hyper} focus 'VMware Fusion'
+
+# navigation & location bindings
+
+bind e:cmd ${showNormalHint}
+bind g:cmd grid padding:5 0:8,3 1:6,2
+
+bind u:cmd;ctrl ${lefthalf}
+bind i:cmd;ctrl ${righthalf}
+
+bind h:cmd;ctrl ${leftless}
+bind l:cmd;ctrl ${rightless}
+
+bind g:cmd;ctrl ${leftmost}
+bind r:cmd;ctrl ${full}
+bind ;:cmd;ctrl ${rightmost}
+
+bind e:cmd;ctrl ${center}
+bind t:cmd;ctrl ${small}
+bind y:cmd;ctrl ${tiny}

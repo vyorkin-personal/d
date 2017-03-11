@@ -1,0 +1,3 @@
+EXCLUDES="rcrc install.sh Makefile Brewfile requirements.txt LICENSE README.md"
+TAGS="macosx zsh tmux git emacs vim python clojure"
+SYMLINK_DIRS="helpers:* dotsecrets:* weechat:* tmux vim"
