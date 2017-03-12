@@ -105,7 +105,7 @@
   ui = true
 [core]
   autocrlf = false
-  excludesfile = $HOME/.gitignore
+  excludesfile = ~/.gitignore
   editor = nvim
 [advice]
   statusHints = false
