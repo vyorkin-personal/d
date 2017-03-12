@@ -16,3 +16,21 @@
 [submodule "tag-ruby/rbenv/plugins/rbenv-default-gems"]
 	path = tag-ruby/rbenv/plugins/rbenv-default-gems
 	url = https://github.com/rbenv/rbenv-default-gems.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-whatis"]
+	path = tag-ruby/rbenv/plugins/rbenv-whatis
+	url = https://github.com/rkh/rbenv-whatis.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-use"]
+	path = tag-ruby/rbenv/plugins/rbenv-use
+	url = https://github.com/rkh/rbenv-use.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-communal-gems"]
+	path = tag-ruby/rbenv/plugins/rbenv-communal-gems
+	url = https://github.com/tpope/rbenv-communal-gems.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-vars"]
+	path = tag-ruby/rbenv/plugins/rbenv-vars
+	url = https://github.com/rbenv/rbenv-vars.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-update"]
+	path = tag-ruby/rbenv/plugins/rbenv-update
+	url = https://github.com/rkh/rbenv-update.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-plug"]
+	path = tag-ruby/rbenv/plugins/rbenv-plug
+	url = https://github.com/znz/rbenv-plug.git
