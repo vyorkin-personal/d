@@ -37,17 +37,22 @@ zplug "zplug/zplug", hook-build: "zplug --self-manage"
 
 # install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
-    printf "install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  printf "install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
 fi
 
 # source plugins and add commands to $PATH
 zplug load
 
-export PATH="$HOME/.rbenv/bin:$HOME/.local/bin:$PATH"
 export GOPATH="$HOME/go"
+export PATH="$HOME/.rbenv/bin:$HOME/.local/bin:$PATH"
+
+if [[ `uname` == 'Darwin' ]] then
+  export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+fi
+
 
 # load custom functions & aliases
 source $HOME/.helpers/index

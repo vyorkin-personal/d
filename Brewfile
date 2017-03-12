@@ -104,6 +104,10 @@ cask 'vlc'
 cask 'wireshark'
 cask 'tunnelblick'
 
+cask 'java'
+cask 'java6'
+cask 'java7'
+
 cask 'postgres'
 cask 'pg-commander'
 cask 'pgadmin3'

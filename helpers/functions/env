@@ -13,4 +13,5 @@ function x() {
 
   eval "$(thefuck --alias)"
   eval "$(rbenv init -)"
+  eval "$(jenv init -)"
 }
