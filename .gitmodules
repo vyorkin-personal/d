@@ -1,3 +1,18 @@
 [submodule "tag-tmux/tmux/plugins/tpm"]
 	path = tag-tmux/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "tag-ruby/rbenv/plugins/ruby-build"]
+	path = tag-ruby/rbenv/plugins/ruby-build
+	url = https://github.com/rbenv/ruby-build.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-aliases"]
+	path = tag-ruby/rbenv/plugins/rbenv-aliases
+	url = https://github.com/tpope/rbenv-aliases.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-binstubs"]
+	path = tag-ruby/rbenv/plugins/rbenv-binstubs
+	url = https://github.com/ianheggie/rbenv-binstubs.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-ctags"]
+	path = tag-ruby/rbenv/plugins/rbenv-ctags
+	url = https://github.com/tpope/rbenv-ctags.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-default-gems"]
+	path = tag-ruby/rbenv/plugins/rbenv-default-gems
+	url = https://github.com/rbenv/rbenv-default-gems.git
