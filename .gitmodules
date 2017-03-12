@@ -34,3 +34,6 @@
 [submodule "tag-ruby/rbenv/plugins/rbenv-plug"]
 	path = tag-ruby/rbenv/plugins/rbenv-plug
 	url = https://github.com/znz/rbenv-plug.git
+[submodule "tag-ruby/rbenv/plugins/rbenv-readline"]
+	path = tag-ruby/rbenv/plugins/rbenv-readline
+	url = https://github.com/tpope/rbenv-readline.git
