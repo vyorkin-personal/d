@@ -47,12 +47,7 @@ fi
 zplug load
 
 export GOPATH="$HOME/go"
-export PATH="$HOME/.rbenv/bin:$HOME/.local/bin:$PATH"
-
-if [[ `uname` == 'Darwin' ]] then
-  export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
-fi
-
+export PATH="/usr/local/sbin:$HOME/.rbenv/bin:$HOME/.local/bin:$PATH"
 
 # load custom functions & aliases
 source $HOME/.helpers/index
