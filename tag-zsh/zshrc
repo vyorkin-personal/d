@@ -33,6 +33,8 @@ zplug "frmendes/geometry", as:theme
 # zplug 'simnalamburt/shellder', as:theme
 # zplug "dracula/zsh", as:theme
 
+# completions
+
 zplug "zplug/zplug", hook-build: "zplug --self-manage"
 
 # install plugins if there are plugins that have not been installed
@@ -49,5 +51,15 @@ zplug load
 export GOPATH="$HOME/go"
 export PATH="/usr/local/sbin:$HOME/.rbenv/bin:$HOME/.local/bin:$PATH"
 
+if [[ `uname` == 'Darwin' ]] then
+  # find a way to install them by zplug
+  # https://github.com/littleq0903/gcloud-zsh-completion
+  # others: https://github.com/unixorn/awesome-zsh-plugins#even-more-completions
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+fi
+
 # load custom functions & aliases
-source $HOME/.helpers/index
+source ~/.helpers/index
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -50,7 +50,7 @@ mv $HOME/.emacs.d $HOME/.emacs.d.bak
 # install spacemacs
 git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 
-# terminfo fix for neovim,
-# see: https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
-infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti
-tic $TERM.ti
+pip install -r requirements.txt
+pip3 install -r requirements3.txt
+
+/usr/local/opt/fzf/install

@@ -24,7 +24,6 @@ Here is the things you should do manually.
 $ jenv add /Library/Java/JavaVirtualMachines/jdkx.x.x_xx.jdk/Contents/Home
 ```
 
-
 Optionally you may want to build and install patched [karabiner elements](https://github.com/vyorkin-forks/Karabiner-Elements/tree/standalone-modifiers) that supports hyper key.
 
 [Here](https://gist.github.com/vyorkin/705c749cb7d439e94d62afee69520ecf) is my config for Karabiner Elements. So when you have it installed just do:
@@ -33,5 +32,17 @@ Optionally you may want to build and install patched [karabiner elements](https:
 mkdir -p ~/.karabiner.d/configuration/
 curl https://gist.githubusercontent.com/vyorkin/705c749cb7d439e94d62afee69520ecf/raw/bea834cf218633b10b0adc98b3a3cee749210b7a/karabiner.json > ~/.karabiner.d/configuration/karabiner.json
 ```
+
+#### ocaml, opam, merlin
+
+Do you want OPAM to modify ~/.zshrc and ~/.ocamlinit? - the answer is N.
+This is because I use 'x' alias instead, see helpers/functions/env.
+
+```
+$ opam init
+$ opam install merlin
+```
+
+For more info see [merlin + vim setup instructions](https://github.com/ocaml/merlin/wiki/vim-from-scratch).
 
 # troubleshooting

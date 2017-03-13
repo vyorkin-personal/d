@@ -110,6 +110,7 @@ cask 'java6'
 cask 'java7'
 
 cask 'pgadmin3'
+cask 'google-cloud-sdk'
 
 cask 'torbrowser'
 cask 'google-chrome'
