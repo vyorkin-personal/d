@@ -46,6 +46,7 @@ brew 'wget', args: ['enable-iri']
 brew 'nmap'
 brew 'zmap'
 
+brew 'postgresql'
 brew 'redis'
 brew 'mysql'
 brew 'sqlite'

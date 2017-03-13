@@ -35,10 +35,3 @@ curl https://gist.githubusercontent.com/vyorkin/705c749cb7d439e94d62afee69520ecf
 ```
 
 # troubleshooting
-
-## Mac OS X
-
-[Postgres.app](https://postgresapp.com/) - You're gonna have issues with `pg` gem.
-The workaround is to:
-`$ gem install pg -v '0.19.0' -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/9.6/bin/pg_config`.
-(Use your versions instead of 0.19.0 and 9.6).
