@@ -30,6 +30,8 @@ brew 'asciinema'
 brew 'zsh'
 brew 'zplug'
 brew 'fish'
+
+brew 'the_silver_searcher'
 brew 'fzf'
 
 brew 'vim', args: ['override-system-vi', 'with-lua', 'with-perl', 'with-python3', 'with-ruby']

@@ -95,6 +95,7 @@ Plug 'briancollins/vim-jst'
 Plug 'alunny/pegjs-vim'
 Plug 'wizicer/vim-jison'
 " Plug 'vyorkin/JavaScript-Indent'
+Plug 'ruanyl/coverage.vim'
 
 " coffeescript
 Plug 'kchmck/vim-coffee-script'
