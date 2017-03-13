@@ -108,8 +108,6 @@ cask 'java'
 cask 'java6'
 cask 'java7'
 
-cask 'postgres'
-cask 'pg-commander'
 cask 'pgadmin3'
 
 cask 'torbrowser'
