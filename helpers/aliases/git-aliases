@@ -47,10 +47,10 @@ alias glsnc='git shortnocolor'
 alias gf='git fetch'
 
 alias gd='git diff'
-alias gdc='git diff --cached -w'
+alias gdc='git diff --cached'
 
 alias gb='git b'
-alias gbd='git b -D -w'
+alias gbd='git b -D'
 
 alias gpl='git pl'
 alias gplp='git plp'
