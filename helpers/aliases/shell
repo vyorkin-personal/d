@@ -24,7 +24,7 @@ alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
 
 # keys
-alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> copied'"
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'id_rsa.pub copied'"
 
 # ps
 alias psa="ps aux"

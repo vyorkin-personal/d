@@ -27,6 +27,7 @@ brew 'graphviz'
 brew 'ripgrep'
 brew 'mosh'
 brew 'asciinema'
+brew 'coreutils'
 
 brew 'zsh'
 brew 'zplug'
@@ -39,11 +40,12 @@ brew 'vim', args: ['override-system-vi', 'with-lua', 'with-perl', 'with-python3'
 brew 'neovim'
 brew 'emacs-plus', args: ['with-cocoa', 'with-gnutls', 'with-librsvg', 'with-imagemagick', 'with-spacemacs-icon']
 
-brew 'z'
 brew 'htop'
 brew 'httpie'
+brew 'jq'
 brew 'jid'
 brew 'cheat'
+brew 'sshrc'
 
 brew 'wget', args: ['enable-iri']
 brew 'nmap'
