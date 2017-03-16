@@ -9,7 +9,6 @@ function x() {
   source "/usr/local/opt/nvm/nvm.sh"
 
   source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-  source /usr/local/etc/profile.d/z.sh
 
   eval "$(thefuck --alias)"
   eval "$(rbenv init -)"
