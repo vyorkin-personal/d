@@ -1,0 +1,3 @@
+alias ed='emacs --daemon'
+alias e='emacsclient'
+alias ec='emacsclient -c'

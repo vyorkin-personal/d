@@ -6,6 +6,8 @@
 ;; - company
 ;; - web-mode
 ;; - eldoc-mode
+;; - magit
+;; - evil-magit
 ;;
 ;; - typescript-mode:
 ;;   Basic font-lock/syntax-highlighting and indentation.
@@ -26,13 +28,13 @@
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
 
-;; enable evil-mode, good for ex-vimmers like me
+;; enable evil-mode globally,
+;; good for ex-vimmers like me
 (evil-mode 1)
 
 ;; highlight parens
 (setq show-paren-style 'parenthesis)
 (show-paren-mode 1)
-
 
 ;; remove menu bars, toolbars, scrollbars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -72,6 +74,9 @@
 ;; use projectile everywhere
 (projectile-mode)
 
+;; use evil mode in magit
+(require 'evil-magit)
+
 ;; typescript, tide
 
 (defun setup-tide-mode ()
@@ -108,6 +113,23 @@
 ;; global hotkeys
 (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
 (global-set-key (kbd "<f2>") 'sr-speedbar-toggle)
+(global-set-key (kbd "C-x C-g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
