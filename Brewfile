@@ -28,6 +28,7 @@ brew 'ripgrep'
 brew 'mosh'
 brew 'asciinema'
 brew 'coreutils'
+brew 'slurm'
 
 brew 'zsh'
 brew 'zplug'
@@ -147,6 +148,7 @@ cask 'font-source-code-pro'
 cask 'font-source-sans-pro'
 cask 'font-courier-prime'
 cask 'font-source-serif-pro'
+cask 'font-hack'
 
 # apps from appstore
 
