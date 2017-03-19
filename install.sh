@@ -47,8 +47,6 @@ sudo chsh -s $(which zsh) $USER
 
 # backup existing emacs configuration
 mv $HOME/.emacs.d $HOME/.emacs.d.bak
-# install spacemacs
-git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 
 pip install -r requirements.txt
 pip3 install -r requirements3.txt
