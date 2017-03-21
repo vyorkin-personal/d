@@ -5,9 +5,12 @@
 ;; - flycheck
 ;; - company
 ;; - web-mode
+;; - emmet-mode
 ;; - eldoc-mode
 ;; - magit
 ;; - evil-magit
+;; - evil-leader
+;; - evil-org
 ;;
 ;; - typescript-mode:
 ;;   Basic font-lock/syntax-highlighting and indentation.
@@ -22,11 +25,23 @@
 (package-initialize)
 
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 12"))
-(set-frame-font "Source Code Pro 12" nil t)
+(set-frame-font "Source Code Pro 16" nil t)
 
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
+
+;; evilify everyting
+(require 'evil-leader)
+(require 'evil-magit)
+(require 'evil-org)
+
+;; enable leader key
+(global-evil-leader-mode)
+;; use your thumbs!
+(evil-leader/set-leader "SPC")
+(evil-leader/set-key "q" 'sr-speedbar-toggle)
+(evil-leader/set-key "g" 'magit-status)
 
 ;; enable evil-mode globally,
 ;; good for ex-vimmers like me
@@ -74,9 +89,6 @@
 ;; use projectile everywhere
 (projectile-mode)
 
-;; use evil mode in magit
-(require 'evil-magit)
-
 ;; typescript, tide
 
 (defun setup-tide-mode ()
@@ -123,7 +135,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
+    (emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

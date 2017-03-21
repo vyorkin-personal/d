@@ -123,6 +123,7 @@ cask 'google-chrome'
 cask 'google-chrome-canary'
 cask 'opera'
 cask 'opera-developer'
+cask 'mist'
 
 # quick look plugins
 # https://github.com/sindresorhus/quick-look-plugins
@@ -153,6 +154,7 @@ cask 'font-hack'
 # apps from appstore
 
 mas 'Xcode', id: 497799835
+mas 'Alfred', id: 405843582
 mas 'Helium', id: 1054607607
 mas 'Pixen', id: 525180431
 mas 'Noizio', id: 928871589
