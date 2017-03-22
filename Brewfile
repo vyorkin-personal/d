@@ -94,6 +94,7 @@ cask 'showyedge'
 cask 'flux'
 cask 'toggldesktop'
 cask 'gyazo'
+cask 'dash2'
 
 cask 'macvim'
 cask 'visual-studio-code'
@@ -154,7 +155,6 @@ cask 'font-hack'
 # apps from appstore
 
 mas 'Xcode', id: 497799835
-mas 'Alfred', id: 405843582
 mas 'Helium', id: 1054607607
 mas 'Pixen', id: 525180431
 mas 'Noizio', id: 928871589
