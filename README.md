@@ -24,6 +24,11 @@ Here is the things you should do manually.
 $ jenv add /Library/Java/JavaVirtualMachines/jdkx.x.x_xx.jdk/Contents/Home
 ```
 
+### Elixir
+
+My emacs config for [alchemist](https://github.com/tonini/alchemist.el) relies on
+[elixir sources](https://github.com/elixir-lang/elixir.git) available at the following path: `~/projects/github/elixir`.
+
 Optionally you may want to build and install patched [karabiner elements](https://github.com/vyorkin-forks/Karabiner-Elements/tree/standalone-modifiers) that supports hyper key.
 
 [Here](https://gist.github.com/vyorkin/705c749cb7d439e94d62afee69520ecf) is my config for Karabiner Elements. So when you have it installed just do:

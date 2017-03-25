@@ -4,6 +4,8 @@
 ;; - projectile
 ;; - flycheck
 ;; - company
+;; - ripgrep
+;; - projetile-ripgrep
 ;; - multiple-cursors
 ;; - web-mode
 ;; - emmet-mode
@@ -31,6 +33,17 @@
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
 
+;; EVIL
+
+;; to restore missing C-u in evil
+(setq evil-want-C-u-scroll t)
+
+(require 'evil)
+
+;; swap : and ; to make colon commands easier to type in Emacs
+(define-key evil-motion-state-map ";" 'evil-ex)
+(define-key evil-motion-state-map ":" 'evil-repeat-find-char)
+
 ;; evilify everyting
 (require 'evil-leader)
 (require 'evil-magit)
@@ -42,6 +55,7 @@
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
   "q" 'sr-speedbar-toggle
+  "a" 'projectile-switch-project
   "g" 'magit-status)
 
 ;; enable evil-mode globally,
@@ -88,7 +102,28 @@
 
 ;; color-theme
 (color-theme-initialize)
-(color-theme-charcoal-black)
+(color-theme-euphoria)
+
+;; PROJECTILE
+
+(setq projectile-enable-caching t)
+(when (executable-find "rg")
+  (progn
+    (defconst modi/rg-arguments
+              `("--line-number" ; line numbers
+                "--smart-case"
+                "--follow"      ; follow symlinks
+                "--mmap")       ; apply memory map optimization when possible
+              "Default rg arguments used in the functions in `projectile' package.")
+    (defun advice-projectile-use-rg ()
+      "Always use `rg' for getting a list of all files in the project."
+      (mapconcat 'identity
+                 (append '("\\rg") ; used unaliased version of `rg': \rg
+                         modi/rg-arguments
+                         '("--null" ; output null separated results,
+                           "--files")) ; get file names matching the regex '' (all files)
+                 " "))
+      (advice-add 'projectile-get-ext-command :override #'advice-projectile-use-rg)))
 
 ;; use projectile everywhere
 (projectile-mode)
@@ -101,9 +136,41 @@
 (setq company-tooltip-align-annotations t)
 
 ;; elixir, alchemist, alchemist-hex
+(setq alchemist-goto-elixir-source-dir "~/projects/github/elixir")
+(setq alchemist-goto-erlang-source-dir "/usr/local/Cellar/erlang/19.2.3")
+
 (add-to-list 'elixir-mode-hook (alchemist-mode +1))
-(add-to-list 'elixir-mode-hook 'alchemist-hex-mode)
+(add-hook 'elixir-mode-hook
+	  (lambda ()
+	    (when (and
+		    (string-equal "exs" (file-name-extension buffer-file-name))
+		    (string-equal "mix" (file-name-base buffer-file-name)))
+              (alchemist-hex-mode 1))))
+
+;; elixir general key bindings
+(evil-define-minor-mode-key 'normal 'alchemist-mode " t" 'alchemist-mix-test)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " T" 'alchemist-project-run-tests-for-current-file)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " ," 'alchemist-test-toggle-test-report-display)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " h" 'alchemist-help-search-at-point)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " H" 'alchemist-help)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " a" 'alchemist-project-toggle-file-and-tests)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " A" 'alchemist-project-toggle-file-and-tests-other-window)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " m" 'alchemist-mix)
+
+;; elixir IEx-specific key bindings
+(evil-define-minor-mode-key 'normal 'alchemist-mode " e" 'alchemist-iex-project-run)
+(evil-define-minor-mode-key 'normal 'alchemist-mode " r" 'alchemist-iex-reload-module)
+(evil-define-minor-mode-key 'visual 'alchemist-mode " e" 'alchemist-iex-send-current-line)
+(evil-define-minor-mode-key 'visual 'alchemist-mode " E" 'alchemist-iex-send-current-line-and-go)
+(evil-define-minor-mode-key 'visual 'alchemist-mode " r" 'alchemist-iex-send-region)
+(evil-define-minor-mode-key 'visual 'alchemist-mode " R" 'alchemist-iex-send-region-and-go)
+
+;; elixir HEX-specific key bindings
 (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " i" 'alchemist-hex-info-at-point)
+(evil-define-minor-mode-key 'normal 'alchemist-hex-mode " I" 'alchemist-hex-info)
+(evil-define-minor-mode-key 'normal 'alchemist-hex-mode " r" 'alchemist-hex-releases-at-point)
+(evil-define-minor-mode-key 'normal 'alchemist-hex-mode " R" 'alchemist-hex-releases)
+(evil-define-minor-mode-key 'normal 'alchemist-hex-mode " s" 'alchemist-hex-search)
 
 ;; CAREFUL: this is for evil-leader/set-local-mode, which isn't merged yet,
 ;; see:https://github.com/cofi/evil-leader/pull/35
@@ -112,7 +179,6 @@
 ;;  (evil-leader/set-local-key
 ;;    "i" 'alchemist-hex-info-at-point))
 ;; (advice-add 'alchemist-hex-mode :after #'alchemist-hex-local-keys)
-
 
 ;; typescript, tide
 
@@ -142,15 +208,16 @@
 
 ;; global hotkeys
 (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
-(global-set-key (kbd "<f2>") 'sr-speedbar-toggle)
 (global-set-key (kbd "C-x C-g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(global-set-key (kbd "C-q") 'projectile-find-file)
+(global-set-key (kbd "C-s") 'projectile-ripgrep)
 
 ;; jumping like in vim
 (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
 
 (require 'multiple-cursors)
-;; multiple cursors keybindings
+;; multiple cursors key bindings
 (global-set-key (kbd "C-M-n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-M-p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-M-m") 'mc/mark-all-like-this)
@@ -162,7 +229,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
+    (projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
