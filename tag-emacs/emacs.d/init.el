@@ -4,9 +4,9 @@
 ;; - projectile
 ;; - flycheck
 ;; - company
+;; - multiple-cursors
 ;; - web-mode
 ;; - emmet-mode
-;; - eldoc-mode
 ;; - magit
 ;; - evil-magit
 ;; - evil-leader
@@ -39,9 +39,10 @@
 ;; enable leader key
 (global-evil-leader-mode)
 ;; use your thumbs!
-(evil-leader/set-leader "SPC")
-(evil-leader/set-key "q" 'sr-speedbar-toggle)
-(evil-leader/set-key "g" 'magit-status)
+(evil-leader/set-leader "<SPC>")
+(evil-leader/set-key
+  "q" 'sr-speedbar-toggle
+  "g" 'magit-status)
 
 ;; enable evil-mode globally,
 ;; good for ex-vimmers like me
@@ -60,6 +61,9 @@
 (setq make-backup-files nil)        ; disable backup files
 (setq auto-save-list-file-name nil) ; disable .saves files
 (setq auto-save-default nil)        ; disable auto saving
+
+;; undo-tree
+(setq undo-tree-auto-save-history t)
 
 ;; enable basic ido support for files and buffers
 (setq ido-enable-flex-matching t)
@@ -89,6 +93,27 @@
 ;; use projectile everywhere
 (projectile-mode)
 
+;; flycheck
+(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+(global-flycheck-mode 1)
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; elixir, alchemist, alchemist-hex
+(add-to-list 'elixir-mode-hook (alchemist-mode +1))
+(add-to-list 'elixir-mode-hook 'alchemist-hex-mode)
+(evil-define-minor-mode-key 'normal 'alchemist-hex-mode " i" 'alchemist-hex-info-at-point)
+
+;; CAREFUL: this is for evil-leader/set-local-mode, which isn't merged yet,
+;; see:https://github.com/cofi/evil-leader/pull/35
+
+;; (defun alchemist-hex-local-keys (&rest args)
+;;  (evil-leader/set-local-key
+;;    "i" 'alchemist-hex-info-at-point))
+;; (advice-add 'alchemist-hex-mode :after #'alchemist-hex-local-keys)
+
+
 ;; typescript, tide
 
 (defun setup-tide-mode ()
@@ -101,9 +126,6 @@
   (tide-hl-identifier-mode +1)
   (company-mode +1))
 
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
-
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 ;; enable tide for .tsx files
@@ -112,10 +134,6 @@
 	  (lambda ()
 	    (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
-
-;; flycheck
-(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-(global-flycheck-mode 1)
 
 ;; company
 (global-company-mode 1)
@@ -128,6 +146,15 @@
 (global-set-key (kbd "C-x C-g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
+;; jumping like in vim
+(define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
+
+(require 'multiple-cursors)
+;; multiple cursors keybindings
+(global-set-key (kbd "C-M-n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-M-p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-M-m") 'mc/mark-all-like-this)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -135,7 +162,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
+    (multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

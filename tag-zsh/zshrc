@@ -30,9 +30,9 @@ zplug "k4rthik/git-cal", as:command
 # (If the defer tag is given 2 or above, run after compinit command)
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git hg node)
-zplug "frmendes/geometry", as:theme
-# zplug 'simnalamburt/shellder', as:theme
+# GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git hg node)
+# zplug "frmendes/geometry", as:theme
+zplug 'simnalamburt/shellder', as:theme
 # zplug "dracula/zsh", as:theme
 
 # fix garish, unreadable green and yellow node segment colours
