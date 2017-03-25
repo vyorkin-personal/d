@@ -27,13 +27,13 @@
 (package-initialize)
 
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 12"))
-(set-frame-font "Source Code Pro 16" nil t)
+(set-frame-font "Source Code Pro 12" nil t)
 
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
 
-;; EVIL
+;; evil ;;
 
 ;; to restore missing C-u in evil
 (setq evil-want-C-u-scroll t)
@@ -54,7 +54,12 @@
 ;; use your thumbs!
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
-  "q" 'sr-speedbar-toggle
+  "v" 'split-window-horizontally
+  "s" 'split-window-vertically
+  "d" 'delete-window
+  "o" 'other-window
+  "SPC" 'delete-other-windows
+  "TAB" 'sr-speedbar-toggle
   "a" 'projectile-switch-project
   "g" 'magit-status)
 
@@ -76,8 +81,14 @@
 (setq auto-save-list-file-name nil) ; disable .saves files
 (setq auto-save-default nil)        ; disable auto saving
 
-;; undo-tree
+;; y/n instead of yes/no
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; undo-tree ;;
+
 (setq undo-tree-auto-save-history t)
+
+;; ido ;;
 
 ;; enable basic ido support for files and buffers
 (setq ido-enable-flex-matching t)
@@ -91,7 +102,7 @@
 ;; make ido use completion-ignore-extensions
 (setq ido-ignore-extensions t)
 
-;; sr-speedbar
+;; sr-speedbar ;;
 (setq sr-speedbar-right-side nil)
 (setq speedbar-use-images nil)
 (setq speedbar-show-unknown-files t)
@@ -100,11 +111,12 @@
 (set-face-font 'speedbar-face "Source Code Pro 10")
 (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
 
-;; color-theme
+;; color-theme ;;
 (color-theme-initialize)
-(color-theme-euphoria)
+;; (color-theme-euphoria)
+(color-theme-deep-blue)
 
-;; PROJECTILE
+;; projectile ;;
 
 (setq projectile-enable-caching t)
 (when (executable-find "rg")
@@ -128,14 +140,15 @@
 ;; use projectile everywhere
 (projectile-mode)
 
-;; flycheck
+;; flycheck ;;
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 (global-flycheck-mode 1)
 
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 
-;; elixir, alchemist, alchemist-hex
+;; elixir, alchemist, alchemist-hex ;;
+
 (setq alchemist-goto-elixir-source-dir "~/projects/github/elixir")
 (setq alchemist-goto-erlang-source-dir "/usr/local/Cellar/erlang/19.2.3")
 
@@ -170,17 +183,17 @@
 (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " I" 'alchemist-hex-info)
 (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " r" 'alchemist-hex-releases-at-point)
 (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " R" 'alchemist-hex-releases)
-(evil-define-minor-mode-key 'normal 'alchemist-hex-mode " s" 'alchemist-hex-search)
+(evil-define-minor-mode-key 'normal 'alchemist-hex-mode " f" 'alchemist-hex-search)
 
 ;; CAREFUL: this is for evil-leader/set-local-mode, which isn't merged yet,
-;; see:https://github.com/cofi/evil-leader/pull/35
+;; see: https://github.com/cofi/evil-leader/pull/35
 
 ;; (defun alchemist-hex-local-keys (&rest args)
 ;;  (evil-leader/set-local-key
 ;;    "i" 'alchemist-hex-info-at-point))
 ;; (advice-add 'alchemist-hex-mode :after #'alchemist-hex-local-keys)
 
-;; typescript, tide
+;; typescript, tide ;;
 
 (defun setup-tide-mode ()
   (interactive)
@@ -201,7 +214,7 @@
 	    (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
 
-;; company
+;; company ;;
 (global-company-mode 1)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
@@ -209,8 +222,9 @@
 ;; global hotkeys
 (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
 (global-set-key (kbd "C-x C-g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(global-set-key (kbd "C-x C-y") 'magit-dispatch-popup)
 (global-set-key (kbd "C-q") 'projectile-find-file)
+(global-set-key (kbd "C-x C-q") 'projectile-find-file-in-known-projects)
 (global-set-key (kbd "C-s") 'projectile-ripgrep)
 
 ;; jumping like in vim
