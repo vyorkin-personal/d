@@ -1,9 +1,7 @@
 #!/bin/sh
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-
         # ...
-
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

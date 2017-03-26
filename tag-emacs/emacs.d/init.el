@@ -4,8 +4,15 @@
 ;; - projectile
 ;; - flycheck
 ;; - company
+;; - ivy
+;; - counsel
+;; - swiper
+;; - counsel-projectile
+;; - hydra
+;; - ivy-hydra
+;; - ace-window
 ;; - ripgrep
-;; - projetile-ripgrep
+;; - projectile-ripgrep
 ;; - multiple-cursors
 ;; - web-mode
 ;; - emmet-mode
@@ -21,6 +28,8 @@
 ;; - tide:
 ;;   TypeScript Interactive Development Environment for Emacs.
 ;;   https://github.com/ananthakumaran/tide
+;;
+;; - idris-mode
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -29,9 +38,37 @@
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 12"))
 (set-frame-font "Source Code Pro 12" nil t)
 
+;; start in fullscreen mode
+(set-frame-parameter nil 'fullscreen 'fullboth)
+
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
+
+;; ivy ;;
+
+(ivy-mode 1)
+
+;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+(setq ivy-use-virtual-buffers t)
+;; number of result lines to display
+(setq ivy-height 14)
+(setq enable-recursive-minibuffers t)
+(setq ivy-count-format "(%d/%d) ")
+;; enable fuzzy matching
+(setq ivy-re-builders-alist
+      '((ivy-switch-buffer . ivy--regex-plus)
+        (t . ivy--regex-fuzzy)))
+;; omit ^ at the beginning of regexp
+(setq ivy-initial-inputs-alist nil)
+
+;; install projectile replacements (counsel-projectile)
+(counsel-projectile-on)
+
+;; winner-mode ;;
+
+;; restore split pane config, winner-undo, winner-redo
+(winner-mode 1)
 
 ;; evil ;;
 
@@ -56,11 +93,14 @@
 (evil-leader/set-key
   "v" 'split-window-horizontally
   "s" 'split-window-vertically
+  "U" 'winner-undo
+  "R" 'winner-redo
   "d" 'delete-window
   "o" 'other-window
+  "w" 'ace-window
   "SPC" 'delete-other-windows
   "TAB" 'sr-speedbar-toggle
-  "a" 'projectile-switch-project
+  "a" 'counsel-projectile-switch-project
   "g" 'magit-status)
 
 ;; enable evil-mode globally,
@@ -84,23 +124,14 @@
 ;; y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; magit ;;
+
+;; magit requires this setting for ivy completion
+(setq magit-completing-read-function 'ivy-completing-read)
+
 ;; undo-tree ;;
 
 (setq undo-tree-auto-save-history t)
-
-;; ido ;;
-
-;; enable basic ido support for files and buffers
-(setq ido-enable-flex-matching t)
-(ido-mode t)
-;; don't ask my permission to create a new buffer
-;; (if the file name doesn't exist)
-(setq ido-create-new-buffer 'always)
-;; customize order in which files are sorted
-;; when ido shows them in the minibuffer
-(setq ido-file-extensioins-order '(".org" ".txt"))
-;; make ido use completion-ignore-extensions
-(setq ido-ignore-extensions t)
 
 ;; sr-speedbar ;;
 (setq sr-speedbar-right-side nil)
@@ -111,14 +142,33 @@
 (set-face-font 'speedbar-face "Source Code Pro 10")
 (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
 
+;; theme
+
+;; customize-themes ;;
+
+;; (load-theme 'monochrome t)
+(load-theme 'quasi-monochrome t)
+
+(require 'color)
+(let ((bg (face-attribute 'default :background)))
+    (custom-set-faces
+     `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
+     `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+     `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+     `(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background ,(color-lighten-name bg 24))))))
+     `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))
+
 ;; color-theme ;;
-(color-theme-initialize)
+;; (color-theme-initialie)
 ;; (color-theme-euphoria)
-(color-theme-deep-blue)
 
 ;; projectile ;;
 
+;; projectile requires this setting for ivy completion
+(setq projectile-completion-system 'ivy)
+;; useful for very large projects
 (setq projectile-enable-caching t)
+
 (when (executable-find "rg")
   (progn
     (defconst modi/rg-arguments
@@ -215,17 +265,37 @@
               (setup-tide-mode))))
 
 ;; company ;;
+
 (global-company-mode 1)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
 
 ;; global hotkeys
+
 (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
-(global-set-key (kbd "C-x C-g") 'magit-status)
+
+(global-set-key (kbd "C-h") 'windmove-left)
+(global-set-key (kbd "C-l") 'windmove-right)
+(global-set-key (kbd "C-k") 'windmove-up)
+(global-set-key (kbd "C-j") 'windmove-down)
+
+(global-set-key (kbd "C-x C-m") 'magit-status)
 (global-set-key (kbd "C-x C-y") 'magit-dispatch-popup)
-(global-set-key (kbd "C-q") 'projectile-find-file)
+
+(global-set-key (kbd "C-s") 'swiper)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "C-x f") 'counsel-describe-function)
+(global-set-key (kbd "C-x v") 'counsel-describe-variable)
+
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-rg)
+
 (global-set-key (kbd "C-x C-q") 'projectile-find-file-in-known-projects)
-(global-set-key (kbd "C-s") 'projectile-ripgrep)
+(global-set-key (kbd "C-x C-g") 'projectile-ripgrep)
+(global-set-key (kbd "C-q") 'counsel-projectile-find-file)
+(global-set-key (kbd "C-x C-b") 'counsel-projectile-switch-to-buffer)
 
 ;; jumping like in vim
 (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
@@ -243,13 +313,17 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
+    (ace-window yoshi-theme tao-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(company-scrollbar-bg ((t (:background "#191919"))))
+ '(company-scrollbar-fg ((t (:background "#0c0c0c"))))
+ '(company-tooltip ((t (:inherit default :background "#050505"))))
+ '(company-tooltip-common ((t (:inherit font-lock-constant-face))))
+ '(company-tooltip-selection ((t (:inherit font-lock-function-name-face)))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
