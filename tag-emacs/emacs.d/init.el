@@ -10,10 +10,17 @@
 ;; - counsel-projectile
 ;; - hydra
 ;; - ivy-hydra
+;; - dired+
+;; - writeroom-mode
+;; - smart-mode-line
+;; - smart-mode-line-powerline-theme
 ;; - ace-window
 ;; - ripgrep
 ;; - projectile-ripgrep
 ;; - multiple-cursors
+;; - highlight-indentation
+;; - rainbow-delimiters
+;; - idle-highlight-mode
 ;; - web-mode
 ;; - emmet-mode
 ;; - magit
@@ -38,12 +45,60 @@
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 12"))
 (set-frame-font "Source Code Pro 12" nil t)
 
-;; start in fullscreen mode
-(set-frame-parameter nil 'fullscreen 'fullboth)
+;; disable *GNU Emacs* buffer on startup
+(setq inhibit-startup-screen t)
+;; disable native fullscreen support
+(setq ns-use-native-fullscreen nil)
+
+;; instead of a splash screen,
+;; let's start with the Bookmark List
+(require 'bookmark)
+(bookmark-bmenu-list)
+(switch-to-buffer "*Bookmark List*")
 
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
+
+;; highlight the current line in the buffer
+(global-hl-line-mode 1)
+
+;; hide the fringe
+(set-fringe-style 0)
+
+;; over-write selection to make things
+;; slightly less uncomfortable to others
+(delete-selection-mode t)
+
+;; mode line ;;
+
+(setq sml/no-confirm-load-theme t)
+(setq sml/name-width 20)
+(setq sml/mode-width 'full)
+(setq sml/shorten-directory t)
+(setq sml/shorten-modes t)
+(setq sml/theme 'dark)
+(sml/setup)
+
+;; (rich-minority-mode 1)
+;; (setq rm-blacklist '(" GitGutter" " MRev" " company" " mate" " Projectile"))
+
+;; show the current time
+(setq display-time-24hr-format t)
+(display-time-mode 1)
+
+;; show column number
+(column-number-mode t)
+
+;; enable automatic line breaking
+(auto-fill-mode t)
+
+;; automatically save place in each file
+(save-place-mode t)
+
+(add-hook 'prog-mode-hook #'highlight-indentation-mode)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook #'idle-highlight-mode)
 
 ;; ivy ;;
 
@@ -101,6 +156,7 @@
   "SPC" 'delete-other-windows
   "TAB" 'sr-speedbar-toggle
   "a" 'counsel-projectile-switch-project
+  "c" 'projectile-invalidate-cache
   "g" 'magit-status)
 
 ;; enable evil-mode globally,
@@ -110,6 +166,9 @@
 ;; highlight parens
 (setq show-paren-style 'parenthesis)
 (show-paren-mode 1)
+
+;; don't create lock files, fuck collisions
+(setq create-lockfiles nil)
 
 ;; remove menu bars, toolbars, scrollbars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -121,6 +180,8 @@
 (setq auto-save-list-file-name nil) ; disable .saves files
 (setq auto-save-default nil)        ; disable auto saving
 
+;; use spaces instead of tabs everywhere
+(setq-default indent-tabs-mode nil)
 ;; y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -295,7 +356,7 @@
 (global-set-key (kbd "C-x C-q") 'projectile-find-file-in-known-projects)
 (global-set-key (kbd "C-x C-g") 'projectile-ripgrep)
 (global-set-key (kbd "C-q") 'counsel-projectile-find-file)
-(global-set-key (kbd "C-x C-b") 'counsel-projectile-switch-to-buffer)
+(global-set-key (kbd "C-a") 'counsel-projectile-switch-to-buffer)
 
 ;; jumping like in vim
 (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
@@ -311,9 +372,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(package-selected-packages
    (quote
-    (ace-window yoshi-theme tao-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
+    (idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line-powerline-theme smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme tao-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -323,7 +387,11 @@
  '(company-scrollbar-fg ((t (:background "#0c0c0c"))))
  '(company-tooltip ((t (:inherit default :background "#050505"))))
  '(company-tooltip-common ((t (:inherit font-lock-constant-face))))
- '(company-tooltip-selection ((t (:inherit font-lock-function-name-face)))))
+ '(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background "#3d3d3d"))))
+ '(idle-highlight ((t (:inherit default :background "controlColor" :foreground "Magenta"))))
+ '(ivy-minibuffer-match-face-1 ((t (:background "#333333"))))
+ '(ivy-minibuffer-match-face-2 ((t (:background "#444444" :weight bold))))
+ '(swiper-line-face ((t (:inherit black :background "black")))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
