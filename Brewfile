@@ -4,12 +4,12 @@ tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'caskroom/fonts'
 tap 'thoughtbot/formulae'
-tap 'd12frosted/emacs-plus'
 tap 'neovim/neovim'
 
 brew 'rcm'
 brew 'mas'
 
+brew 'rust'
 brew 'elixir'
 brew 'python'
 brew 'python3'
@@ -37,9 +37,8 @@ brew 'fish'
 brew 'the_silver_searcher'
 brew 'fzf'
 
-brew 'vim', args: ['override-system-vi', 'with-lua', 'with-perl', 'with-python3', 'with-ruby']
 brew 'neovim'
-brew 'emacs-plus', args: ['with-cocoa', 'with-gnutls', 'with-librsvg', 'with-imagemagick', 'with-spacemacs-icon']
+brew 'vim', args: ['override-system-vi', 'with-lua', 'with-perl', 'with-python3', 'with-ruby']
 
 brew 'htop'
 brew 'httpie'
@@ -97,6 +96,7 @@ cask 'gyazo'
 cask 'dash2'
 
 cask 'macvim'
+cask 'emacs'
 cask 'visual-studio-code'
 cask 'lighttable'
 
@@ -159,3 +159,4 @@ mas 'Helium', id: 1054607607
 mas 'Pixen', id: 525180431
 mas 'Noizio', id: 928871589
 mas 'TweetDeck', id: 485812721
+mas 'Monosnap', id: 540348655

@@ -62,6 +62,8 @@
 
 ;; highlight the current line in the buffer
 (global-hl-line-mode 1)
+;; TODO: fixme
+;; (set-face-background hl-line-face "#111111")
 
 ;; hide the fringe
 (set-fringe-style 0)
@@ -220,6 +222,7 @@
      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))
 
 ;; color-theme ;;
+
 ;; (color-theme-initialie)
 ;; (color-theme-euphoria)
 
@@ -377,7 +380,7 @@
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(package-selected-packages
    (quote
-    (idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line-powerline-theme smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme tao-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
+    (flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line-powerline-theme smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme tao-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -388,7 +391,7 @@
  '(company-tooltip ((t (:inherit default :background "#050505"))))
  '(company-tooltip-common ((t (:inherit font-lock-constant-face))))
  '(company-tooltip-selection ((t (:inherit font-lock-function-name-face :background "#3d3d3d"))))
- '(idle-highlight ((t (:inherit default :background "controlColor" :foreground "Magenta"))))
+ '(idle-highlight ((t (:inherit default :background "#111111" :foreground "#ffaa00"))))
  '(ivy-minibuffer-match-face-1 ((t (:background "#333333"))))
  '(ivy-minibuffer-match-face-2 ((t (:background "#444444" :weight bold))))
  '(swiper-line-face ((t (:inherit black :background "black")))))
