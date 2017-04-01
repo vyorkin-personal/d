@@ -1,3 +1,2 @@
-alias ed='emacs --daemon'
-alias e='emacsclient'
-alias ec='emacsclient -c'
+alias ed='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
+alias ec='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c --no-wait'
