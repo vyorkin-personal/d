@@ -3,6 +3,7 @@
 [user]
   name = Vasiliy Yorkin
   email = vasiliy.yorkin@gmail.com
+	signingkey = 78C78F27
 [github]
   user = vyorkin
 [alias]
@@ -129,6 +130,7 @@
   ff = only
 [commit]
   template = ~/.gitmessage
+	gpgsign = true
 [filter "lfs"]
   required = true
   clean = git-lfs clean -- %f

@@ -50,4 +50,8 @@ $ opam install merlin
 
 For more info see [merlin + vim setup instructions](https://github.com/ocaml/merlin/wiki/vim-from-scratch).
 
+#### PGP/GPG, keybase, signing git commits
+
+Read on [pstadler/keybase-gpg-github](https://github.com/pstadler/keybase-gpg-github) on how to set everything up.
+
 # troubleshooting

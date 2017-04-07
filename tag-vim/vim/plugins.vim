@@ -193,6 +193,9 @@ Plug 'idris-hackers/idris-vim'
 " arduino
 Plug 'sudar/vim-arduino-syntax'
 
+" solidity
+Plug 'tomlion/vim-solidity'
+
 " markdown
 Plug 'tpope/vim-markdown'
 Plug 'jtratner/vim-flavored-markdown'
