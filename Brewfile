@@ -130,6 +130,7 @@ cask 'google-chrome-canary'
 cask 'opera'
 cask 'opera-developer'
 cask 'mist'
+cask 'brave'
 
 # quick look plugins
 # https://github.com/sindresorhus/quick-look-plugins
