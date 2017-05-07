@@ -15,6 +15,7 @@ brew 'elixir'
 brew 'python'
 brew 'python3'
 brew 'flow'
+brew 'go'
 
 brew 'git'
 brew 'gitsh'
@@ -131,6 +132,9 @@ cask 'opera'
 cask 'opera-developer'
 cask 'mist'
 cask 'brave'
+
+cask 'hex-fiend'
+cask '0xed'
 
 # quick look plugins
 # https://github.com/sindresorhus/quick-look-plugins
