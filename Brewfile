@@ -67,6 +67,10 @@ brew 'haskell-stack'
 brew 'ocaml'
 brew 'opam'
 
+brew 'nasm'
+brew 'bochs'
+brew 'qemu'
+
 brew 'jenv'
 brew 'rbenv'
 brew 'nvm'
