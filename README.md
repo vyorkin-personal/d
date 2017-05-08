@@ -24,7 +24,7 @@ Here is the things you should do manually.
 $ jenv add /Library/Java/JavaVirtualMachines/jdkx.x.x_xx.jdk/Contents/Home
 ```
 
-### Elixir
+#### Elixir
 
 My emacs config for [alchemist](https://github.com/tonini/alchemist.el) relies on
 [elixir sources](https://github.com/elixir-lang/elixir.git) available at the following path: `~/projects/github/elixir`.
@@ -53,5 +53,11 @@ For more info see [merlin + vim setup instructions](https://github.com/ocaml/mer
 #### PGP/GPG, keybase, signing git commits
 
 Read on [pstadler/keybase-gpg-github](https://github.com/pstadler/keybase-gpg-github) on how to set everything up.
+
+#### Rust
+
+Common crates that I use:
+
+* [rusty-tags](https://github.com/dan-t/rusty-tags)
 
 # troubleshooting
