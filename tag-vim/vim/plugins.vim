@@ -230,6 +230,7 @@ Plug 'uarun/vim-protobuf'
 Plug 'spwhitt/vim-nix'
 Plug 'tikhomirov/vim-glsl'
 Plug 'zah/nim.vim'
+Plug 'cespare/vim-toml'
 
 " text objects
 Plug 'kana/vim-textobj-user'
