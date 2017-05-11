@@ -16,6 +16,7 @@ brew 'python'
 brew 'python3'
 brew 'flow'
 brew 'go'
+brew 'ponyc'
 
 brew 'git'
 brew 'gitsh'
