@@ -140,7 +140,7 @@ Plug 'rust-lang/rust.vim'
 " Plug 'wting/rust.vim'
 
 " pony
-Plug "dleonard0/pony-vim-syntax"
+Plug 'dleonard0/pony-vim-syntax'
 
 " scala
 Plug 'derekwyatt/vim-scala'
