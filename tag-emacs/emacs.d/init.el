@@ -62,7 +62,7 @@
 ;; let's start with the Bookmark List
 (require 'bookmark)
 (bookmark-bmenu-list)
-(switch-to-buffer "*Bookmark List*")
+;; (switch-to-buffer "*Bookmark List*")
 
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
@@ -92,7 +92,7 @@
 (setq sml/shorten-directory t)
 (setq sml/shorten-modes t)
 (setq sml/theme 'dark)
-(sml/setup)
+;; (sml/setup)
 
 ;; (rich-minority-mode 1)
 ;; (setq rm-blacklist '(" GitGutter" " MRev" " company" " mate" " Projectile"))
@@ -237,10 +237,10 @@
 ;; (load-theme 'abyss t)
 ;; (load-theme 'cyberpunk t)
 ;; (load-theme 'afternoon t)
-(load-theme 'paganini t)
+;; (load-theme 'paganini t)
 ;; (load-theme 'gotham t)
 ;; (load-theme 'gruber-darker t)
-;; (load-theme 'base16-grayscale-dark t)
+(load-theme 'base16-grayscale-dark t)
 ;; (load-theme 'base16-tomorrow t)
 ;; (load-theme 'base16-atelier-forest-light t)
 ;; (load-theme 'base16-atelier-heath-light t)
@@ -421,6 +421,12 @@
 (global-set-key (kbd "C-M-n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-M-p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-M-m") 'mc/mark-all-like-this)
+
+;; set initial window position
+(when (window-system)
+  (set-frame-position (selected-frame) 0 10)
+  (set-frame-height (selected-frame) 80)
+  (set-frame-width (selected-frame) 205))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
