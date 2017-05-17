@@ -13,6 +13,9 @@ $ make
 
 # setup
 
+If you use iTerm2, enable "Applications in terminal may access system
+clipboard"
+
 Some of the installed software requires additional setup, so examine the Brewfile and run `brew info someting` and `brew cask info something` accordingly to find out your post-installation steps.
 I've tried hard to do this for you, so you may not require to do anyting at all,
 but I probably missed smth.
