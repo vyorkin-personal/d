@@ -6,7 +6,6 @@ function x() {
 
   source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-  eval "$(thefuck --alias)"
   eval "$(rbenv init -)"
   eval "$(jenv init -)"
 }

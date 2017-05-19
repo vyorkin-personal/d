@@ -79,8 +79,6 @@ brew 'kubectl'
 brew 'leiningen'
 brew 'nginx'
 
-brew 'thefuck'
-
 brew 'weechat', args: ['with-python', 'with-perl']
 brew 'irssi'
 
