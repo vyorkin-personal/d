@@ -70,6 +70,7 @@ brew 'opam'
 brew 'nasm'
 brew 'bochs'
 brew 'qemu'
+brew 'xorriso'
 
 brew 'jenv'
 brew 'rbenv'
