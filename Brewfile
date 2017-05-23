@@ -67,6 +67,8 @@ brew 'haskell-stack'
 brew 'ocaml'
 brew 'opam'
 
+brew 'autoconf'
+brew 'automake'
 brew 'nasm'
 brew 'bochs'
 brew 'qemu'

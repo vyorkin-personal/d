@@ -57,7 +57,7 @@ For more info see [merlin + vim setup instructions](https://github.com/ocaml/mer
 
 On Mac OS X I use GNU GCC and GNU bitutils for cross compilation,
 so in my zshrc I have these binaries added to my PATH env variable.
-I put GCC binaries here `/usr/local/i386elfgcc/bin`.
+I put GCC binaries here `/usr/local/i386elfgcc/bin` and here `/usr/local/x8664pcelfgcc/bin`.
 See [this page](https://github.com/cfenollosa/os-tutorial/tree/master/11-kernel-crosscompiler)
 for a detailed instructions on how to setup development environment for cross compilation.
 
