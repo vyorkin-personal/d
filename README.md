@@ -53,6 +53,14 @@ $ opam install merlin
 
 For more info see [merlin + vim setup instructions](https://github.com/ocaml/merlin/wiki/vim-from-scratch).
 
+#### GCC & bitutils
+
+On Mac OS X I use GNU GCC and GNU bitutils for cross compilation,
+so in my zshrc I have these binaries added to my PATH env variable.
+I put GCC binaries here `/usr/local/i386elfgcc/bin`.
+See [this page](https://github.com/cfenollosa/os-tutorial/tree/master/11-kernel-crosscompiler)
+for a detailed instructions on how to setup development environment for cross compilation.
+
 #### PGP/GPG, keybase, signing git commits
 
 Read on [pstadler/keybase-gpg-github](https://github.com/pstadler/keybase-gpg-github) on how to set everything up.
