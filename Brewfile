@@ -62,6 +62,7 @@ brew 'sqlite'
 brew 'mongodb'
 brew 'rethinkdb'
 
+brew 'llvm'
 brew 'purescript'
 brew 'haskell-stack'
 brew 'ocaml'
