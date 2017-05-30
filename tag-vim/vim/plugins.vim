@@ -137,6 +137,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " rust
 Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
 " Plug 'wting/rust.vim'
 
 " pony

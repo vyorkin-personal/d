@@ -70,5 +70,7 @@ Read on [pstadler/keybase-gpg-github](https://github.com/pstadler/keybase-gpg-gi
 Common crates that I use:
 
 * [rusty-tags](https://github.com/dan-t/rusty-tags)
+* [rustfmt](https://github.com/rust-lang-nursery/rustfmt)
+* [racer](https://github.com/phildawes/racer)
 
 # troubleshooting

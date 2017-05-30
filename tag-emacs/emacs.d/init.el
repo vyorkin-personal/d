@@ -1,10 +1,17 @@
 ;; - exec-path-from-shell
 ;; - evil
 ;; - color-theme
-;; - sr-speedbar
+;; - all-the-icons
+;; - neotree
 ;; - projectile
 ;; - flycheck
+;; - flycheck-rust
+;; - yasnippet
 ;; - company
+;; - company-web
+;; - company-tern
+;; - rust-mode
+;; - racer
 ;; - ivy
 ;; - counsel
 ;; - swiper
@@ -126,9 +133,9 @@
 (setq ivy-count-format "(%d/%d) ")
 
 ;; enable fuzzy matching
-;; (setq ivy-re-builders-alist
-;;      '((ivy-switch-buffer . ivy--regex-plus)
-;;        (t . ivy--regex-fuzzy)))
+(setq ivy-re-builders-alist
+      '((ivy-switch-buffer . ivy--regex-plus)
+        (t . ivy--regex-fuzzy)))
 
 ;; omit ^ at the beginning of regexp
 (setq ivy-initial-inputs-alist nil)
@@ -169,7 +176,7 @@
   "d" 'delete-window
   "o" 'other-window
   "w" 'ace-window
-  "q" 'sr-speedbar-toggle
+  "q" 'neotree-toggle
   "SPC" 'delete-other-windows
   "RET" 'writeroom-mode
   "a" 'counsel-projectile-switch-project
@@ -213,20 +220,39 @@
 ;; magit requires this setting for ivy completion
 (setq magit-completing-read-function 'ivy-completing-read)
 
+;; all-the-icons, neotree
+
+(require 'all-the-icons)
+(require 'neotree)
+;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-theme 'arrow)
+;; every time when the neotree window is opened, let it find current file and jump to node
+(setq neo-smart-open t)
+(setq neo-window-width 34)
+
+;; when running ‘projectile-switch-project’, ‘neotree’ will change root automatically
+;; (setq projectile-switch-project-action 'neotree-projectile-action)
+
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+
+(evil-define-key 'normal neotree-mode-map (kbd "s") 'neotree-enter-horizontal-split)
+(evil-define-key 'normal neotree-mode-map (kbd "v") 'neotree-enter-vertical-split)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-hidden-file-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "a") 'neotree-stretch-toggle)
+
+(evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
+(evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
+(evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
+
+(evil-define-key 'normal neotree-mode-map (kbd "U") 'neotree-select-up-node)
+(evil-define-key 'normal neotree-mode-map (kbd "D") 'neotree-select-up-node)
+
 ;; undo-tree ;;
 
 (setq undo-tree-auto-save-history t)
-
-;; sr-speedbar ;;
-
-(setq sr-speedbar-right-side nil)
-(setq speedbar-use-images nil)
-(setq speedbar-show-unknown-files t)
-(setq sr-speedbar-width 25)
-
-;; (make-face 'speedbar-face)
-;; (set-face-font 'speedbar-face "Source Code Pro 12")
-;; (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
 
 ;; theme
 
@@ -284,8 +310,28 @@
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 (global-flycheck-mode 1)
 
-;; aligns annotation to the right hand side
+;; yasnippet ;;
+
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"
+        "~/.emacs.d/yasnippet-snippets"))
+(yas-global-mode 1)
+
+;; rust ;;
+
+(require 'rust-mode)
+
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
+
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
 
 ;; elixir, alchemist, alchemist-hex ;;
 
@@ -354,6 +400,26 @@
 ;; use eslint with web-mode for jsx files
 (flycheck-add-mode 'javascript-eslint 'web-mode)
 
+(defun my-web-mode-hook ()
+  "Hook for `web-mode'."
+    (set (make-local-variable 'company-backends)
+         '(company-tern company-web-html company-yasnippet company-files)))
+
+(add-hook 'web-mode-hook 'my-web-mode-hook)
+
+;; enable JavaScript completion between <script>...</script> etc.
+(defadvice company-tern (before web-mode-set-up-ac-sources activate)
+  "Set `tern-mode' based on current language before running company-tern."
+  (message "advice")
+  (if (equal major-mode 'web-mode)
+      (let ((web-mode-cur-language
+             (web-mode-language-at-pos)))
+        (if (or (string= web-mode-cur-language "javascript")
+                (string= web-mode-cur-language "jsx")
+                )
+            (unless tern-mode (tern-mode))
+          (if tern-mode (tern-mode -1))))))
+
 ;; typescript, tide ;;
 
 (setq typescript-indent-level 2)
@@ -378,10 +444,43 @@
               (setup-tide-mode))))
 
 ;; company ;;
+;; see http://company-mode.github.io/
 
 (global-company-mode 1)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
+; (setq company-show-numbers t)
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+(add-to-list 'company-backends 'company-tern)
+;; (setq company-tern-meta-as-single-line t)
+;; (setq company-tooltip-align-annotations t)
+
+;; company interferes with Yasnippet’s native behaviour.
+(defun check-expansion ()
+  (save-excursion
+        (if (looking-at "\\_>") t
+        (backward-char 1)
+        (if (looking-at "\\.") t
+            (backward-char 1)
+            (if (looking-at "->") t nil)))))
+
+(defun do-yas-expand ()
+    (let ((yas/fallback-behavior 'return-nil))
+        (yas/expand)))
+
+(defun tab-indent-or-complete ()
+    (interactive)
+    (if (minibufferp)
+        (minibuffer-complete)
+        (if (or (not yas/minor-mode)
+                (null (do-yas-expand)))
+            (if (check-expansion)
+                (company-complete-common)
+            (indent-for-tab-command)))))
+
+(global-set-key [tab] 'tab-indent-or-complete)
 
 ;; global hotkeys
 
@@ -453,7 +552,7 @@
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide sr-speedbar projectile evil eldoc-overlay-mode company color-theme)))
+    (flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
