@@ -63,7 +63,8 @@
 (setq inhibit-startup-screen t)
 
 ;; disable native fullscreen support
-;; (setq ns-use-native-fullscreen t)
+;; I don't like sliding animation on Mac OS X
+(setq ns-use-native-fullscreen nil)
 
 ;; instead of a splash screen,
 ;; let's start with the Bookmark List
@@ -90,6 +91,14 @@
 ;; make Emacs use the $PATH set up by the user's shell
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+;; don't wrap long lines
+
+;; set left and right margins for every window
+(add-hook 'window-configuration-change-hook
+          (lambda ()
+            (set-window-margins (car (get-buffer-window-list (current-buffer) nil t)) 2 2)
+            (setq truncate-lines t)))
 
 ;; mode line ;;
 
@@ -177,6 +186,7 @@
   "o" 'other-window
   "w" 'ace-window
   "q" 'neotree-toggle
+  "r" 'neotree-toggle
   "SPC" 'delete-other-windows
   "RET" 'writeroom-mode
   "a" 'counsel-projectile-switch-project
@@ -237,7 +247,8 @@
 (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-enter)
 (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
 
-(evil-define-key 'normal neotree-mode-map (kbd "s") 'neotree-enter-horizontal-split)
+(evil-define-key 'normal neotree-mode-map (kbd "i") 'neotree-enter-horizontal-split)
+(evil-define-key 'normal neotree-mode-map (kbd "s") 'neotree-enter-vertical-split)
 (evil-define-key 'normal neotree-mode-map (kbd "v") 'neotree-enter-vertical-split)
 (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
 (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-hidden-file-toggle)
@@ -272,6 +283,10 @@
 ;; (load-theme 'base16-atelier-heath-light t)
 ;; (load-theme 'base16-default-light t)
 ;; (load-theme 'base16-eighties t)
+
+;; additional customizations
+
+(set-face-attribute 'vertical-border nil :foreground "#000000")
 
 ;; color-theme ;;
 
@@ -447,7 +462,8 @@
 ;; see http://company-mode.github.io/
 
 (global-company-mode 1)
-(setq company-idle-delay 0)
+;; adjust this setting according to your typing speed
+(setq company-idle-delay 0.4)
 (setq company-minimum-prefix-length 1)
 ; (setq company-show-numbers t)
 ;; aligns annotation to the right hand side
