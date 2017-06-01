@@ -93,12 +93,11 @@
   (exec-path-from-shell-initialize))
 
 ;; don't wrap long lines
+(setq-default truncate-lines t)
 
 ;; set left and right margins for every window
-(add-hook 'window-configuration-change-hook
-          (lambda ()
-            (set-window-margins (car (get-buffer-window-list (current-buffer) nil t)) 2 2)
-            (setq truncate-lines t)))
+(setq-default left-margin-width 2 right-margin-width 2)
+(set-window-buffer nil (current-buffer))
 
 ;; mode line ;;
 
