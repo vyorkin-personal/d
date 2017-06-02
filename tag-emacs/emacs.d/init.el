@@ -66,10 +66,10 @@
 ;; I don't like sliding animation on Mac OS X
 (setq ns-use-native-fullscreen nil)
 
-;; instead of a splash screen,
-;; let's start with the Bookmark List
-(require 'bookmark)
-(bookmark-bmenu-list)
+;; (require 'bookmark)
+;; (bookmark-bmenu-list)
+
+;; instead of a splash screen, let's start with the Bookmark List
 ;; (switch-to-buffer "*Bookmark List*")
 
 ;; ad-handle-definition warning are generated when functions are redefined
