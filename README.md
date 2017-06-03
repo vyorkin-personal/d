@@ -53,6 +53,10 @@ $ opam install merlin
 
 For more info see [merlin + vim setup instructions](https://github.com/ocaml/merlin/wiki/vim-from-scratch).
 
+#### Emacs and Irony mode
+
+[Mac OS X issues and workaround](https://github.com/Sarcasm/irony-mode/wiki/Mac-OS-X-issues-and-workaround)
+
 #### GCC & bitutils
 
 On Mac OS X I use GNU GCC and GNU bitutils for cross compilation,

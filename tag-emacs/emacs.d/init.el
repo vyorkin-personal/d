@@ -4,12 +4,18 @@
 ;; - all-the-icons
 ;; - neotree
 ;; - projectile
+;; - irony
+;; - irony-eldoc
+;; - disaster
 ;; - flycheck
 ;; - flycheck-rust
+;; - flycheck-irony
 ;; - yasnippet
 ;; - company
 ;; - company-web
 ;; - company-tern
+;; - company-irony
+;; - company-irony-c-headers
 ;; - rust-mode
 ;; - racer
 ;; - ivy
@@ -394,6 +400,26 @@
 ;;    "i" 'alchemist-hex-info-at-point))
 ;; (advice-add 'alchemist-hex-mode :after #'alchemist-hex-local-keys)
 
+;; c, c++ ;;
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(require 'company-irony-c-headers)
+;; load with `irony-mode` as a grouped backend
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends '(company-irony-c-headers company-irony)))
+
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(add-hook 'irony-mode-hook #'irony-eldoc)
+
+;; disassemble C/C++ code under cursor
+;; TODO: https://github.com/jart/disaster/issues/13
+;; (require 'disaster)
+;; (define-key c-mode-base-map (kbd "C-c d") 'disaster)
+
 ;; javascript, json ;;
 
 ;; indent step is 2 spaces
@@ -567,7 +593,7 @@
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
+    (irony-eldoc company-irony-c-headers disaster flycheck-irony company-irony irony flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote

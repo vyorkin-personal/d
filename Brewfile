@@ -62,7 +62,7 @@ brew 'sqlite'
 brew 'mongodb'
 brew 'rethinkdb'
 
-brew 'llvm'
+brew 'llvm', args: ['with-clang', 'with-libcxx']
 brew 'purescript'
 brew 'haskell-stack'
 brew 'ocaml'
