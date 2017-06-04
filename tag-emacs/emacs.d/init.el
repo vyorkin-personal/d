@@ -415,6 +415,12 @@
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 (add-hook 'irony-mode-hook #'irony-eldoc)
 
+;; lets use the latest & greatest
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++17")))
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
 ;; disassemble C/C++ code under cursor
 ;; TODO: https://github.com/jart/disaster/issues/13
 ;; (require 'disaster)
