@@ -192,7 +192,7 @@
   "w" 'ace-window
   "q" 'neotree-toggle
   "r" 'neotree-toggle
-  "SPC" 'delete-other-windows
+  "SPC" 'compile
   "RET" 'writeroom-mode
   "a" 'counsel-projectile-switch-project
   "c" 'projectile-invalidate-cache
@@ -402,6 +402,28 @@
 
 ;; c, c++ ;;
 
+(require 'cl)
+
+;; running Make with the closest Makefile
+(defun* get-closest-pathname (&optional (file "Makefile"))
+  "Determine the pathname of the first instance of FILE starting from the current directory towards root.
+This may not do the correct thing in presence of links. If it does not find FILE, then it shall return the name
+of FILE in the current directory, suitable for creation"
+  (let ((root (expand-file-name "/"))) ; the win32 builds should translate this correctly
+    (expand-file-name file
+		      (loop
+			for d = default-directory then (expand-file-name ".." d)
+			if (file-exists-p (expand-file-name file d))
+			return d
+			if (equal d root)
+			return nil))))
+
+(require 'compile)
+(add-hook 'c++-mode-hook
+          (lambda () (set
+                      (make-local-variable 'compile-command)
+                      (format "make -f %s" (get-closest-pathname)))))
+
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 (add-hook 'objc-mode-hook 'irony-mode)
@@ -415,8 +437,9 @@
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 (add-hook 'irony-mode-hook #'irony-eldoc)
 
-;; lets use the latest & greatest
-(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++17")))
+;; always use the latest & greatest
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
 
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
