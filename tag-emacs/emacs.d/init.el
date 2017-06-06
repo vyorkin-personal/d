@@ -438,8 +438,8 @@ of FILE in the current directory, suitable for creation"
 (add-hook 'irony-mode-hook #'irony-eldoc)
 
 ;; always use the latest & greatest
-(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
-(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++17")))
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++17")))
 
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
