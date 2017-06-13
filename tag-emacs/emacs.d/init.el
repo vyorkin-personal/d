@@ -281,12 +281,14 @@
 ;; (load-theme 'afternoon t)
 ;; (load-theme 'paganini t)
 ;; (load-theme 'gotham t)
+;; (load-theme 'deeper-blue t)
 ;; (load-theme 'gruber-darker t)
 (load-theme 'base16-grayscale-dark t)
 ;; (load-theme 'base16-tomorrow t)
 ;; (load-theme 'base16-atelier-forest-light t)
 ;; (load-theme 'base16-atelier-heath-light t)
 ;; (load-theme 'base16-default-light t)
+;; (load-theme 'base16-eighties t)
 ;; (load-theme 'base16-eighties t)
 
 ;; additional customizations
@@ -352,6 +354,8 @@
 (add-hook 'rust-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
+
+(add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
 
 ;; elixir, alchemist, alchemist-hex ;;
 
