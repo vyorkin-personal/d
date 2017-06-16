@@ -173,6 +173,10 @@
 (define-key evil-motion-state-map ";" 'evil-ex)
 (define-key evil-motion-state-map ":" 'evil-repeat-find-char)
 
+;; comment region / uncomment region
+;; (define-key evil-window-map (kbd "C-c") 'comment-region)
+;; (define-key evil-window-map (kbd "C-c C-u") 'uncomment-region)
+
 ;; evilify everyting
 (require 'evil-leader)
 (require 'evil-magit)
