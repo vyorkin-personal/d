@@ -1,5 +1,7 @@
 config/nvim/.netrwhist
 config/nvim/view/*
+config/nvim/plugin/
+config/nvim/rplugin/
 
 tag-vim/vim/backups
 tag-vim/vim/undo/*
