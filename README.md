@@ -77,4 +77,9 @@ Common crates that I use:
 * [rustfmt](https://github.com/rust-lang-nursery/rustfmt)
 * [racer](https://github.com/phildawes/racer)
 
-# troubleshooting
+# Troubleshooting
+
+# TODO
+
+* [learn ASDF version manager](https://github.com/asdf-vm/asdf) to see if it can
+  replace a bunch of other language-specific tools
