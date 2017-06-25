@@ -56,6 +56,7 @@ Plug 'ninja/sky'
 Plug 'geoffharcourt/one-dark.vim'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'zanglg/nova.vim'
+Plug 'ajmwagar/vim-dues'
 
 Plug 'RussellBradley/vim-rockets-away'
 Plug 'vim-scripts/Sift'

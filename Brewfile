@@ -19,6 +19,8 @@ brew 'go'
 brew 'ponyc'
 brew 'sbt'
 
+brew 'sdl2'
+
 brew 'git'
 brew 'gitsh'
 brew 'git-extras'
