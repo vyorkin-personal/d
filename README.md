@@ -27,6 +27,10 @@ Here is the things you should do manually.
 $ jenv add /Library/Java/JavaVirtualMachines/jdkx.x.x_xx.jdk/Contents/Home
 ```
 
+## Optional
+
+* [Bash-Snippets](https://github.com/alexanderepstein/Bash-Snippets.git)
+
 #### Elixir
 
 My emacs config for [alchemist](https://github.com/tonini/alchemist.el) relies on
