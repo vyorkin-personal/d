@@ -45,7 +45,7 @@ mkdir -p ~/.karabiner.d/configuration/
 curl https://gist.githubusercontent.com/vyorkin/705c749cb7d439e94d62afee69520ecf/raw/bea834cf218633b10b0adc98b3a3cee749210b7a/karabiner.json > ~/.karabiner.d/configuration/karabiner.json
 ```
 
-#### ocaml, opam, merlin
+#### OCaml, Opam, Merlin
 
 Do you want OPAM to modify ~/.zshrc and ~/.ocamlinit? - the answer is N.
 This is because I use 'x' alias instead, see helpers/functions/env.
@@ -56,6 +56,10 @@ $ opam install merlin
 ```
 
 For more info see [merlin + vim setup instructions](https://github.com/ocaml/merlin/wiki/vim-from-scratch).
+
+#### Reason
+
+You may want to install [the Reason toolchain](https://github.com/reasonml/reason-cli).
 
 #### Emacs and Irony mode
 

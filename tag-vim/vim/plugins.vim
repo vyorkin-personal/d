@@ -113,6 +113,9 @@ Plug 'Shougo/vimproc.vim'
 " flowtype
 Plug 'flowtype/vim-flow'
 
+" reasonml
+Plug 'reasonml/vim-reason'
+
 " julia
 Plug 'dcjones/julia-minimalist-vim'
 
