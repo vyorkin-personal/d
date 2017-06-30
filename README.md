@@ -45,7 +45,7 @@ mkdir -p ~/.karabiner.d/configuration/
 curl https://gist.githubusercontent.com/vyorkin/705c749cb7d439e94d62afee69520ecf/raw/bea834cf218633b10b0adc98b3a3cee749210b7a/karabiner.json > ~/.karabiner.d/configuration/karabiner.json
 ```
 
-#### OCaml, Opam, Merlin
+#### OCaml, Opam, Merlin, Tuareg
 
 Do you want OPAM to modify ~/.zshrc and ~/.ocamlinit? - the answer is N.
 This is because I use 'x' alias instead, see helpers/functions/env.
@@ -53,6 +53,7 @@ This is because I use 'x' alias instead, see helpers/functions/env.
 ```
 $ opam init
 $ opam install merlin
+$ opam install tuareg
 ```
 
 For more info see [merlin + vim setup instructions](https://github.com/ocaml/merlin/wiki/vim-from-scratch).

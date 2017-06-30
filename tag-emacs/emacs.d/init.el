@@ -1,66 +1,69 @@
-;; - exec-path-from-shell
-;; - evil
-;; - color-theme
-;; - all-the-icons
-;; - neotree
-;; - projectile
-;; - irony
-;; - irony-eldoc
-;; - disaster
-;; - flycheck
-;; - flycheck-rust
-;; - flycheck-irony
-;; - yasnippet
-;; - company
-;; - company-web
-;; - company-tern
-;; - company-irony
-;; - company-irony-c-headers
-;; - rust-mode
-;; - racer
-;; - ivy
-;; - counsel
-;; - swiper
-;; - counsel-projectile
-;; - hydra
-;; - ivy-hydra
-;; - dired+
-;; - writeroom-mode
-;; - smart-mode-line
-;; - ace-window
-;; - ripgrep
-;; - projectile-ripgrep
-;; - multiple-cursors
-;; - highlight-indentation
-;; - rainbow-delimiters
-;; - idle-highlight-mode
-;; - solidity-mode
-;; - web-mode
-;; - emmet-mode
-;; - magit
-;; - evil-magit
-;; - evil-leader
-;; - evil-org
-;; - base16-themes
-;; - sublime-themes
-;;
-;; - typescript-mode:
-;;   Basic font-lock/syntax-highlighting and indentation.
-;;   https://github.com/ananthakumaran/typescript.el
-;;
-;; - tide:
-;;   TypeScript Interactive Development Environment for Emacs.
-;;   https://github.com/ananthakumaran/tide
-;;
-;; - js2-mode
-;; - js2-refactor
-;; - json-mode
-;;
-;; - idris-mode
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
+
+;; bootstrap quelpa ;;
+(if (require 'quelpa nil t)
+    ;; (quelpa-self-upgrade)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
+    (eval-buffer)))
+
+;; (setq quelpa-upgrade-p t)
+
+;; packages ;;
+
+(quelpa 'exec-path-from-shell)
+(quelpa 'evil)
+(quelpa 'all-the-icons)
+(quelpa 'neotree)
+(quelpa 'projectile)
+(quelpa 'irony)
+(quelpa 'irony-eldoc)
+(quelpa 'disaster)
+(quelpa 'flycheck)
+(quelpa 'flycheck-rust)
+(quelpa 'flycheck-irony)
+(quelpa 'yasnippet)
+(quelpa 'company)
+(quelpa 'company-web)
+(quelpa 'company-tern)
+(quelpa 'company-irony)
+(quelpa 'company-irony-c-headers)
+(quelpa 'rust-mode)
+(quelpa 'racer)
+(quelpa 'ivy)
+(quelpa 'counsel)
+(quelpa 'swiper)
+(quelpa 'counsel-projectile)
+(quelpa 'hydra)
+(quelpa 'ivy-hydra)
+(quelpa 'dired+)
+(quelpa 'writeroom-mode)
+(quelpa 'smart-mode-line)
+(quelpa 'ace-window)
+(quelpa 'ripgrep)
+(quelpa 'projectile-ripgrep)
+(quelpa 'multiple-cursors)
+(quelpa 'highlight-indentation)
+(quelpa 'rainbow-delimiters)
+(quelpa 'idle-highlight-mode)
+(quelpa 'solidity-mode)
+(quelpa 'web-mode)
+(quelpa 'emmet-mode)
+(quelpa 'magit)
+(quelpa 'evil-magit)
+(quelpa 'evil-leader)
+(quelpa 'evil-org)
+(quelpa 'base16-themes)
+(quelpa 'sublime-themes)
+(quelpa 'typescript-mode)
+(quelpa 'tide)
+(quelpa 'js2-mode)
+(quelpa 'js2-refactor)
+(quelpa 'json-mode)
+(quelpa 'idris-mode)
+(quelpa '(reason-mode :repo "arichiardi/reason-mode" :fetcher github :stable t))
 
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 12"))
 (set-frame-font "Source Code Pro 12" nil t)
@@ -361,6 +364,23 @@
 
 (add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
 
+;; ocaml, reason, merlin ;;
+
+;; setup / init merlin
+(let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
+ (when (and opam-share (file-directory-p opam-share))
+  ;; Register Merlin
+  (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+  (autoload 'merlin-mode "merlin" nil t nil)
+  ;; Automatically start it in OCaml buffers
+  (add-hook 'tuareg-mode-hook 'merlin-mode t)
+  (add-hook 'caml-mode-hook 'merlin-mode t)
+  ;; Use opam switch to lookup ocamlmerlin binary
+  (setq merlin-command 'opam)))
+
+;; setup / init tuareg
+(load "~/.opam/system/share/emacs/site-lisp/tuareg-site-file")
+
 ;; elixir, alchemist, alchemist-hex ;;
 
 (setq alchemist-goto-elixir-source-dir "~/projects/github/elixir")
@@ -630,7 +650,7 @@ of FILE in the current directory, suitable for creation"
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (irony-eldoc company-irony-c-headers disaster flycheck-irony company-irony irony flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
+    (quelpa package-build merlin irony-eldoc company-irony-c-headers disaster flycheck-irony company-irony irony flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
