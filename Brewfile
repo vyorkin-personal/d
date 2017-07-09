@@ -90,6 +90,9 @@ brew 'kubectl'
 brew 'leiningen'
 brew 'nginx'
 
+brew 'imagemagick'
+brew 'ffmpeg'
+
 brew 'weechat', args: ['with-python', 'with-perl']
 brew 'irssi'
 

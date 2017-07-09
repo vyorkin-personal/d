@@ -378,6 +378,9 @@
   ;; Use opam switch to lookup ocamlmerlin binary
   (setq merlin-command 'opam)))
 
+(with-eval-after-load 'company
+ (add-to-list 'company-backends 'merlin-company-backend))
+
 ;; setup / init tuareg
 (load "~/.opam/system/share/emacs/site-lisp/tuareg-site-file")
 
