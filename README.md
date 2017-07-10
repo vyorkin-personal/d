@@ -30,6 +30,7 @@ $ jenv add /Library/Java/JavaVirtualMachines/jdkx.x.x_xx.jdk/Contents/Home
 ## Optional
 
 * [Bash-Snippets](https://github.com/alexanderepstein/Bash-Snippets.git)
+* [Hexitor](https://github.com/briansteffens/hexitor)
 
 #### Elixir
 
