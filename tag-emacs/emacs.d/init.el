@@ -495,6 +495,14 @@
 ;; setup / init tuareg
 (load "~/.opam/system/share/emacs/site-lisp/tuareg-site-file")
 
+;; haskell ;;
+
+(require 'haskell-mode)
+
+(add-hook 'haskell-mode-hook 'haskell-indent-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook 'haskell-doc-mode)
+
 ;; elixir, alchemist, alchemist-hex ;;
 
 (setq alchemist-goto-elixir-source-dir "~/projects/github/elixir")
