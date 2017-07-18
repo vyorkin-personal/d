@@ -32,6 +32,10 @@ $ jenv add /Library/Java/JavaVirtualMachines/jdkx.x.x_xx.jdk/Contents/Home
 * [Bash-Snippets](https://github.com/alexanderepstein/Bash-Snippets.git)
 * [Hexitor](https://github.com/briansteffens/hexitor)
 
+#### Scala
+
+[sbt & ensime installation guide](http://ensime.org/build_tools/sbt/)
+
 #### Elixir
 
 My emacs config for [alchemist](https://github.com/tonini/alchemist.el) relies on

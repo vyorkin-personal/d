@@ -188,6 +188,26 @@
   (dolist (mode whitespace-enabled-modes)
     (add-hook mode 'rc/setup-whitespace-handling)))
 
+;; disable whitespace white popup is displayed
+;; see: https://github.com/company-mode/company-mode/pull/245#issuecomment-232943098
+(defvar my-prev-whitespace-mode nil)
+(make-variable-buffer-local 'my-prev-whitespace-mode)
+(defun pre-popup-draw ()
+  "Turn off whitespace mode before showing company complete tooltip"
+  (if whitespace-mode
+      (progn
+        (setq my-prev-whitespace-mode t)
+        (whitespace-mode -1)
+        (setq my-prev-whitespace-mode t))))
+(defun post-popup-draw ()
+  "Restore previous whitespace mode after showing company tooltip"
+  (if my-prev-whitespace-mode
+      (progn
+        (whitespace-mode 1)
+        (setq my-prev-whitespace-mode nil))))
+(advice-add 'company-pseudo-tooltip-unhide :before #'pre-popup-draw)
+(advice-add 'company-pseudo-tooltip-hide :after #'post-popup-draw)
+
 ;; google-translate ;;
 
 (require 'google-translate)
