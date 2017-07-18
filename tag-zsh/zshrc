@@ -86,5 +86,14 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+if [ -f $HOME/.bashhub/bashhub.zsh ]; then
+    source $HOME/.bashhub/bashhub.zsh
+fi
+
+source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+eval "$(rbenv init -)"
+eval "$(jenv init -)"
+
 # load custom functions & aliases
 source ~/.helpers/index

@@ -16,6 +16,10 @@
 (quelpa 'exec-path-from-shell)
 (quelpa 'evil)
 (quelpa 'all-the-icons)
+(quelpa 'whitespace)
+(quelpa 'google-translate)
+(quelpa 'rtags)
+(quelpa 'ggtags)
 (quelpa 'neotree)
 (quelpa 'projectile)
 (quelpa 'irony)
@@ -23,7 +27,12 @@
 (quelpa 'disaster)
 (quelpa 'flycheck)
 (quelpa 'flycheck-rust)
+(quelpa 'flycheck-clojure)
 (quelpa 'flycheck-irony)
+(quelpa 'flycheck-purescript)
+(quelpa 'flycheck-flow)
+(quelpa 'flycheck-dialyzer)
+(quelpa 'flycheck-dialyxir)
 (quelpa 'yasnippet)
 (quelpa 'company)
 (quelpa 'company-web)
@@ -31,6 +40,7 @@
 (quelpa 'company-irony)
 (quelpa 'company-irony-c-headers)
 (quelpa 'rust-mode)
+(quelpa 'clojure-mode)
 (quelpa 'racer)
 (quelpa 'ivy)
 (quelpa 'counsel)
@@ -50,6 +60,7 @@
 (quelpa 'idle-highlight-mode)
 (quelpa 'solidity-mode)
 (quelpa 'web-mode)
+(quelpa 'rainbow-mode)
 (quelpa 'emmet-mode)
 (quelpa 'magit)
 (quelpa 'evil-magit)
@@ -57,11 +68,28 @@
 (quelpa 'evil-org)
 (quelpa 'base16-themes)
 (quelpa 'sublime-themes)
+(quelpa 'dockerfile-mode)
+(quelpa 'purescript-mode)
+(quelpa 'd-mode)
+(quelpa 'nginx-mode)
+(quelpa 'yaml-mode)
+(quelpa 'toml-mode)
+(quelpa 'kotlin-mode)
+(quelpa 'glsl-mode)
+(quelpa 'jade-mode)
+(quelpa 'lua-mode)
+(quelpa 'go-mode)
 (quelpa 'typescript-mode)
 (quelpa 'tide)
 (quelpa 'js2-mode)
 (quelpa 'js2-refactor)
 (quelpa 'json-mode)
+(quelpa 'erlang-mode)
+(quelpa 'elixir-mode)
+(quelpa 'alchemist)
+(quelpa 'ensime)
+(quelpa 'scala-mode)
+(quelpa 'haskell-mode)
 (quelpa 'idris-mode)
 (quelpa '(reason-mode :repo "arichiardi/reason-mode" :fetcher github :stable t))
 
@@ -107,6 +135,69 @@
 ;; set left and right margins for every window
 (setq-default left-margin-width 2 right-margin-width 2)
 (set-window-buffer nil (current-buffer))
+
+;; rainbow ;;
+
+(require 'rainbow-mode)
+
+(defun rc/setup-rainbow-mode ()
+  (interactive)
+  (rainbow-mode 1))
+
+(let ((rainbow-enabled-modes
+       '(
+         html-mode-hook
+         web-mode-hook
+         js2-mode-hook
+         typescript-mode-hook
+         css-mode-hook)))
+  (dolist (mode rainbow-enabled-modes)
+    (add-hook mode 'rc/setup-rainbow-mode)))
+
+;; whitespace ;;
+
+(require 'whitespace)
+
+(setq whitespace-display-mappings
+      '((space-mark 32 [183] [46])
+        (newline-mark 10 [182 10])
+        (tab-mark 9 [9655 9] [92 9])))
+
+(defun rc/setup-whitespace-handling ()
+  (interactive)
+  (whitespace-mode 1)
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+
+(let ((whitespace-enabled-modes
+       '(
+         tuareg-mode-hook
+         c++-mode-hook
+         emacs-lisp-mode-hook
+         java-mode-hook
+         lua-mode-hook
+         rust-mode-hook
+         scala-mode-hook
+         markdown-mode-hook
+         web-mode-hook
+         j2-mode-hook
+         typescript-mode-hook
+         reason-mode-hook
+         elixir-mode-hook
+         idris-mode-hook
+         haskell-mode-hook)))
+  (dolist (mode whitespace-enabled-modes)
+    (add-hook mode 'rc/setup-whitespace-handling)))
+
+;; google-translate ;;
+
+(require 'google-translate)
+(require 'google-translate-default-ui)
+
+(setq google-translate-default-source-language "en")
+(setq google-translate-default-target-language "ru")
+
+(global-set-key (kbd "C-c C-t") 'google-translate-at-point)
+(global-set-key (kbd "C-c C-q") 'google-translate-query-translate)
 
 ;; mode line ;;
 
@@ -242,7 +333,27 @@
 ;; magit requires this setting for ivy completion
 (setq magit-completing-read-function 'ivy-completing-read)
 
-;; all-the-icons, neotree
+;; rtags ;;
+
+(require 'rtags)
+
+;; ggtags ;;
+
+(require 'ggtags)
+
+(defun rc/setup-ggtags ()
+  (interactive)
+  (ggtags-mode 1))
+
+(add-hook 'c-mode-common-hook 'rc/setup-ggtags)
+
+;; dired+ ;;
+
+;; instantly teleports to the currently
+;; edited file’s position in a dired buffer
+(global-set-key (kbd "C-x C-j") 'dired-jump)
+
+;; all-the-icons, neotree ;;
 
 (require 'all-the-icons)
 (require 'neotree)
@@ -392,10 +503,10 @@
 ;; (add-to-list 'elixir-mode-hook (alchemist-mode +1))
 (add-hook 'elixir-mode-hook 'alchemist-mode)
 (add-hook 'elixir-mode-hook
-	  (lambda ()
-	    (when (and
-		    (string-equal "exs" (file-name-extension buffer-file-name))
-		    (string-equal "mix" (file-name-base buffer-file-name)))
+          (lambda ()
+            (when (and
+                   (string-equal "exs" (file-name-extension buffer-file-name))
+                   (string-equal "mix" (file-name-base buffer-file-name)))
               (alchemist-hex-mode 1))))
 
 ;; elixir general key bindings
@@ -442,12 +553,12 @@ This may not do the correct thing in presence of links. If it does not find FILE
 of FILE in the current directory, suitable for creation"
   (let ((root (expand-file-name "/"))) ; the win32 builds should translate this correctly
     (expand-file-name file
-		      (loop
-			for d = default-directory then (expand-file-name ".." d)
-			if (file-exists-p (expand-file-name file d))
-			return d
-			if (equal d root)
-			return nil))))
+          (loop
+      for d = default-directory then (expand-file-name ".." d)
+      if (file-exists-p (expand-file-name file d))
+      return d
+      if (equal d root)
+      return nil))))
 
 (require 'compile)
 (add-hook 'c++-mode-hook
@@ -532,6 +643,8 @@ of FILE in the current directory, suitable for creation"
   (setq flycheck-tslint-args . ("--type-check"))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
+  (add-to-list 'compilation-error-regexp-alist
+               '("ERROR in \\(.*\\)\n(\\([0-9]+\\),\\([0-9]+\\)):" 1 2 3))
   (company-mode +1))
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
@@ -539,8 +652,8 @@ of FILE in the current directory, suitable for creation"
 ;; enable tide for .tsx files
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-hook 'web-mode-hook
-	  (lambda ()
-	    (when (string-equal "tsx" (file-name-extension buffer-file-name))
+    (lambda ()
+      (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
 
 ;; company ;;
@@ -616,11 +729,15 @@ of FILE in the current directory, suitable for creation"
 ;; jumping like in vim
 (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
 
+;; multiple-cursors ;;
+
 (require 'multiple-cursors)
 ;; multiple cursors key bindings
 (global-set-key (kbd "C-M-n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-M-p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-M-m") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-M->") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-M-<") 'mc/skip-to-previous-like-this)
 
 ;; set initial window position
 (when (window-system)
@@ -653,7 +770,7 @@ of FILE in the current directory, suitable for creation"
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (quelpa package-build merlin irony-eldoc company-irony-c-headers disaster flycheck-irony company-irony irony flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
+    (toml-mode erlang flycheck-dialyxir flycheck-dialyzer go-mode yaml-mode flycheck-clojure clojure-mode d-mode flycheck-flow flycheck-purescript purescript-mode dockerfile-mode ggtags google-translate haskell-mode rainbow-mode rtags quelpa package-build merlin irony-eldoc company-irony-c-headers disaster flycheck-irony company-irony irony flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -684,6 +801,9 @@ of FILE in the current directory, suitable for creation"
        (not
         (facep
          (aref ansi-term-color-vector 0)))))
+ '(whitespace-style
+   (quote
+    (face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark)))
  '(window-divider-default-right-width 1)
  '(window-divider-mode t))
 
@@ -692,7 +812,6 @@ of FILE in the current directory, suitable for creation"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
-;; Local Variables:
-;; byte-compile-warnings: (not free-vars unresolved)
-;; End:
+ '(whitespace-line ((t (:background "gray6" :foreground "gray13"))))
+ '(whitespace-space ((t (:background "gray6" :foreground "gray13"))))
+ '(whitespace-tab ((t (:background "gray6" :foreground "gray13")))))

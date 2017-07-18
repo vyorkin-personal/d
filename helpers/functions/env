@@ -1,11 +1,3 @@
 # lazily load heavy stuff
 function x() {
-  if [ -f $HOME/.bashhub/bashhub.zsh ]; then
-      source $HOME/.bashhub/bashhub.zsh
-  fi
-
-  source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-
-  eval "$(rbenv init -)"
-  eval "$(jenv init -)"
 }
