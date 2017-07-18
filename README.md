@@ -34,7 +34,8 @@ $ jenv add /Library/Java/JavaVirtualMachines/jdkx.x.x_xx.jdk/Contents/Home
 
 #### Scala
 
-[sbt & ensime installation guide](http://ensime.org/build_tools/sbt/)
+* [sbt & ensime installation guide](http://ensime.org/build_tools/sbt/)
+* [coursier](https://github.com/coursier/coursier#quick-start)
 
 #### Elixir
 

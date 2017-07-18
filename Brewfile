@@ -18,6 +18,7 @@ brew 'flow'
 brew 'go'
 brew 'ponyc'
 brew 'sbt'
+brew 'coursier/formulas/coursier'
 
 brew 'sdl2'
 
