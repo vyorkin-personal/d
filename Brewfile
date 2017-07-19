@@ -170,6 +170,7 @@ cask 'webpquicklook'
 cask 'suspicious-package'
 cask 'quicklookase'
 cask 'qlvideo'
+cask 'unrarx'
 
 # fonts
 
