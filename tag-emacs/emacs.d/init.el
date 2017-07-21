@@ -43,6 +43,7 @@
 (quelpa 'clojure-mode)
 (quelpa 'racer)
 (quelpa 'ivy)
+(quelpa 'flx)
 (quelpa 'counsel)
 (quelpa 'swiper)
 (quelpa 'counsel-projectile)
@@ -261,6 +262,7 @@
 (setq ivy-count-format "(%d/%d) ")
 
 ;; enable fuzzy matching
+;; see: https://oremacs.com/2016/01/06/ivy-flx/
 (setq ivy-re-builders-alist
       '((ivy-switch-buffer . ivy--regex-plus)
         (t . ivy--regex-fuzzy)))
@@ -445,6 +447,8 @@
 ;; useful for very large projects
 (setq projectile-enable-caching t)
 
+(setq projectile-require-project-root nil)
+
 (when (executable-find "rg")
   (progn
     (defconst modi/rg-arguments
@@ -462,6 +466,26 @@
                            "--files")) ; get file names matching the regex '' (all files)
                  " "))
       (advice-add 'projectile-get-ext-command :override #'advice-projectile-use-rg)))
+
+(setq projectile-globally-ignored-directories
+      (append '(
+        ".git"
+        ".svn"
+        "out"
+        "repl"
+        "project"
+        "target"
+        "venv") projectile-globally-ignored-directories))
+(setq projectile-globally-ignored-files
+      (append '(
+        ".DS_Store"
+        "TAGS"
+        "*.gz"
+        "*.pyc"
+        "*.jar"
+        "*.tar.gz"
+        "*.tgz"
+        "*.zip") projectile-globally-ignored-files))
 
 ;; use projectile everywhere
 (projectile-mode)
@@ -798,7 +822,7 @@ of FILE in the current directory, suitable for creation"
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (toml-mode erlang flycheck-dialyxir flycheck-dialyzer go-mode yaml-mode flycheck-clojure clojure-mode d-mode flycheck-flow flycheck-purescript purescript-mode dockerfile-mode ggtags google-translate haskell-mode rainbow-mode rtags quelpa package-build merlin irony-eldoc company-irony-c-headers disaster flycheck-irony company-irony irony flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
+    (flx toml-mode erlang flycheck-dialyxir flycheck-dialyzer go-mode yaml-mode flycheck-clojure clojure-mode d-mode flycheck-flow flycheck-purescript purescript-mode dockerfile-mode ggtags google-translate haskell-mode rainbow-mode rtags quelpa package-build merlin irony-eldoc company-irony-c-headers disaster flycheck-irony company-irony irony flycheck-rust racer rust-mode company-web company-tern all-the-icons neotree solidity-mode json-mode js2-refactor js2-mode exec-path-from-shell heroku-theme gruber-darker-theme gotham-theme farmhouse-theme phoenix-dark-pink-theme cyberpunk-theme calmer-forest-theme sublime-themes base16-theme kooten-theme afternoon-theme abyss-theme arjen-grey-theme danneskjold-theme paganini-theme hamburg-theme default-text-scale flycheck-elixir idle-highlight-mode rainbow-delimiters highlight-indentation dired+ smart-mode-line darkroom writeroom-mode evil-anzu ace-window yoshi-theme monochrome-theme quasi-monochrome-theme ivy-hydra counsel-projectile counsel ivy idris-mode projectile-ripgrep ripgrep multiple-cursors emmet-mode evil-org alchemist evil-magit magit web-mode tide projectile evil eldoc-overlay-mode company color-theme)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -840,6 +864,6 @@ of FILE in the current directory, suitable for creation"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(whitespace-line ((t (:background "gray6" :foreground "gray13"))))
- '(whitespace-space ((t (:background "gray6" :foreground "gray13"))))
- '(whitespace-tab ((t (:background "gray6" :foreground "gray13")))))
+ '(whitespace-line ((t (:background "gray6" :foreground "gray15"))))
+ '(whitespace-space ((t (:background "gray6" :foreground "gray15"))))
+ '(whitespace-tab ((t (:background "gray6" :foreground "gray15")))))
