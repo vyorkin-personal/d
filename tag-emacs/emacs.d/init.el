@@ -95,7 +95,10 @@
 (quelpa '(reason-mode :repo "arichiardi/reason-mode" :fetcher github :stable t))
 
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 12"))
+;; (add-to-list 'default-frame-alist '(font . "VT220-mod 28"))
+
 (set-frame-font "Source Code Pro 12" nil t)
+;;(set-frame-font "VT220-mod 28" nil t)
 
 ;; disable *GNU Emacs* buffer on startup
 (setq inhibit-startup-screen t)
