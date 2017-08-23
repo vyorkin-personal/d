@@ -1,14 +1,8 @@
 ;; less GC during startup
 ;; see: https://github.com/nilcons/emacs-use-package-fast#a-trick-less-gc-during-startup
 (setq gc-cons-threshold 64000000)
-(add-hook 'after-init-hook
-          (lambda ()
-            ;; restore after startup
-            (setq gc-cons-threshold 800000)))
-
-;; highlight parens
-(setq show-paren-style 'parenthesis)
-(show-paren-mode 1)
+;; restore after startup
+(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
 
 ;; don't create lock files, fuck collisions
 (setq create-lockfiles nil)
@@ -32,11 +26,11 @@
 ;; y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(add-to-list 'default-frame-alist '(font . "Source Code Pro 14"))
-;; (add-to-list 'default-frame-alist '(font . "VT220-mod 28"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 16"))
+(set-frame-font "Source Code Pro 16" nil t)
 
-(set-frame-font "Source Code Pro 14" nil t)
-;;(set-frame-font "VT220-mod 28" nil t)
+;; (add-to-list 'default-frame-alist '(font . "VT220-mod 28"))
+;; (set-frame-font "VT220-mod 28" nil t)
 
 ;; disable *GNU Emacs* buffer on startup
 (setq inhibit-startup-screen t)
@@ -44,6 +38,10 @@
 ;; disable native fullscreen support
 ;; I don't like sliding animation on Mac OS X
 (setq ns-use-native-fullscreen nil)
+
+;; highlight parens
+(setq show-paren-style 'parenthesis)
+(show-paren-mode 1)
 
 ;; hide the fringe
 (set-fringe-style 0)
@@ -59,9 +57,8 @@
 (setq-default truncate-lines t)
 
 ;; set left and right margins for every window
-(setq-default
- left-margin-width 2
- right-margin-width 2)
+(setq-default left-margin-width 2)
+(setq-default right-margin-width 2)
 
 (set-window-buffer nil (current-buffer))
 
@@ -77,6 +74,9 @@
 
 ;; automatically save place in each file
 (save-place-mode t)
+
+;; highlight the current line in the buffer
+(global-hl-line-mode 1)
 
 ;; allow minibuffer commands while in the minibuffer
 (setq enable-recursive-minibuffers t)
@@ -113,119 +113,40 @@
 ;; but only autoload functions selected by the package author
 (package-initialize)
 
+(setq exec-path-from-shell-check-startup-files nil)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(require 'use-package)
+(eval-when-compile (require 'use-package))
 ;; install missing packages by default
 (setq use-package-always-ensure t)
 
-(use-package base16-theme
-  :config
-  ;; (load-theme 'base16-grayscale-dark t)
-  ;; (set-face-attribute 'vertical-border nil :foreground "#000000")
-  ;; (custom-set-faces
-  ;;  '(whitespace-line ((t (:background "gray6" :foreground "gray15"))))
-  ;;  '(whitespace-space ((t (:background "gray6" :foreground "gray15"))))
-  ;;  '(whitespace-tab ((t (:background "gray6" :foreground "gray15")))))
-  )
-
-(use-package dracula-theme)
-(use-package gotham-theme)
-(use-package sublime-themes)
-(use-package doom-themes
-  :config (load-theme 'doom-vibrant t))
-
 ;; packages ;;
 
-(use-package exec-path-from-shell
+;; modernizing Emacs' Package Menu
+;; with package ratings, usage statistics, customizability, and more
+(use-package paradox
+  :demand t
   :init
-  (setq exec-path-from-shell-check-startup-files nil)
-  :config
   (setq
-    sublimity-scroll-weight 12
-    sublimity-scroll-drift-length 0.5
-    sublimity-map-size 20
-    sublimity-map-fraction 0.3
-    sublimity-map-text-scale -10)
+   paradox-execute-asynchronously t
+   paradox-automatically-star t)
   :config
-  (require 'sublimity-scroll)
-  (require 'sublimity-map) ;; experimental
-  (require 'sublimity-attractive)
-  (sublimity-map-set-delay 1))
-
-(use-package evil
-  :preface
-  (defun rc/minibuffer-keyboard-quit ()
-    "Abort recursive edit.
-    In Delete Selection mode, if the mark is active, just deactivate it;
-    then it takes a second \\[keyboard-quit] to abort the minibuffer."
-    (interactive)
-    (if (and delete-selection-mode transient-mark-mode mark-active)
-        (setq deactivate-mark  t)
-        (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-        (abort-recursive-edit)))
-  (defun rc/setup-esc-quits ()
-    "Esc should always quit"
-    (define-key evil-normal-state-map [escape] 'keyboard-quit)
-    (define-key evil-visual-state-map [escape] 'keyboard-quit)
-    (define-key minibuffer-local-map [escape] 'rc/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-ns-map [escape] 'rc/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-completion-map [escape] 'rc/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-must-match-map [escape] 'rc/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-isearch-map [escape] 'rc/minibuffer-keyboard-quit))
-  :init
-  ;; to restore missing C-u in evil
-  (setq evil-want-C-u-scroll t)
-  (use-package evil-magit :demand t)
-  (use-package evil-leader
-    :init (global-evil-leader-mode)
-    :config
-    ;; enable leader key
-    ;; use your thumbs!
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key
-      "v" 'split-window-horizontally
-      "s" 'split-window-vertically
-      "U" 'winner-undo
-      "R" 'winner-redo
-      "d" 'delete-window
-      "o" 'other-window
-      "w" 'ace-window
-      "q" 'treemacs-toggle
-      "SPC" 'compile
-      "RET" 'sublimity-mode
-      "a" 'counsel-projectile-switch-project
-      "c" 'projectile-invalidate-cache
-      "g" 'magit-status))
-  (use-package evil-org :demand t)
-  (use-package evil-numbers :demand t)
-  :config
-  ;; enable evil-mode globally,
-  ;; good for ex-vimmers like me
-  (evil-mode 1)
-  (rc/setup-esc-quits)
-  ;; comment region / uncomment region
-  (define-key evil-motion-state-map (kbd "C-c C-r") 'comment-region)
-  (define-key evil-motion-state-map (kbd "C-c C-u") 'uncomment-region)
-  ;; jumping like in vim
-  (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
-  (global-set-key [escape] 'evil-exit-emacs-state)
-  ;; swap : and ; to make colon commands easier to type in Emacs
-  (define-key evil-motion-state-map ";" 'evil-ex)
-  (define-key evil-motion-state-map ":" 'evil-repeat-find-char))
+  ;; replace the default interface with paradox
+  (paradox-enable))
 
 (use-package whitespace
   :init
+  (setq whitespace-style '(face spaces tabs newline space-mark tab-mark))
   (setq whitespace-display-mappings
         '((space-mark 32 [183] [46])
           (newline-mark 10 [182 10])
           (tab-mark 9 [9655 9] [92 9])))
   :preface
-  (defun rc/setup-whitespace-handling ()
-    (whitespace-mode 1)
-    (add-to-list 'write-file-functions 'delete-trailing-whitespace))
-  (defvar rc/whitespace-enabled-modes
+  (defvar rc/whitespace/modes
     '(tuareg-mode-hook
       c++-mode-hook
       emacs-lisp-mode-hook
@@ -241,67 +162,288 @@
       elixir-mode-hook
       idris-mode-hook
       haskell-mode-hook))
-  (defvar rc/prev-whitespace-mode nil)
-  (make-variable-buffer-local 'rc/prev-whitespace-mode)
-  (defun rc/pre-popup-draw ()
+  (defvar rc/whitespace/prev-mode nil)
+  (defun rc/whitespace/setup ()
+    ;; comment out if you don't want
+    ;; hidden chars to be visible by default
+    (whitespace-mode 1)
+    (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+  (make-variable-buffer-local 'rc/whitespace/prev-mode)
+  (defun rc/whitespace/pre-popup-draw ()
     "Turn off whitespace mode before showing company complete tooltip"
     (if whitespace-mode
         (progn
-          (setq rc/prev-whitespace-mode t)
+          (setq rc/whitespace/prev-mode t)
           (whitespace-mode -1)
-          (setq rc/prev-whitespace-mode t))))
-  (defun rc/post-popup-draw ()
+          (setq rc/whitespace/prev-mode t))))
+  (defun rc/whitespace/post-popup-draw ()
     "Restore previous whitespace mode after showing company tooltip"
-    (if rc/prev-whitespace-mode
+    (if rc/whitespace/prev-mode
         (progn
           (whitespace-mode 1)
-          (setq rc/prev-whitespace-mode nil))))
+          (setq rc/whitespace/prev-mode nil))))
+  :commands whitespace-mode
   :config
-  (dolist (mode rc/whitespace-enabled-modes)
-    (add-hook mode 'rc/setup-whitespace-handling))
+  (dolist (mode rc/whitespace/modes)
+    (add-hook mode 'rc/whitespace/setup))
   ;; disable whitespace while popup is displayed
   ;; see: https://github.com/company-mode/company-mode/pull/245#issuecomment-232943098
-  (advice-add 'company-pseudo-tooltip-unhide :before 'rc/pre-popup-draw)
-  (advice-add 'company-pseudo-tooltip-hide :after 'rc/post-popup-draw)
+  (advice-add 'company-pseudo-tooltip-unhide :before 'rc/whitespace/pre-popup-draw)
+  (advice-add 'company-pseudo-tooltip-hide :after 'rc/whitespace/post-popup-draw)
   :diminish whitespace-mode)
 
+;; see http://company-mode.github.io/
+(use-package company
+  :preface
+  ;; company interferes with yasnippet's native behaviour
+  (defun rc/company/check-expansion ()
+    (save-excursion
+      (if (looking-at "\\_>") t
+        (backward-char 1)
+        (if (looking-at "\\.") t
+          (backward-char 1)
+          (if (looking-at "->") t nil)))))
+  (defun rc/company/do-yas-expand ()
+    (let ((yas/fallback-behavior 'return-nil))
+      (yas/expand)))
+  (defun rc/company/tab-indent-or-complete ()
+    (if (minibufferp)
+        (minibuffer-complete)
+      (if (or (not yas/minor-mode)
+              (null (rc/company/do-yas-expand)))
+          (if (rc/company/check-expansion)
+              (company-complete-common)
+            (indent-for-tab-command)))))
+  (defun rc/company/setup-ui ()
+    (custom-set-variables
+     '(company-preview-common
+       ((t (:inherit company-preview))))
+     '(company-tooltip-common
+       ((((type x)) (:inherit company-tooltip :weight normal))
+        (t (:inherit company-tooltip))))
+     '(company-tooltip-common-selection
+       ((((type x)) (:inherit company-tooltip-selection :weight normal))
+        (t (:inherit company-tooltip-selection))))))
+  :init
+  ;; adjust this setting according to your typing speed
+  (setq company-idle-delay 0.4)
+  (setq company-minimum-prefix-length 1)
+  ;; (setq company-show-numbers t)
+  ;; aligns annotation to the right hand side
+  (setq company-tooltip-align-annotations t)
+  ;; (setq company-tern-meta-as-single-line t)
+  ;; (setq company-tooltip-align-annotations t)
+  :config
+  (use-package company-quickhelp :demand t)
+  (use-package company-web :demand t)
+  (use-package company-tern :demand t)
+  (use-package company-irony :demand t)
+  (use-package company-irony-c-headers :demand t)
+  (rc/company/setup-ui)
+  ;; use company-mode in all buffers
+  (add-hook 'after-init-hook 'global-company-mode)
+  (with-eval-after-load 'company
+    '(add-to-list 'company-backends
+                  '(company-tern
+                    company-irony-c-headers
+                    company-irony
+                    merlin-company-backend))
+    '(define-key company-active-map (kbd "C-c h")
+       'company-quickhelp-manual-begin))
+  :bind
+  (:map global-map
+        ([tab] . rc/company/tab-indent-or-complete))
+  :diminish company-mode)
+
+(use-package highlight-indentation
+  :preface
+  (defvar rc/highlight-indentation/modes
+    '(reason-mode-hook
+      idris-mode-hook
+      haskell-mode-hook))
+  :commands highlight-indentation-mode
+  :config
+  (dolist (mode rc/highlight-indentation/modes)
+    (add-hook mode 'highlight-indentation-mode))
+  :diminish highlight-indentation-mode)
+
+(use-package base16-theme
+  :disabled
+  :preface
+  (defun rc/theme/grayscale-light ()
+    (load-theme 'base16-grayscale-light t)
+    (set-face-attribute 'vertical-border nil :foreground "#dddddd"))
+  (defun rc/theme/grayscale-dark ()
+    (load-theme 'base16-grayscale-dark t)
+    (set-face-attribute 'vertical-border nil :foreground "#000000"))
+  :config
+  (rc/theme/grayscale-light))
+
+(use-package dracula-theme :disabled)
+(use-package gotham-theme :disabled)
+(use-package sublime-themes :disabled)
+
+(use-package doom-themes
+  :config
+  ;; enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; corrects (and improves) org-mode's native fontification
+  (doom-themes-org-config)
+  (load-theme 'doom-one t))
+
+(use-package diminish)
+(use-package delight
+  :config
+  (delight '((auto-revert-mode " ar" autorevert)
+             (emacs-lisp-mode " elisp" :major)
+             (elixir-mode " ex" elixir)
+             (alchemist-mode " alch" alchemist)
+             (rust-mode " rs" rust)
+             (eldoc-mode " eldoc" eldoc)
+             (hi-lock-mode " hi" hi-lock))))
+
+(use-package try
+  :defer t)
+(use-package which-key
+  :defer t
+  :init
+  (setq which-key-idle-delay 1)
+  :config
+  (which-key-mode)
+  :diminish which-key-mode)
+
+(use-package evil
+  :preface
+  (defun rc/evil/minibuffer-keyboard-quit ()
+    "Abort recursive edit. In Delete Selection mode, if the mark is active, just deactivate it;
+    then it takes a second \\[keyboard-quit] to abort the minibuffer."
+    (if (and delete-selection-mode transient-mark-mode mark-active)
+        (setq deactivate-mark  t)
+        (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+        (abort-recursive-edit)))
+  (defun rc/setup-esc-quits ()
+    "Esc should always quit"
+    (define-key evil-normal-state-map [escape] 'keyboard-quit)
+    (define-key evil-visual-state-map [escape] 'keyboard-quit)
+    (define-key minibuffer-local-map [escape] 'rc/evil/minibuffer-keyboard-quit)
+    (define-key minibuffer-local-ns-map [escape] 'rc/evil/minibuffer-keyboard-quit)
+    (define-key minibuffer-local-completion-map [escape] 'rc/evil/minibuffer-keyboard-quit)
+    (define-key minibuffer-local-must-match-map [escape] 'rc/evil/minibuffer-keyboard-quit)
+    (define-key minibuffer-local-isearch-map [escape] 'rc/evil/minibuffer-keyboard-quit))
+  :init
+  ;; to restore missing C-u in evil
+  (setq evil-want-C-u-scroll t)
+  (use-package evil-magit)
+  (use-package evil-surround)
+  (use-package evil-leader
+    :demand t
+    :config
+    (global-evil-leader-mode)
+    ;; enable leader key, use your thumbs!
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key
+      "v" 'split-window-horizontally
+      "s" 'split-window-vertically
+      "U" 'winner-undo
+      "R" 'winner-redo
+      "d" 'delete-window
+      "o" 'other-window
+      "w" 'ace-window
+      "W" 'whitespace-mode
+      "q" 'treemacs-toggle
+      "SPC" 'compile
+      "RET" 'sublimity-mode
+      "a" 'counsel-projectile-switch-project
+      "c" 'projectile-invalidate-cache
+      "g" 'magit-status))
+  (use-package evil-org :demand t)
+  (use-package evil-numbers :demand t)
+  :config
+  ;; enable evil-mode globally,
+  ;; good for ex-vimmers like me
+  (evil-mode 1)
+  (rc/setup-esc-quits)
+  ;; comment region / uncomment region
+  (define-key evil-motion-state-map (kbd "C-c C-c") 'comment-region)
+  (define-key evil-motion-state-map (kbd "C-c C-u") 'uncomment-region)
+  ;; jumping like in vim
+  (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
+  (global-set-key [escape] 'evil-exit-emacs-state)
+  ;; swap : and ; to make colon commands easier to type in Emacs
+  (define-key evil-motion-state-map ";" 'evil-ex)
+  (define-key evil-motion-state-map ":" 'evil-repeat-find-char))
+
+(use-package powerline
+  :init
+  (setq
+   powerline-height (truncate (* 1.0 (frame-char-height)))
+   powerline-default-separator 'utf-8)
+  :config
+  ;; see: https://www.emacswiki.org/emacs/DelightedPowerLine
+  (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
+    "Ensure that powerline's major mode names are delighted. See `delight-major-mode'."
+    (let ((inhibit-mode-name-delight nil)) ad-do-it))
+  (powerline-default-theme))
+
 (use-package undo-tree
+  :defer t
   :init
   (setq undo-tree-visualizer-diff t)
   (setq undo-tree-visualizer-timestamps t)
-  (setq undo-tree-auto-save-history t))
+  (setq undo-tree-auto-save-history t)
+  :config
+  (undo-tree-mode)
+  :diminish undo-tree-mode)
 
 (use-package google-translate
   :init
   (setq google-translate-default-source-language "en")
   (setq google-translate-default-target-language "ru")
   :config
-  (require 'google-translate-default-ui)
+  (paradox-require 'google-translate-default-ui)
   :bind
   (:map global-map
         ("C-c C-t" . google-translate-at-point)
         ("C-c C-q" . google-translate-query-translate)))
 
-(use-package rtags)
+(use-package sublimity
+  :defer t
+  :init
+  (setq
+    sublimity-scroll-weight 12
+    sublimity-scroll-drift-length 0.5
+    sublimity-map-size 20
+    sublimity-map-fraction 0.3
+    sublimity-map-text-scale -10)
+  :config
+  (paradox-require 'sublimity-scroll)
+  (paradox-require 'sublimity-map) ;; experimental
+  (paradox-require 'sublimity-attractive)
+  (sublimity-map-set-delay 1))
+
+(use-package rtags
+  :defer t)
 (use-package ggtags
+  :defer t
   :commands ggtags-mode
   :config (add-hook 'c-mode-common-hook 'ggtags-mode)
   :diminish ggtags-mode)
 
 (use-package treemacs
-  :defer t
+  :init
+  (setq
+   treemacs-follow-after-init t
+   treemacs-width 25
+   treemacs-indentation 2
+   treemacs-git-integration t
+   treemacs-change-root-without-asking nil
+   treemacs-sorting 'alphabetic-desc
+   treemacs-show-hidden-files t
+   treemacs-never-persist nil
+   treemacs-goto-tag-strategy 'refetch-index)
   :config
   (use-package treemacs-evil :demand t)
-  (setq treemacs-header-function #'treemacs--create-header-projectile
-        treemacs-follow-after-init t
-        treemacs-width 25
-        treemacs-indentation 2
-        treemacs-git-integration t
-        treemacs-change-root-without-asking nil
-        treemacs-sorting 'alphabetic-desc
-        treemacs-show-hidden-files t
-        treemacs-never-persist nil
-        treemacs-goto-tag-strategy 'refetch-index)
+  (setq treemacs-header-function #'treemacs--create-header-projectile)
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   :bind
@@ -319,6 +461,11 @@
         ("x" . treemacs-change-root)))
 
 (use-package projectile
+  :preface
+  (defvar rc/projectile/ignored-dirs
+    '(".git" ".svn" "out" "repl" "project" "target" "venv"))
+  (defvar rc/projectile/ignored-files
+    '(".DS_Store" "TAGS" "*.gz" "*.pyc" "*.jar" "*.tar.gz" "*.tgz" "*.zip"))
   :init
   ;; projectile requires this setting for ivy completion
   (setq projectile-completion-system 'ivy)
@@ -327,96 +474,62 @@
   (setq projectile-require-project-root nil)
   :config
   (setq projectile-globally-ignored-directories
-        (append '(".git" ".svn" "out" "repl" "project" "target" "venv")
+        (append rc/projectile/ignored-dirs
                 projectile-globally-ignored-directories))
   (setq projectile-globally-ignored-files
-        (append '(".DS_Store" "TAGS" "*.gz" "*.pyc" "*.jar" "*.tar.gz" "*.tgz" "*.zip")
+        (append rc/projectile/ignored-files
                 projectile-globally-ignored-files))
   ;; use projectile everywhere
   (projectile-mode)
   ;; remove the mode name for projectile-mode, but show the project name
-  ;; :delight '(:eval (concat " " (projectile-project-name)))
+  :delight '(:eval (concat " " (projectile-project-name)))
   :bind
   (:map global-map
         ("C-x C-q" . projectile-find-file-in-known-projects)
         ("C-x C-g" . projectile-ripgrep)))
 
 (use-package yasnippet
+  :defer t
   :init
   (setq yas-snippet-dirs
         '("~/.emacs.d/snippets"
           "~/.emacs.d/yasnippet-snippets"))
   :config
-  (yas-global-mode 1))
-
-;; see http://company-mode.github.io/
-(use-package company
-  :defer 5
-  :preface
-  ;; company interferes with Yasnippet’s native behaviour.
-  (defun check-expansion ()
-    (save-excursion
-            (if (looking-at "\\_>") t
-            (backward-char 1)
-            (if (looking-at "\\.") t
-                (backward-char 1)
-                (if (looking-at "->") t nil)))))
-  (defun rc/do-yas-expand ()
-    (let ((yas/fallback-behavior 'return-nil))
-      (yas/expand)))
-  (defun rc/tab-indent-or-complete ()
-    (interactive)
-    (if (minibufferp)
-        (minibuffer-complete)
-      (if (or (not yas/minor-mode)
-              (null (rc/do-yas-expand)))
-          (if (check-expansion)
-              (company-complete-common)
-            (indent-for-tab-command)))))
-  :init
-  ;; adjust this setting according to your typing speed
-  (setq company-idle-delay 0.4)
-  (setq company-minimum-prefix-length 1)
-  ;; (setq company-show-numbers t)
-  ;; aligns annotation to the right hand side
-  (setq company-tooltip-align-annotations t)
-  ;; (setq company-tern-meta-as-single-line t)
-  ;; (setq company-tooltip-align-annotations t)
-  :config
-  (global-company-mode 1)
-  (add-to-list 'company-backends 'company-tern)
-  (use-package company-web :demand t)
-  (use-package company-tern :demand t)
-  (use-package company-irony :demand t)
-  (use-package company-irony-c-headers :demand t)
-  (with-eval-after-load 'company
-    '(add-to-list 'company-backends
-                  '(company-irony-c-headers
-                    company-irony
-                    merlin-company-backend)))
-  :bind
-  (:map global-map
-   ([tab] . rc/tab-indent-or-complete)))
+  (yas-global-mode 1)
+  :diminish yas-minor-mode)
 
 (use-package irony
   :defer t
+  :preface
+  (defvar rc/irony/modes
+    '(c++-mode-hook
+      c-mode-hook
+      objc-mode-hook))
   :commands irony-mode
   :config
-  (use-package irony-eldoc :demand t)
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (add-hook 'irony-mode-hook 'irony-eldoc))
+  (use-package irony-eldoc
+    :config
+    (add-hook 'irony-mode-hook 'irony-eldoc))
+  (dolist (mode rc/irony/modes)
+    (add-hook mode 'irony-mode))
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
-(use-package disaster)
+;; disassemble C/C++ code under cursor
+(use-package disaster
+  ;; here is why: https://github.com/jart/disaster/issues/13
+  :disabled
+  :config
+  :bind
+  (:map c-mode-base-map
+        ("C-c d") 'disaster))
 
 (use-package flycheck
-  :defer 7
+  :defer t
   :init
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   :config
-  (global-flycheck-mode 1))
+  (global-flycheck-mode 1)
+  :diminish flycheck-mode)
 
 (use-package flycheck-rust)
 (use-package flycheck-clojure)
@@ -428,9 +541,16 @@
 
 (use-package rust-mode
   :config
-  (add-hook 'rust-mode-hook 'racer-mode)
-  (add-hook 'racer-mode-hook 'eldoc-mode)
-  (add-hook 'racer-mode-hook 'company-mode)
+  (use-package racer
+    :demand t
+    :commands racer-mode
+    :config
+    (add-hook 'racer-mode-hook 'eldoc-mode)
+    (add-hook 'racer-mode-hook 'company-mode)
+    (add-hook 'rust-mode-hook 'racer-mode))
+  :commands rust-mode
+  :config
+  ;; enable rust-mode for .lalrpop files
   (add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
   :bind
   (:map rust-mode-map
@@ -438,7 +558,6 @@
         ("C-c <tab>" . rust-format-buffer)))
 
 (use-package clojure-mode)
-(use-package racer)
 
 (use-package ivy
   :init
@@ -454,8 +573,9 @@
   ;; enable fuzzy matching
   ;; see: https://oremacs.com/2016/01/06/ivy-flx/
   (setq ivy-re-builders-alist
-      '((ivy-switch-buffer . ivy--regex-plus)
-          (t . ivy--regex-fuzzy))))
+        '((ivy-switch-buffer . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
+  :diminish ivy-mode)
 
 (use-package flx)
 
@@ -491,21 +611,8 @@
   :bind
   (:map global-map
         ;; instantly teleports to the currently
-        ;; edited file’s position in a dired buffer
+        ;; edited file's position in a dired buffer
         ("C-x C-j" . dired-jump)))
-
-(use-package writeroom-mode)
-
-;; (use-package smart-mode-line
-;;   :init
-;;   (setq sml/no-confirm-load-theme t)
-;;   (setq sml/name-width 20)
-;;   (setq sml/mode-width 'full)
-;;   (setq sml/shorten-directory t)
-;;   (setq sml/shorten-modes t)
-;;   (setq sml/theme 'dark)
-;;   :config
-;;   (sml/setup))
 
 (use-package ace-window)
 (use-package ripgrep)
@@ -520,28 +627,33 @@
         ("C-M->" . mc/skip-to-next-like-this)
         ("C-M-<" . mc/skip-to-previous-like-this)))
 
-(use-package highlight-indentation)
-(use-package rainbow-delimiters)
-(use-package idle-highlight-mode)
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+(use-package idle-highlight-mode
+  :config
+  (add-hook 'prog-mode-hook 'idle-highlight-mode))
+
 (use-package solidity-mode)
 
-(use-package web-mode)
-
 (use-package rainbow-mode
+  :preface
+  (defvar rc/rainbow/modes
+    '(html-mode-hook
+      web-mode-hook
+      js2-mode-hook
+      typescript-mode-hook
+      css-mode-hook))
+  :commands rainbow-mode
   :config
-  (let ((rainbow-enabled-modes
-       '(
-         html-mode-hook
-         web-mode-hook
-         js2-mode-hook
-         typescript-mode-hook
-         css-mode-hook)))
-  (dolist (mode rainbow-enabled-modes)
-    (add-hook mode 'rainbow-mode))))
+  (dolist (mode rc/rainbow/modes)
+    (add-hook mode 'rainbow-mode)))
 
 (use-package emmet-mode)
 
 (use-package magit
+  :after ivy
   :init
   ;; magit requires this setting for ivy completion
   (setq magit-completing-read-function 'ivy-completing-read))
@@ -552,36 +664,32 @@
 (use-package d-mode)
 
 (use-package nginx-mode)
-(use-package yaml-mode)
+(use-package yaml-mode
+  :delight " yaml")
 (use-package toml-mode)
 (use-package kotlin-mode)
 (use-package glsl-mode)
 (use-package jade-mode)
 (use-package lua-mode)
 (use-package go-mode)
+
 (use-package typescript-mode)
 (use-package tide)
-(use-package js2-mode)
-(use-package js2-refactor)
+
 (use-package json-mode)
 (use-package erlang)
 
 (use-package elixir-mode
+  :after evil-leader
   :init
   (use-package alchemist
-    :preface
-    ;; (defun alchemist-hex-local-keys (&rest args)
-    ;;  (evil-leader/set-local-key
-    ;;    "i" 'alchemist-hex-info-at-point))
+    :demand t
     :init
     (setq
      alchemist-goto-elixir-source-dir "~/projects/github/elixir"
      alchemist-goto-erlang-source-dir "/usr/local/Cellar/erlang/19.2.3")
     :config
-    ;; CAREFUL: this is for evil-leader/set-local-mode, which isn't merged yet,
-    ;; see: https://github.com/cofi/evil-leader/pull/35
-    ;; (advice-add 'alchemist-hex-mode :after #'alchemist-hex-local-keys)
-
+    ;; evil-leader/set-key-for-mode doesn't work here for some reason
     ;; elixir general key bindings
     (evil-define-minor-mode-key 'normal 'alchemist-mode " t" 'alchemist-mix-test)
     (evil-define-minor-mode-key 'normal 'alchemist-mode " T" 'alchemist-project-run-tests-for-current-file)
@@ -591,7 +699,6 @@
     (evil-define-minor-mode-key 'normal 'alchemist-mode " a" 'alchemist-project-toggle-file-and-tests)
     (evil-define-minor-mode-key 'normal 'alchemist-mode " A" 'alchemist-project-toggle-file-and-tests-other-window)
     (evil-define-minor-mode-key 'normal 'alchemist-mode " m" 'alchemist-mix)
-
     ;; elixir IEx-specific key bindings
     (evil-define-minor-mode-key 'normal 'alchemist-mode " e" 'alchemist-iex-project-run)
     (evil-define-minor-mode-key 'normal 'alchemist-mode " r" 'alchemist-iex-reload-module)
@@ -599,7 +706,6 @@
     (evil-define-minor-mode-key 'visual 'alchemist-mode " E" 'alchemist-iex-send-current-line-and-go)
     (evil-define-minor-mode-key 'visual 'alchemist-mode " r" 'alchemist-iex-send-region)
     (evil-define-minor-mode-key 'visual 'alchemist-mode " R" 'alchemist-iex-send-region-and-go)
-
     ;; elixir HEX-specific key bindings
     (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " i" 'alchemist-hex-info-at-point)
     (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " I" 'alchemist-hex-info)
@@ -607,7 +713,6 @@
     (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " R" 'alchemist-hex-releases)
     (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " f" 'alchemist-hex-search))
   :config
-  ;; (add-to-list 'elixir-mode-hook (alchemist-mode +1))
   (add-hook 'elixir-mode-hook 'alchemist-mode)
   (add-hook 'elixir-mode-hook
             (lambda ()
@@ -620,38 +725,34 @@
 (use-package scala-mode)
 
 (use-package haskell-mode
+  :commands (haskell-indent-mode
+             interactive-haskell-mode
+             haskell-doc-mode)
   :config
   (add-hook 'haskell-mode-hook 'haskell-indent-mode)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'haskell-doc-mode))
 
 (use-package idris-mode)
-;; (require 'bookmark)
-;; (bookmark-bmenu-list)
 
-;; instead of a splash screen, let's start with the Bookmark List
-;; (switch-to-buffer "*Bookmark List*")
+(use-package bookmark
+  :config
+  (bookmark-bmenu-list)
+  ;; instead of a splash screen, let's start with the Bookmark List
+  (switch-to-buffer "*Bookmark List*"))
 
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
 
-;; highlight the current line in the buffer
-(global-hl-line-mode 1)
-
-
 ;; what the fuck is this shit ?
 ;; (rich-minority-mode 1)
 ;; (setq rm-blacklist '(" GitGutter" " MRev" " company" " mate" " Projectile"))
 
-;; (add-hook 'prog-mode-hook #'highlight-indentation-mode)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'prog-mode-hook 'idle-highlight-mode)
-
-;; winner-mode ;;
-
-;; restore split pane config, winner-undo, winner-redo
-(winner-mode 1)
+(use-package winner
+  :config
+  ;; restore split pane config, winner-undo, winner-redo
+  (winner-mode 1))
 
 (when (executable-find "rg")
   (progn
@@ -669,20 +770,20 @@
                          '("--null" ; output null separated results,
                            "--files")) ; get file names matching the regex '' (all files)
                  " "))
-      (advice-add 'projectile-get-ext-command :override #'advice-projectile-use-rg)))
+      (advice-add 'projectile-get-ext-command :override 'advice-projectile-use-rg)))
 
 ;; ocaml, reason, merlin ;;
 
 ;; setup / init merlin
 (let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
  (when (and opam-share (file-directory-p opam-share))
-  ;; Register Merlin
+  ;; register Merlin
   (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
   (autoload 'merlin-mode "merlin" nil t nil)
-  ;; Automatically start it in OCaml buffers
+  ;; automatically start it in OCaml buffers
   (add-hook 'tuareg-mode-hook 'merlin-mode)
   (add-hook 'caml-mode-hook 'merlin-mode)
-  ;; Use opam switch to lookup ocamlmerlin binary
+  ;; use opam switch to lookup ocamlmerlin binary
   (setq merlin-command 'opam)))
 
 ;; setup / init tuareg
@@ -690,68 +791,55 @@
 
 ;; c, c++ ;;
 
-(require 'cl)
-
-;; running Make with the closest Makefile
-(defun* get-closest-pathname (&optional (file "Makefile"))
-  "Determine the pathname of the first instance of FILE starting from the current directory towards root.
-This may not do the correct thing in presence of links. If it does not find FILE, then it shall return the name
-of FILE in the current directory, suitable for creation"
-  (let ((root (expand-file-name "/"))) ; the win32 builds should translate this correctly
-    (expand-file-name file
-          (loop
-      for d = default-directory then (expand-file-name ".." d)
-      if (file-exists-p (expand-file-name file d))
-      return d
-      if (equal d root)
-      return nil))))
-
-(require 'compile)
-(add-hook 'c++-mode-hook
-          (lambda () (set
-                      (make-local-variable 'compile-command)
-                      (format "make -f %s" (get-closest-pathname)))))
+(use-package compile
+  :preface
+  (paradox-require 'cl)
+  (defun rc/compile/closest-pathname (&optional (file "Makefile"))
+    "Determine the pathname of the first instance of FILE starting from the current directory towards root.
+    This may not do the correct thing in presence of links. If it does not find FILE, then it shall return the name
+    of FILE in the current directory, suitable for creation"
+    (let ((root (expand-file-name "/"))) ;; the win32 builds should translate this correctly
+      (expand-file-name
+       file
+       (loop
+        for d = default-directory then (expand-file-name ".." d)
+        if (file-exists-p (expand-file-name file d))
+        return d
+        if (equal d root)
+        return nil))))
+  ;; need for running Make with the closest Makefile
+  (defun rc/compile/setup-make ()
+    (set
+     (make-local-variable 'compile-command)
+     (format "make -f %s" (rc/compile/closest-pathname))))
+  :config
+  (add-hook 'c++-mode-hook 'rc/compile/setup-make))
 
 ;; always use the latest & greatest
 (add-hook 'c++-mode-hook
           (lambda () (setq
-                       flycheck-gcc-language-standard "c++17"
-                       flycheck-clang-language-standard "c++17")))
+                      flycheck-gcc-language-standard "c++17"
+                      flycheck-clang-language-standard "c++17")))
 
 (with-eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
 
-;; disassemble C/C++ code under cursor
-;; TODO: https://github.com/jart/disaster/issues/13
-;; (require 'disaster)
-;; (define-key c-mode-base-map (kbd "C-c d") 'disaster)
-
-;; javascript, json ;;
-
-;; indent step is 2 spaces
-(setq-default js2-basic-offset 2)
-
-(add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-
-(setq-default flycheck-disabled-checkers
-  (append flycheck-disabled-checkers
-    '(javascript-jshint)))
-
-;; enable minor mode for js refactoring
-(add-hook 'js2-mode-hook 'js2-refactor-mode)
-;; see: https://github.com/magnars/js2-refactor.el#refactorings
-(js2r-add-keybindings-with-prefix "C-c C-j")
-
-;; use eslint with web-mode for jsx files
-(flycheck-add-mode 'javascript-eslint 'web-mode)
-
-(defun rc/web-mode-hook ()
-  "Hook for web-mode"
+(use-package web-mode
+  :after (flycheck company)
+  :preface
+  (defun rc/web-mode-hook ()
+    "Hook for web-mode"
     (set (make-local-variable 'company-backends)
-         '(company-tern company-web-html company-yasnippet company-files)))
-
-(add-hook 'web-mode-hook 'rc/web-mode-hook)
+         '(company-tern
+           company-web-html
+           company-yasnippet
+           company-files)))
+  :commands web-mode
+  :config
+  ;; use eslint with web-mode for jsx files
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (add-hook 'web-mode-hook 'rc/web-mode-hook)
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode)))
 
 ;; enable JavaScript completion between <script>...</script> etc.
 (defadvice company-tern (before web-mode-set-up-ac-sources activate)
@@ -766,12 +854,30 @@ of FILE in the current directory, suitable for creation"
             (unless tern-mode (tern-mode))
           (if tern-mode (tern-mode -1))))))
 
+
+(use-package js2-mode
+  :init
+  ;; indent step is 2 spaces
+  (setq-default js2-basic-offset 2)
+  :commands js2-mode
+  :config
+  (use-package js2-refactor
+    :config
+    ;; enable minor mode for js refactoring
+    ;; see: https://github.com/magnars/js2-refactor.el#refactorings
+    (js2r-add-keybindings-with-prefix "C-c C-j")
+    (add-hook 'js2-mode-hook 'js2-refactor-mode))
+  (add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode)))
+
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+    '(javascript-jshint)))
+
 ;; typescript, tide ;;
 
 (setq typescript-indent-level 2)
 
 (defun setup-tide-mode ()
-  (interactive)
   (tide-setup)
   (flycheck-mode +1)
   (setq
