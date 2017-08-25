@@ -96,6 +96,8 @@
 (global-set-key (kbd "C-x C-m") 'magit-status)
 (global-set-key (kbd "C-x C-y") 'magit-dispatch-popup)
 
+(global-set-key (kbd "RET") 'newline-and-indent)
+
 ;; set initial window position
 (when (window-system)
   (set-frame-position (selected-frame) 220 130)
@@ -214,16 +216,6 @@
           (if (rc/company/check-expansion)
               (company-complete-common)
             (indent-for-tab-command)))))
-  (defun rc/company/setup-ui ()
-    (custom-set-variables
-     '(company-preview-common
-       ((t (:inherit company-preview))))
-     '(company-tooltip-common
-       ((((type x)) (:inherit company-tooltip :weight normal))
-        (t (:inherit company-tooltip))))
-     '(company-tooltip-common-selection
-       ((((type x)) (:inherit company-tooltip-selection :weight normal))
-        (t (:inherit company-tooltip-selection))))))
   :init
   ;; adjust this setting according to your typing speed
   (setq company-idle-delay 0.4)
@@ -239,7 +231,6 @@
   (use-package company-tern :demand t)
   (use-package company-irony :demand t)
   (use-package company-irony-c-headers :demand t)
-  (rc/company/setup-ui)
   ;; use company-mode in all buffers
   (add-hook 'after-init-hook 'global-company-mode)
   (with-eval-after-load 'company
@@ -291,19 +282,23 @@
   (doom-themes-org-config)
   (load-theme 'doom-one t))
 
-(use-package diminish)
 (use-package delight
   :config
-  (delight '((auto-revert-mode " ar" autorevert)
-             (emacs-lisp-mode " elisp" :major)
+  (delight '((emacs-lisp-mode " elisp" :major)
              (elixir-mode " ex" elixir)
              (alchemist-mode " alch" alchemist)
              (rust-mode " rs" rust)
              (eldoc-mode " eldoc" eldoc)
+             (auto-revert-mode " ar" autorevert)
              (hi-lock-mode " hi" hi-lock))))
+
+(use-package diminish
+  :config
+  (diminish 'auto-revert-mode))
 
 (use-package try
   :defer t)
+
 (use-package which-key
   :defer t
   :init
@@ -333,6 +328,13 @@
   :init
   ;; to restore missing C-u in evil
   (setq evil-want-C-u-scroll t)
+  ;; change cursor color depending on mode
+  (setq evil-emacs-state-cursor '("red" box))
+  (setq evil-normal-state-cursor '("green" box))
+  (setq evil-visual-state-cursor '("orange" box))
+  (setq evil-insert-state-cursor '("red" bar))
+  (setq evil-replace-state-cursor '("red" bar))
+  (setq evil-operator-state-cursor '("red" hollow))
   (use-package evil-magit)
   (use-package evil-surround)
   (use-package evil-leader
@@ -350,6 +352,7 @@
       "o" 'other-window
       "w" 'ace-window
       "W" 'whitespace-mode
+      "H" 'highlight-indentation-mode
       "q" 'treemacs-toggle
       "SPC" 'compile
       "RET" 'sublimity-mode
@@ -629,7 +632,13 @@
 
 (use-package rainbow-delimiters
   :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  :diminish rainbow-delimiters-mode)
+
+(use-package color-identifiers-mode
+  :config
+  (add-hook 'after-init-hook 'global-color-identifiers-mode)
+  :diminish color-identifiers-mode)
 
 (use-package idle-highlight-mode
   :config
@@ -656,7 +665,8 @@
   :after ivy
   :init
   ;; magit requires this setting for ivy completion
-  (setq magit-completing-read-function 'ivy-completing-read))
+  (setq magit-completing-read-function 'ivy-completing-read)
+  :diminish magit-mode)
 
 (use-package dockerfile-mode)
 (use-package purescript-mode)
@@ -735,11 +745,13 @@
 
 (use-package idris-mode)
 
-(use-package bookmark
+(use-package bookmark+
   :config
-  (bookmark-bmenu-list)
-  ;; instead of a splash screen, let's start with the Bookmark List
-  (switch-to-buffer "*Bookmark List*"))
+  (use-package bookmark
+    :config
+    (bookmark-bmenu-list)
+    ;; instead of a splash screen, let's start with the Bookmark List
+    (switch-to-buffer "*Bookmark List*")))
 
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
@@ -893,6 +905,10 @@
     (lambda ()
       (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
+
+;; save customizations somewhere other than your initialization file
+(setq custom-file "~/.emacs-custom.el")
+(load custom-file)
 
 ;; prevent quelpa from doing anyting
 ;; that requires network connection
