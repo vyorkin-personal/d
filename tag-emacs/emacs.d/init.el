@@ -745,10 +745,6 @@
 ;; with defadvice in a third-party packages and they aren't helpful
 (setq ad-redefinition-action 'accept)
 
-;; what the fuck is this shit ?
-;; (rich-minority-mode 1)
-;; (setq rm-blacklist '(" GitGutter" " MRev" " company" " mate" " Projectile"))
-
 (use-package winner
   :config
   ;; restore split pane config, winner-undo, winner-redo
