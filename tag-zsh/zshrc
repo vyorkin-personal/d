@@ -24,7 +24,17 @@ source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
+
+# bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
 zplug "zsh-users/zsh-autosuggestions"
+
+# use ctrl+t to toggle autosuggestions(hopefully this wont be needed as
+# zsh-autosuggestions is designed to be unobtrusive)
+bindkey '^T' autosuggest-toggle
+
 zplug "k4rthik/git-cal", as:command
 
 # set the priority when loading
@@ -58,7 +68,7 @@ zplug "zplug/zplug", hook-build: "zplug --self-manage"
 
 # install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
-  printf "install? [y/N]: "
+  printf "install fucking plugs? [y/N]: "
   if read -q; then
     echo; zplug install
   fi

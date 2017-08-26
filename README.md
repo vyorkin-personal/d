@@ -94,7 +94,30 @@ Common crates that I use:
 
 # Troubleshooting
 
+Don't worry, be happy
+
 # TODO
+
+* remove old packages from the list below and automate the installation process somehow:
+```
+  bower duo grunt-cli broccoli-cli gulp yo khaos jspm
+  npm-check npm-check-updates bower-check-updates avn avn-nvm browserify
+  madge forever nodemon jscs csslint how-to-npm
+  psi eslint eslint_d jsdoc stylelint doiuse
+  watch js-beautify nsp snyk gitbook-cli plato sloc npmd@1 live-server git-guilt doctoc
+  trash localtunnel svgo git+https://github.com/ramitos/jsctags.git
+  jsfmt fixmyjs jsinspect tmi speed-test tldr commitizen
+  karma-cli istanbul foreman
+  iron-node devtool disc stylelint-config-suitcss next-update semantic-release-cli
+  git-issues exact-semver fixpack cli-real-favicon greenkeeper npm-which budo
+  del-cli json-package npm-quick-run center-code gtni alex typings
+  tern recli webpack-validator all-nvm available-versions manpm center-code
+  conventional-changelog-cli conventional-recommended-bump
+  typed-css-modules chrome-webstore-upload-cli react-native-cli
+  create-webpack-config create-react-app node-pre-gyp npm-upgrade
+  yarn-completions pkgcount typescript-formatter pulp
+  git-recall
+```
 
 * [learn ASDF version manager](https://github.com/asdf-vm/asdf) to see if it can
   replace a bunch of other language-specific tools
