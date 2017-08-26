@@ -547,6 +547,7 @@
   (setq-default
    flycheck-disabled-checkers
    '(emacs-lisp-checkdoc javascript-jshint))
+  (setq flycheck-javascript-eslint-executable "eslint_d")
   (use-package flycheck-rust)
   (use-package flycheck-clojure)
   (use-package flycheck-irony)
