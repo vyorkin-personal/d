@@ -13,6 +13,12 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
+;; set initial window position
+(when (window-system)
+  (set-frame-position (selected-frame) 220 130)
+  (set-frame-height (selected-frame) 40)
+  (set-frame-width (selected-frame) 120))
+
 (setq make-backup-files nil)        ; disable backup files
 (setq auto-save-list-file-name nil) ; disable .saves files
 (setq auto-save-default nil)        ; disable auto saving
@@ -95,14 +101,6 @@
 
 (global-set-key (kbd "C-x C-m") 'magit-status)
 (global-set-key (kbd "C-x C-y") 'magit-dispatch-popup)
-
-(global-set-key (kbd "RET") 'newline-and-indent)
-
-;; set initial window position
-(when (window-system)
-  (set-frame-position (selected-frame) 220 130)
-  (set-frame-height (selected-frame) 40)
-  (set-frame-width (selected-frame) 120))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -259,7 +257,6 @@
   :diminish highlight-indentation-mode)
 
 (use-package base16-theme
-  :disabled
   :preface
   (defun rc/theme/grayscale-light ()
     (load-theme 'base16-grayscale-light t)
@@ -275,6 +272,7 @@
 (use-package sublime-themes :disabled)
 
 (use-package doom-themes
+  :disabled
   :config
   ;; enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -288,19 +286,20 @@
              (elixir-mode " ex" elixir)
              (alchemist-mode " alch" alchemist)
              (rust-mode " rs" rust)
+             (javascript-mode " js" js)
              (eldoc-mode " eldoc" eldoc)
              (auto-revert-mode " ar" autorevert)
              (hi-lock-mode " hi" hi-lock))))
 
 (use-package diminish
   :config
-  (diminish 'auto-revert-mode))
+  (diminish 'auto-revert-mode)
+  (diminish 'eldoc-mode))
 
 (use-package try
   :defer t)
 
 (use-package which-key
-  :defer t
   :init
   (setq which-key-idle-delay 1)
   :config
@@ -328,17 +327,13 @@
   :init
   ;; to restore missing C-u in evil
   (setq evil-want-C-u-scroll t)
-  ;; change cursor color depending on mode
-  (setq evil-emacs-state-cursor '("red" box))
-  (setq evil-normal-state-cursor '("green" box))
-  (setq evil-visual-state-cursor '("orange" box))
-  (setq evil-insert-state-cursor '("red" bar))
-  (setq evil-replace-state-cursor '("red" bar))
-  (setq evil-operator-state-cursor '("red" hollow))
-  (use-package evil-magit)
-  (use-package evil-surround)
-  (use-package evil-leader
+  (use-package evil-magit :defer 5)
+  (use-package evil-surround :defer 4)
+  (use-package evil-commentary
     :demand t
+    :commands evil-commentary-mode
+    :config (evil-commentary-mode))
+  (use-package evil-leader
     :config
     (global-evil-leader-mode)
     ;; enable leader key, use your thumbs!
@@ -353,6 +348,7 @@
       "w" 'ace-window
       "W" 'whitespace-mode
       "H" 'highlight-indentation-mode
+      "j" 'bookmark-jump
       "q" 'treemacs-toggle
       "SPC" 'compile
       "RET" 'sublimity-mode
@@ -362,31 +358,23 @@
   (use-package evil-org :demand t)
   (use-package evil-numbers :demand t)
   :config
+  ;; its impossible to use evil mode for these modes listed below
+  (evil-set-initial-state 'bookmark-bmenu-mode 'emacs)
+  (evil-set-initial-state 'dired-mode 'emacs)
   ;; enable evil-mode globally,
   ;; good for ex-vimmers like me
   (evil-mode 1)
   (rc/setup-esc-quits)
-  ;; comment region / uncomment region
-  (define-key evil-motion-state-map (kbd "C-c C-c") 'comment-region)
-  (define-key evil-motion-state-map (kbd "C-c C-u") 'uncomment-region)
   ;; jumping like in vim
   (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
+  ;; comment region / uncomment region,
+  ;; but I use evil-commentary, so left here as an example
+  ;; (define-key evil-motion-state-map (kbd "C-c C-c") 'comment-region)
+  ;; (define-key evil-motion-state-map (kbd "C-c C-u") 'uncomment-region)
   (global-set-key [escape] 'evil-exit-emacs-state)
   ;; swap : and ; to make colon commands easier to type in Emacs
   (define-key evil-motion-state-map ";" 'evil-ex)
   (define-key evil-motion-state-map ":" 'evil-repeat-find-char))
-
-(use-package powerline
-  :init
-  (setq
-   powerline-height (truncate (* 1.0 (frame-char-height)))
-   powerline-default-separator 'utf-8)
-  :config
-  ;; see: https://www.emacswiki.org/emacs/DelightedPowerLine
-  (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
-    "Ensure that powerline's major mode names are delighted. See `delight-major-mode'."
-    (let ((inhibit-mode-name-delight nil)) ad-do-it))
-  (powerline-default-theme))
 
 (use-package undo-tree
   :defer t
@@ -398,16 +386,44 @@
   (undo-tree-mode)
   :diminish undo-tree-mode)
 
-(use-package google-translate
-  :init
-  (setq google-translate-default-source-language "en")
-  (setq google-translate-default-target-language "ru")
+(use-package anzu
   :config
-  (paradox-require 'google-translate-default-ui)
-  :bind
-  (:map global-map
-        ("C-c C-t" . google-translate-at-point)
-        ("C-c C-q" . google-translate-query-translate)))
+  (global-anzu-mode +1)
+  (set-face-attribute 'anzu-mode-line nil :foreground "yellow" :weight 'normal)
+  (define-key isearch-mode-map [remap isearch-query-replace] #'anzu-isearch-query-replace)
+  (define-key isearch-mode-map [remap isearch-query-replace-regexp] #'anzu-isearch-query-replace-regexp)
+  :diminish anzu-mode)
+
+(use-package telephone-line
+  :after anzu
+  :config
+  (setq
+   telephone-line-primary-left-separator 'telephone-line-flat
+   telephone-line-secondary-left-separator 'telephone-line-flat
+   telephone-line-primary-right-separator 'telephone-line-flat
+   telephone-line-secondary-right-separator 'telephone-line-flat
+   telephone-line-height 20
+   telephone-line-evil-use-short-tag t)
+  ;; my useless attempt to add a segment for anzu,
+  ;; doesn't work for some reason, left here as a reminder for myself
+  ;; (telephone-line-defsegment* telephone-line-anzu-segment ()
+  ;;   (when (and active (bound-and-true-p anzu--state))
+  ;;     (anzu--update-mode-line)))
+  (require 'telephone-line-config)
+  (telephone-line-evil-config))
+
+(use-package powerline
+  :disabled
+  :init
+  (setq
+   powerline-height (truncate (* 1.0 (frame-char-height)))
+   powerline-default-separator 'utf-8)
+  :config
+  ;; see: https://www.emacswiki.org/emacs/DelightedPowerLine
+  (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
+    "Ensure that powerline's major mode names are delighted. See `delight-major-mode'."
+    (let ((inhibit-mode-name-delight nil)) ad-do-it))
+  (powerline-default-theme))
 
 (use-package sublimity
   :defer t
@@ -431,7 +447,6 @@
   :commands ggtags-mode
   :config (add-hook 'c-mode-common-hook 'ggtags-mode)
   :diminish ggtags-mode)
-
 (use-package treemacs
   :init
   (setq
@@ -529,18 +544,23 @@
 (use-package flycheck
   :defer t
   :init
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (setq-default
+   flycheck-disabled-checkers
+   '(emacs-lisp-checkdoc javascript-jshint))
+  (use-package flycheck-rust)
+  (use-package flycheck-clojure)
+  (use-package flycheck-irony)
+  (use-package flycheck-purescript)
+  (use-package flycheck-flow)
+  (use-package flycheck-elixir)
+  (use-package flycheck-mix
+    :config
+    (flycheck-mix-setup))
+  (use-package flycheck-dialyzer) ;; for erlang
+  (use-package flycheck-dialyxir) ;; for elixir
   :config
   (global-flycheck-mode 1)
   :diminish flycheck-mode)
-
-(use-package flycheck-rust)
-(use-package flycheck-clojure)
-(use-package flycheck-irony)
-(use-package flycheck-purescript)
-(use-package flycheck-flow)
-(use-package flycheck-dialyzer)
-(use-package flycheck-dialyxir)
 
 (use-package rust-mode
   :config
@@ -617,6 +637,16 @@
         ;; edited file's position in a dired buffer
         ("C-x C-j" . dired-jump)))
 
+(use-package bookmark+
+  :config
+  (use-package bookmark
+    :init
+    (setq-default bmkp-last-as-first-bookmark-file nil)
+    :config
+    (bookmark-bmenu-list)
+    ;; instead of a splash screen, let's start with the Bookmark List
+    (switch-to-buffer "*Bookmark List*")))
+
 (use-package ace-window)
 (use-package ripgrep)
 (use-package projectile-ripgrep)
@@ -683,10 +713,6 @@
 (use-package lua-mode)
 (use-package go-mode)
 
-(use-package typescript-mode)
-(use-package tide)
-
-(use-package json-mode)
 (use-package erlang)
 
 (use-package elixir-mode
@@ -744,14 +770,6 @@
   (add-hook 'haskell-mode-hook 'haskell-doc-mode))
 
 (use-package idris-mode)
-
-(use-package bookmark+
-  :config
-  (use-package bookmark
-    :config
-    (bookmark-bmenu-list)
-    ;; instead of a splash screen, let's start with the Bookmark List
-    (switch-to-buffer "*Bookmark List*")))
 
 ;; ad-handle-definition warning are generated when functions are redefined
 ;; with defadvice in a third-party packages and they aren't helpful
@@ -835,6 +853,9 @@
 (use-package web-mode
   :after (flycheck company)
   :preface
+  (defvar rc/web-mode/extensions
+    '("\\.tsx\\'"
+      "\\.jsx\\'"))
   (defun rc/web-mode-hook ()
     "Hook for web-mode"
     (set (make-local-variable 'company-backends)
@@ -847,64 +868,91 @@
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (add-hook 'web-mode-hook 'rc/web-mode-hook)
-  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode)))
+  (dolist (ext rc/web-mode/extensions)
+    (add-to-list 'auto-mode-alist `(,ext . web-mode))))
 
-;; enable JavaScript completion between <script>...</script> etc.
-(defadvice company-tern (before web-mode-set-up-ac-sources activate)
-  "Set `tern-mode' based on current language before running company-tern."
-  (message "advice")
-  (if (equal major-mode 'web-mode)
-      (let ((web-mode-cur-language
-             (web-mode-language-at-pos)))
-        (if (or (string= web-mode-cur-language "javascript")
-                (string= web-mode-cur-language "jsx")
-                )
-            (unless tern-mode (tern-mode))
-          (if tern-mode (tern-mode -1))))))
+(use-package json-mode)
 
+(use-package tern
+  :commands tern-mode
+  :config
+  ;; enable JavaScript completion between <script>...</script> etc.
+  (defadvice company-tern (before web-mode-set-up-ac-sources activate)
+    "Set `tern-mode' based on current language before running company-tern."
+    (message "advice")
+    (if (equal major-mode 'web-mode)
+        (let ((web-mode-cur-language (web-mode-language-at-pos)))
+            (if (or (string= web-mode-cur-language "javascript")
+                    (string= web-mode-cur-language "jsx"))
+                (unless tern-mode (tern-mode))
+            (if tern-mode (tern-mode -1)))))))
 
 (use-package js2-mode
   :init
   ;; indent step is 2 spaces
   (setq-default js2-basic-offset 2)
-  :commands js2-mode
-  :config
+  (setq-default js-indent-level 2)
+  (use-package xref-js2
+    :preface
+    (defun rc/xref-js2/add-backend ()
+      (add-hook 'xref-backend-functions
+                #'xref-js2-xref-backend nil t))
+    :config
+    (unbind-key "M-." js2-mode-map)
+    (add-hook 'js2-mode-hook 'rc/xref-js2/add-backend))
   (use-package js2-refactor
     :config
     ;; enable minor mode for js refactoring
     ;; see: https://github.com/magnars/js2-refactor.el#refactorings
     (js2r-add-keybindings-with-prefix "C-c C-j")
     (add-hook 'js2-mode-hook 'js2-refactor-mode))
-  (add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode)))
+  :commands js2-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  :delight " js2")
 
-(setq-default flycheck-disabled-checkers
-  (append flycheck-disabled-checkers
-    '(javascript-jshint)))
+(use-package rjsx-mode
+  :commands rjsx-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode)))
 
-;; typescript, tide ;;
-
-(setq typescript-indent-level 2)
-
-(defun setup-tide-mode ()
-  (tide-setup)
-  (flycheck-mode +1)
+(use-package typescript-mode
+  :init
   (setq
-    flycheck-check-syntax-automatically '(save mode-enabled)
-    flycheck-tslint-args . ("--type-check"))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (add-to-list 'compilation-error-regexp-alist
-               '("ERROR in \\(.*\\)\n(\\([0-9]+\\),\\([0-9]+\\)):" 1 2 3))
-  (company-mode +1))
+   typescript-indent-level 2
+   flycheck-check-syntax-automatically '(save mode-enabled)
+   flycheck-tslint-args . ("--type-check"))
+  :config
+  (use-package tide
+    :config
+    (defun rc/tide-mode/setup ()
+      (tide-setup)
+      (flycheck-mode +1)
+      (eldoc-mode +1)
+      (tide-hl-identifier-mode +1)
+      (add-to-list
+       'compilation-error-regexp-alist
+       '("ERROR in \\(.*\\)\n(\\([0-9]+\\),\\([0-9]+\\)):" 1 2 3)))
+      (company-mode +1))
+    (add-hook 'typescript-mode-hook 'rc/tide-mode/setup)
+    ;; enable tide for .tsx files
+    (add-hook
+     'web-mode-hook
+     (lambda ()
+       (when (string-equal "tsx" (file-name-extension buffer-file-name))
+         (rc/tide-mode/setup))))
+  :delight " ts")
 
-(add-hook 'typescript-mode-hook 'setup-tide-mode)
-
-;; enable tide for .tsx files
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-hook 'web-mode-hook
-    (lambda ()
-      (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
+(use-package google-translate
+  :init
+  (setq google-translate-default-source-language "en")
+  (setq google-translate-default-target-language "ru")
+  :config
+  (paradox-require 'google-translate-default-ui)
+  :bind
+  (:map global-map
+        ("C-c C-t" . google-translate-at-point)
+        ("C-c C-q" . google-translate-query-translate)))
 
 ;; save customizations somewhere other than your initialization file
 (setq custom-file "~/.emacs-custom.el")
