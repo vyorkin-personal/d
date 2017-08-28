@@ -130,7 +130,7 @@
   ff = only
 [commit]
   template = ~/.gitmessage
-	gpgsign = true
+  gpgsign = true
 [filter "lfs"]
   required = true
   clean = git-lfs clean -- %f
