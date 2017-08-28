@@ -137,7 +137,7 @@ set background=dark
 if &background=="dark"
   colorscheme strange
 else
-  colorscheme strange
+  colorscheme tomorrow
 endif
 
 " colorscheme switching for vimdiff

@@ -56,6 +56,8 @@
 ;; slightly less uncomfortable to others
 (delete-selection-mode t)
 
+;; faster than scp
+(setq tramp-default-method "ssh")
 ;; disable autosave for tramp buffers
 (setq tramp-auto-save-directory "/tmp")
 
@@ -257,6 +259,7 @@
   :diminish highlight-indentation-mode)
 
 (use-package base16-theme
+  :disabled
   :preface
   (defun rc/theme/grayscale-light ()
     (load-theme 'base16-grayscale-light t)
@@ -272,7 +275,6 @@
 (use-package sublime-themes :disabled)
 
 (use-package doom-themes
-  :disabled
   :config
   ;; enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -348,7 +350,8 @@
       "w" 'ace-window
       "W" 'whitespace-mode
       "H" 'highlight-indentation-mode
-      "j" 'bookmark-jump
+      "T" 'counsel-load-theme
+      "j" 'counsel-bookmark
       "q" 'treemacs-toggle
       "SPC" 'compile
       "RET" 'sublimity-mode
@@ -387,6 +390,7 @@
   :diminish undo-tree-mode)
 
 (use-package anzu
+  :disabled
   :config
   (global-anzu-mode +1)
   (set-face-attribute 'anzu-mode-line nil :foreground "yellow" :weight 'normal)
@@ -395,7 +399,6 @@
   :diminish anzu-mode)
 
 (use-package telephone-line
-  :after anzu
   :config
   (setq
    telephone-line-primary-left-separator 'telephone-line-flat
@@ -404,11 +407,6 @@
    telephone-line-secondary-right-separator 'telephone-line-flat
    telephone-line-height 20
    telephone-line-evil-use-short-tag t)
-  ;; my useless attempt to add a segment for anzu,
-  ;; doesn't work for some reason, left here as a reminder for myself
-  ;; (telephone-line-defsegment* telephone-line-anzu-segment ()
-  ;;   (when (and active (bound-and-true-p anzu--state))
-  ;;     (anzu--update-mode-line)))
   (require 'telephone-line-config)
   (telephone-line-evil-config))
 
@@ -610,11 +608,13 @@
   :bind
   (:map global-map
         ("M-x" . counsel-M-x)
+        ("C-x C-r" . find-file)
         ("C-x C-f" . counsel-find-file)
         ("C-x f" . counsel-describe-function)
         ("C-x v" . counsel-describe-variable)
         ("C-c g" . counsel-git)
         ("C-c j" . counsel-git-grep)
+        ("C-c l" . counsel-ag)
         ("C-c k" . counsel-rg)))
 
 (use-package swiper
