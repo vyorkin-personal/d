@@ -182,6 +182,7 @@ cask 'font-source-sans-pro'
 cask 'font-courier-prime'
 cask 'font-source-serif-pro'
 cask 'font-hack'
+cask 'font-fira-code'
 
 # apps from appstore
 
