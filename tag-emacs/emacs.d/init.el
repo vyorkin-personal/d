@@ -327,7 +327,8 @@
   :config
   (delight '((emacs-lisp-mode " elisp" :major)
              (elixir-mode " ex" elixir)
-             (alchemist-mode " alch" alchemist)
+             (alchemist-mode " al" alchemist)
+             (alchemist-hex-mode " alhex" alchemist)
              (rust-mode " rs" rust)
              (javascript-mode " js" js)
              (eldoc-mode " eldoc" eldoc)
@@ -584,6 +585,7 @@
    "f" 'toggle-frame-fullscreen
    "v" 'split-window-horizontally
    "s" 'split-window-vertically
+   "p" 'list-processes
    "U" 'winner-undo
    "R" 'winner-redo
    "d" 'delete-window
@@ -612,6 +614,9 @@
     "q" 'quit-window
     "<" 'help-go-back
     ">" 'help-go-forward)
+  (general-define-key
+   :keymaps 'process-menu-mode-map
+   "M-d" 'process-menu-delete-process)
   (general-define-key
    :keymaps 'dired-mode-map
    ")" 'dired-omit-mode))
@@ -712,7 +717,7 @@
     "C" 'treemacs-create-dir
     "d" 'treemacs-delete
     "i" 'treemacs-visit-node-vertical-split
-    "o" 'treemacs-visit-node-horizontal-split
+    "s" 'treemacs-visit-node-horizontal-split
     "M-j" 'treemacs-next-neighbour
     "M-k" 'treemacs-previous-neighbour
     "u" 'treemacs-uproot
@@ -1037,7 +1042,10 @@
     :config
     (bookmark-bmenu-list)
     ;; instead of a splash screen, let's start with the Bookmark List
-    (switch-to-buffer "*Bookmark List*")))
+    (switch-to-buffer "*Bookmark List*")
+    (general-define-key
+     :prefix "SPC"
+     "b" 'bookmark-set)))
 
 (use-package ace-window)
 
@@ -1138,9 +1146,9 @@
   :config
   (add-hook 'ruby-mode-hook 'robe-mode))
 (use-package rubocop
-  :delight rubocop-mode " rubocop"
   :config
-  (add-hook 'ruby-mode-hook 'rubocop-mode))
+  (add-hook 'ruby-mode-hook 'rubocop-mode)
+  :delight " rubocop")
 (use-package go-mode)
 
 (use-package erlang)
@@ -1154,28 +1162,31 @@
      alchemist-goto-elixir-source-dir "~/projects/github/elixir"
      alchemist-goto-erlang-source-dir "/usr/local/Cellar/erlang/19.2.3")
     :config
-    ;; elixir general key bindings
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " t" 'alchemist-mix-test)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " T" 'alchemist-project-run-tests-for-current-file)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " ," 'alchemist-test-toggle-test-report-display)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " h" 'alchemist-help-search-at-point)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " H" 'alchemist-help)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " a" 'alchemist-project-toggle-file-and-tests)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " A" 'alchemist-project-toggle-file-and-tests-other-window)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " m" 'alchemist-mix)
-    ;; elixir IEx-specific key bindings
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " e" 'alchemist-iex-project-run)
-    (evil-define-minor-mode-key 'normal 'alchemist-mode " r" 'alchemist-iex-reload-module)
-    (evil-define-minor-mode-key 'visual 'alchemist-mode " e" 'alchemist-iex-send-current-line)
-    (evil-define-minor-mode-key 'visual 'alchemist-mode " E" 'alchemist-iex-send-current-line-and-go)
-    (evil-define-minor-mode-key 'visual 'alchemist-mode " r" 'alchemist-iex-send-region)
-    (evil-define-minor-mode-key 'visual 'alchemist-mode " R" 'alchemist-iex-send-region-and-go)
+    (general-evil-define-key 'normal 'alchemist-mode-map
+      ;; elixir general key bindings
+      " t" 'alchemist-mix-test
+      " T" 'alchemist-project-run-tests-for-current-file
+      " ," 'alchemist-test-toggle-test-report-display
+      " h" 'alchemist-help-search-at-point
+      " H" 'alchemist-help
+      " a" 'alchemist-project-toggle-file-and-tests
+      " A" 'alchemist-project-toggle-file-and-tests-other-window
+      " m" 'alchemist-mix
+      ;; elixir IEx-specific key bindings
+      " e" 'alchemist-iex-project-run
+      " r" 'alchemist-iex-reload-module)
+    (general-evil-define-key 'visual 'alchemist-mode-map
+      " e" 'alchemist-iex-send-current-line
+      " E" 'alchemist-iex-send-current-line-and-go
+      " r" 'alchemist-iex-send-region
+      " R" 'alchemist-iex-send-region-and-go)
     ;; elixir HEX-specific key bindings
-    (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " i" 'alchemist-hex-info-at-point)
-    (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " I" 'alchemist-hex-info)
-    (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " r" 'alchemist-hex-releases-at-point)
-    (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " R" 'alchemist-hex-releases)
-    (evil-define-minor-mode-key 'normal 'alchemist-hex-mode " f" 'alchemist-hex-search))
+    (general-evil-define-key 'normal 'alchemist-hex-mode-map
+      " i" 'alchemist-hex-info-at-point
+      " I" 'alchemist-hex-info
+      " r" 'alchemist-hex-releases-at-point
+      " R" 'alchemist-hex-releases
+      " f" 'alchemist-hex-search))
   :config
   (add-hook 'elixir-mode-hook 'alchemist-mode)
   (add-hook 'elixir-mode-hook
@@ -1281,7 +1292,18 @@
 (with-eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
 
-(use-package emmet-mode)
+(use-package emmet-mode
+  :after sgml-mode
+  :preface
+  (defvar rc/emmet/modes
+    '(sgml-mode-hook
+      css-mode-hook
+      jade-mode-hook))
+  :commands emmet-mode
+  :config
+  (dolist (mode rc/emmet/modes)
+    (add-hook mode 'emmet-mode))
+  :delight " emmet")
 
 (use-package web-mode
   :after (flycheck company)
