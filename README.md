@@ -98,6 +98,8 @@ Don't worry, be happy
 
 # TODO
 
+* consider using [targets.el](https://github.com/noctuid/targets.el) - extension of evil text objects, when it'll become stable enough
+
 * remove old packages from the list below and automate the installation process somehow:
 ```
   bower duo grunt-cli broccoli-cli gulp yo khaos jspm
