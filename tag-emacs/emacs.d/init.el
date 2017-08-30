@@ -3,6 +3,10 @@
 (setq gc-cons-threshold 64000000)
 ;; restore after startup
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
+;; disable garbage collection in minibuffer
+;; see: http://tiny.cc/7wd7ay
+(add-hook 'minibuffer-setup-hook (lambda () (setq gc-cons-threshold most-positive-fixnum)))
+(add-hook 'minibuffer-exit-hook (lambda () (setq gc-cons-threshold 800000)))
 
 ;; don't create lock files, fuck collisions
 (setq create-lockfiles nil)
@@ -13,16 +17,18 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
-;; set initial window position
-(when (window-system)
-  (set-frame-position (selected-frame) 220 130)
-  (set-frame-height (selected-frame) 40)
-  (set-frame-width (selected-frame) 120))
+;; uncomment these lines below
+;; if you want to change initial window position
+;; (when (window-system)
+;;   (set-frame-position (selected-frame) 220 130)
+;;   (set-frame-height (selected-frame) 40)
+;;   (set-frame-width (selected-frame) 120))
 
-(setq make-backup-files nil)        ; disable backup files
-(setq auto-save-list-file-name nil) ; disable .saves files
-(setq auto-save-default nil)        ; disable auto saving
-(setq ring-bell-function 'ignore)   ; turn off alarms completely
+(setq
+ make-backup-files nil        ; disable backup files
+ auto-save-list-file-name nil ; disable .saves files
+ auto-save-default nil        ; disable auto saving
+ ring-bell-function 'ignore)  ; turn off alarms completely
 
 ;; use spaces instead of tabs everywhere
 (setq-default indent-tabs-mode nil)
@@ -32,8 +38,13 @@
 ;; y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(add-to-list 'default-frame-alist '(font . "Source Code Pro 16"))
-(set-frame-font "Source Code Pro 16" nil t)
+;; fonts ;;
+
+(add-to-list 'default-frame-alist '(font . "Fira Code 16"))
+(set-frame-font "Fira Code 16" nil t)
+
+;; (add-to-list 'default-frame-alist '(font . "Source Code Pro 14"))
+;; (set-frame-font "Source Code Pro 14" nil t)
 
 ;; (add-to-list 'default-frame-alist '(font . "VT220-mod 28"))
 ;; (set-frame-font "VT220-mod 28" nil t)
@@ -50,16 +61,15 @@
 (show-paren-mode 1)
 
 ;; hide the fringe
-(set-fringe-style 0)
+(set-fringe-style 18)
 
 ;; over-write selection to make things
 ;; slightly less uncomfortable to others
 (delete-selection-mode t)
 
-;; faster than scp
-(setq tramp-default-method "ssh")
-;; disable autosave for tramp buffers
-(setq tramp-auto-save-directory "/tmp")
+(setq
+ tramp-default-method "ssh"        ; faster than scp
+ tramp-auto-save-directory "/tmp") ; disable autosave for tramp buffers
 
 ;; don't wrap long lines
 (setq-default truncate-lines t)
@@ -70,12 +80,21 @@
 
 (set-window-buffer nil (current-buffer))
 
+;; scroll smoothly
+(setq
+ scroll-margin 0
+ scroll-conservatively 10000
+ scroll-preserve-screen-position t)
+
 ;; show the current time
-(setq display-time-24hr-format t)
-(display-time-mode 1)
+;; (setq display-time-24hr-format t)
+;; (display-time-mode nil)
 
 ;; show column number
 (column-number-mode t)
+
+;; wrap text at 80 characters
+(setq-default fill-column 80)
 
 ;; enable automatic line breaking
 (auto-fill-mode t)
@@ -89,20 +108,20 @@
 ;; allow minibuffer commands while in the minibuffer
 (setq enable-recursive-minibuffers t)
 
-;; global hotkeys
+;; convert certain words into symbols, e.g. lambda becomes λ.
+(global-prettify-symbols-mode)
 
-(global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
+;; enable HideShow in programming modes,
+;; useful for getting an overview of the code,
+;; it works better in some languages and layouts than others
+(add-hook 'prog-mode-hook (lambda () (hs-minor-mode t)))
 
-(global-set-key (kbd "C-M-=") 'default-text-scale-increase)
-(global-set-key (kbd "C-M--") 'default-text-scale-decrease)
+;; enable recentf-mode and remember a lot of files
+(recentf-mode 1)
+(setq recentf-max-saved-items 200)
 
-(global-set-key (kbd "C-h") 'windmove-left)
-(global-set-key (kbd "C-l") 'windmove-right)
-(global-set-key (kbd "C-k") 'windmove-up)
-(global-set-key (kbd "C-j") 'windmove-down)
-
-(global-set-key (kbd "C-x C-m") 'magit-status)
-(global-set-key (kbd "C-x C-y") 'magit-dispatch-popup)
+;; when gdb debugging, show the many windows (stack trace, break points,etc.)
+(setq gdb-many-windows t)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -114,10 +133,6 @@
 ;; package-initialize will not load the whole package,
 ;; but only autoload functions selected by the package author
 (package-initialize)
-
-(setq exec-path-from-shell-check-startup-files nil)
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -139,6 +154,26 @@
   :config
   ;; replace the default interface with paradox
   (paradox-enable))
+
+(use-package exec-path-from-shell
+  :init
+  (setq exec-path-from-shell-check-startup-files nil)
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
+;; helps keeping ~/.emacs.d clean
+;; I need to setup bookmarks file before using this
+;; (use-package no-littering)
+
+;; guesses the indentation offset originally used
+;; for creating source code files and
+;; transparently adjusts the corresponding settings in Emacs,
+;; making it more convenient to edit foreign files
+(use-package dtrt-indent)
+
+;; makes managing multiple terminals easier
+(use-package multi-term)
 
 (use-package whitespace
   :init
@@ -209,6 +244,7 @@
     (let ((yas/fallback-behavior 'return-nil))
       (yas/expand)))
   (defun rc/company/tab-indent-or-complete ()
+    (interactive)
     (if (minibufferp)
         (minibuffer-complete)
       (if (or (not yas/minor-mode)
@@ -236,11 +272,16 @@
   (with-eval-after-load 'company
     '(add-to-list 'company-backends
                   '(company-tern
+                    company-robe
                     company-irony-c-headers
                     company-irony
                     merlin-company-backend))
     '(define-key company-active-map (kbd "C-c h")
        'company-quickhelp-manual-begin))
+  (general-define-key
+   :keymaps 'company-active-map
+   "C-j" 'company-select-next-or-abort
+   "C-k" 'company-select-previous-or-abort)
   :bind
   (:map global-map
         ([tab] . rc/company/tab-indent-or-complete))
@@ -268,7 +309,7 @@
     (load-theme 'base16-grayscale-dark t)
     (set-face-attribute 'vertical-border nil :foreground "#000000"))
   :config
-  (rc/theme/grayscale-light))
+  (rc/theme/grayscale-dark))
 
 (use-package dracula-theme :disabled)
 (use-package gotham-theme :disabled)
@@ -295,96 +336,298 @@
 
 (use-package diminish
   :config
-  (diminish 'auto-revert-mode)
-  (diminish 'eldoc-mode))
+  (eval-after-load "simple" '(diminish 'overwrite-mode))
+  (eval-after-load "dired" '(diminish 'dired-omit-mode))
+  (eval-after-load "hideshow" '(diminish 'hs-minor-mode))
+  (eval-after-load "autorevert" '(diminish 'auto-revert-mode))
+  (eval-after-load "eldoc" '(diminish 'eldoc-mode)))
 
 (use-package try
   :defer t)
 
 (use-package which-key
   :init
-  (setq which-key-idle-delay 1)
+  (setq
+   which-key-idle-delay 1
+   which-key-side-window-max-height 0.50
+   which-key-allow-evil-operators t
+   which-key-show-operator-state-maps nil)
   :config
   (which-key-mode)
   :diminish which-key-mode)
 
 (use-package evil
   :preface
-  (defun rc/evil/minibuffer-keyboard-quit ()
+  (defvar rc/evil/esc-hook '(t)
+    "A hook run after ESC is pressed in normal mode (invoked by `evil-force-normal-state').
+    If a hook returns non-nil, all hooks after it are ignored.")
+  (defun rc/evil/attach-esc-hook ()
+    "Run all escape hooks, if any returns non-nil, then stop there"
+    (run-hook-with-args-until-success 'rc/evil/esc-hook))
+  (defun rc/evil/quit ()
+    "Esc should always quit"
+    (interactive)
+    (evil-force-normal-state)
+    (keyboard-quit))
+  (defun rc/evil/minibuffer-quit ()
     "Abort recursive edit. In Delete Selection mode, if the mark is active, just deactivate it;
     then it takes a second \\[keyboard-quit] to abort the minibuffer."
+    (interactive)
     (if (and delete-selection-mode transient-mark-mode mark-active)
         (setq deactivate-mark  t)
         (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
         (abort-recursive-edit)))
   (defun rc/setup-esc-quits ()
-    "Esc should always quit"
-    (define-key evil-normal-state-map [escape] 'keyboard-quit)
-    (define-key evil-visual-state-map [escape] 'keyboard-quit)
-    (define-key minibuffer-local-map [escape] 'rc/evil/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-ns-map [escape] 'rc/evil/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-completion-map [escape] 'rc/evil/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-must-match-map [escape] 'rc/evil/minibuffer-keyboard-quit)
-    (define-key minibuffer-local-isearch-map [escape] 'rc/evil/minibuffer-keyboard-quit))
+    "Setup esc to quit anything"
+    (define-key evil-normal-state-map [escape] 'rc/evil/quit)
+    (define-key evil-visual-state-map [escape] 'rc/evil/quit)
+    (define-key minibuffer-local-map [escape] 'rc/evil/minibuffer-quit)
+    (define-key minibuffer-local-ns-map [escape] 'rc/evil/minibuffer-quit)
+    (define-key minibuffer-local-completion-map [escape] 'rc/evil/minibuffer-quit)
+    (define-key minibuffer-local-must-match-map [escape] 'rc/evil/minibuffer-quit)
+    (define-key minibuffer-local-isearch-map [escape] 'rc/evil/minibuffer-quit)
+    (advice-add 'evil-force-normal-state :after 'rc/evil/attach-esc-hook))
+  (defun rc/evil/restore-normal-state-on-windmove (orig-fn &rest args)
+    "If in anything but normal or motion mode when moving to another window, restore normal mode.
+    This prevents insert state from bleeding into other modes across windows."
+    (unless (memq evil-state '(normal motion emacs))
+      (evil-normal-state +1))
+    (apply orig-fn args))
   :init
-  ;; to restore missing C-u in evil
-  (setq evil-want-C-u-scroll t)
-  (use-package evil-magit :defer 5)
-  (use-package evil-surround :defer 4)
+  (setq
+   evil-want-C-u-scroll t ; to restore missing C-u in evil
+   evil-want-C-w-delete t
+   evil-want-fine-undo "No"
+   evil-want-visual-char-semi-exclusive t
+   evil-want-Y-yank-to-eol t
+   evil-magic t
+   evil-echo-state t
+   evil-indent-convert-tabs t
+   evil-ex-search-vim-style-regexp t
+   evil-overriding-maps nil
+   evil-ex-substitute-global t
+   evil-ex-visual-char-range t ; column range for ex commands
+   evil-insert-skip-empty-lines t
+   evil-search-module 'evil-search
+   evil-mode-line-format 'nil
+   ;; more vim-like behavior
+   evil-symbol-word-search t
+   ;; cursors
+   evil-default-cursor (face-background 'cursor nil t)
+   evil-normal-state-cursor 'box
+   evil-emacs-state-cursor `(,(face-foreground 'warning) box)
+   evil-insert-state-cursor 'bar
+   evil-visual-state-cursor 'hollow)
+  ;; disable evil-make-overriding/intercept-map at start-up,
+  ;; otherwise, Evil will mess with other mode’s mappings
+  (advice-add 'evil-make-intercept-map :override
+              (defun my-kill-intercept-maps (&rest _)))
+  (advice-add 'evil-make-overriding-map :override
+              (defun my-kill-overriding-maps (&rest _)))
+  (use-package sentence-navigation
+    :after evil
+    :config
+    (define-key evil-normal-state-map ")" 'sentence-nav-evil-forward)
+    (define-key evil-normal-state-map "(" 'sentence-nav-evil-backward)
+    (define-key evil-normal-state-map "g)" 'sentence-nav-evil-forward-end)
+    (define-key evil-normal-state-map "g(" 'sentence-nav-evil-backward-end)
+    (define-key evil-outer-text-objects-map "s" 'sentence-nav-evil-outer-sentence)
+    (define-key evil-inner-text-objects-map "s" 'sentence-nav-evil-inner-sentence))
+  (use-package evil-mc
+    :demand t
+    :preface
+    (defun rc/evil-mc/esc ()
+      "Clear evil-mc cursors and restore state."
+      (when (evil-mc-has-cursors-p)
+        (evil-mc-undo-all-cursors)
+        (evil-mc-resume-cursors)
+        t))
+    :config
+    (global-evil-mc-mode 1)
+    (add-hook 'rc/evil/esc-hook 'rc/evil-mc/esc))
+  (use-package evil-magit :demand t)
+  (use-package evil-ediff :demand t)
+  (use-package evil-matchit
+    :demand t
+    :commands
+    (evilmi-jump-items
+     evilmi-text-object
+     global-evil-matchit-mode)
+    :config
+    (global-evil-matchit-mode 1))
+  (use-package evil-surround
+    :demand t
+    :commands
+    (global-evil-surround-mode
+     evil-surround-edit
+     evil-Surround-edit
+     evil-surround-region)
+    :config
+    (global-evil-surround-mode 1))
+  (use-package evil-embrace
+    :after evil-surround
+    :demand t
+    :init
+    (setq evil-embrace-show-help-p nil)
+    :config
+    (evil-embrace-enable-evil-surround-integration))
+  (use-package evil-visualstar
+    :demand t
+    :config
+    (global-evil-visualstar-mode))
+  (use-package evil-vimish-fold
+    :demand t
+    :init
+    (setq vimish-fold-indication-mode 'right-fringe)
+    :commands evil-vimish-fold-mode
+    :config
+    (evil-vimish-fold-mode 1))
+  (use-package evil-args
+    :demand t
+    :commands
+    (evil-inner-arg
+     evil-outer-arg
+     evil-forward-arg
+     evil-backward-arg
+     evil-jump-out-args))
+  (use-package evil-indent-plus
+    :demand t
+    :commands
+    (evil-indent-plus-i-indent
+     evil-indent-plus-a-indent
+     evil-indent-plus-i-indent-up
+     evil-indent-plus-a-indent-up
+     evil-indent-plus-i-indent-up-down
+     evil-indent-plus-a-indent-up-down))
   (use-package evil-commentary
     :demand t
-    :commands evil-commentary-mode
+    :commands
+    (evil-commentary
+     evil-commentary-yank
+     evil-commentary-line)
     :config (evil-commentary-mode))
-  (use-package evil-leader
-    :config
-    (global-evil-leader-mode)
-    ;; enable leader key, use your thumbs!
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key
-      "v" 'split-window-horizontally
-      "s" 'split-window-vertically
-      "U" 'winner-undo
-      "R" 'winner-redo
-      "d" 'delete-window
-      "o" 'other-window
-      "w" 'ace-window
-      "W" 'whitespace-mode
-      "H" 'highlight-indentation-mode
-      "T" 'counsel-load-theme
-      "j" 'counsel-bookmark
-      "q" 'treemacs-toggle
-      "SPC" 'compile
-      "RET" 'sublimity-mode
-      "a" 'counsel-projectile-switch-project
-      "c" 'projectile-invalidate-cache
-      "g" 'magit-status))
   (use-package evil-org :demand t)
+  (use-package evil-exchange
+    :demand t
+    :preface
+    (defun rc/evil-exchange/cancel ()
+      (when evil-exchange--overlays
+        (evil-exchange-cancel) t))
+    :commands
+    (evil-exchange
+     evil-exchange-install)
+    :config
+    (evil-exchange-install)
+    (add-hook 'rc/evil/esc-hook 'rc/evil-exchange/cancel))
   (use-package evil-numbers :demand t)
   :config
-  ;; its impossible to use evil mode for these modes listed below
-  (evil-set-initial-state 'bookmark-bmenu-mode 'emacs)
-  (evil-set-initial-state 'dired-mode 'emacs)
+  ;; normal state == motion state:
+  ;; basically avoid motion state and use normal state instead,
+  ;; I don't need motion state, so it adds unnecessary complexity
+  (setq evil-normal-state-modes (append evil-motion-state-modes evil-normal-state-modes))
+  (setq evil-motion-state-modes nil)
   ;; enable evil-mode globally,
   ;; good for ex-vimmers like me
   (evil-mode 1)
   (rc/setup-esc-quits)
+  (with-eval-after-load "bookmark"
+    (evil-set-initial-state 'bookmark-bmenu-mode 'normal)
+    (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
+    (evil-make-overriding-map bookmark-bmenu-mode-map 'normal)
+    (general-evil-define-key 'normal 'bookmark-bmenu-mode-map
+      "RET" 'bookmark-bmenu-this-window
+      "j" 'evil-next-line
+      "k" 'evil-previous-line))
+  ;; special
+  (evil-make-overriding-map special-mode-map 'normal)
+  ;; compilation
+  (evil-set-initial-state 'compilation-mode 'normal)
+  ;; occur
+  (evil-make-overriding-map occur-mode-map 'normal)
+  (evil-set-initial-state 'occur-mode 'normal)
   ;; jumping like in vim
   (define-key evil-normal-state-map (kbd "C-]") (kbd "\\ M-."))
   ;; comment region / uncomment region,
   ;; but I use evil-commentary, so left here as an example
-  ;; (define-key evil-motion-state-map (kbd "C-c C-c") 'comment-region)
-  ;; (define-key evil-motion-state-map (kbd "C-c C-u") 'uncomment-region)
+  ;; (define-key evil-normal-state-map (kbd "C-c C-c") 'comment-region)
+  ;; (define-key evil-normal-state-map (kbd "C-c C-u") 'uncomment-region)
   (global-set-key [escape] 'evil-exit-emacs-state)
   ;; swap : and ; to make colon commands easier to type in Emacs
-  (define-key evil-motion-state-map ";" 'evil-ex)
-  (define-key evil-motion-state-map ":" 'evil-repeat-find-char))
+  (define-key evil-normal-state-map ";" 'evil-ex)
+  (define-key evil-normal-state-map ":" 'evil-repeat-find-char)
+  (advice-add 'windmove-do-window-select :around 'rc/evil/restore-normal-state-on-windmove))
+
+(use-package general
+  :preface
+  (defun rc/text-scale-reset ()
+    "Reset the text scale to 0."
+    (interactive)
+    (text-scale-set 0))
+  :init
+  ;; bind a key globally in normal state; keymaps must be quoted
+  (setq general-default-keymaps 'evil-normal-state-map)
+  :config
+  (general-evil-setup)
+  (general-define-key
+   "<f11>" 'toggle-frame-fullscreen
+   "C-M-=" 'text-scale-increase
+   "C-M--" 'text-scale-decrease
+   "C-M-0" 'rc/text-scale-reset
+   "C-h" 'windmove-left
+   "C-l" 'windmove-right
+   "C-k" 'windmove-up
+   "C-j" 'windmove-down
+   "M-l" (kbd "\\ M-.")
+   "M-h" 'xref-pop-marker-stack)
+  (general-define-key
+   :prefix "SPC"
+   "f" 'toggle-frame-fullscreen
+   "v" 'split-window-horizontally
+   "s" 'split-window-vertically
+   "U" 'winner-undo
+   "R" 'winner-redo
+   "d" 'delete-window
+   "o" 'other-window
+   "w" 'ace-window
+   "W" 'whitespace-mode
+   "H" 'highlight-indentation-mode
+   "G" 'global-git-gutter+-mode
+   "T" 'counsel-load-theme
+   "j" 'counsel-bookmark
+   "q" 'treemacs-toggle
+   "SPC" 'counsel-M-x
+   "RET" 'sublimity-mode
+   "a" 'counsel-projectile-switch-project
+   "c" 'projectile-invalidate-cache
+   "gs" 'magit-status
+   "gd" 'magit-diff
+   "gf" 'magit-file-popup
+   "gc" 'magit-commit
+   "gl" 'magit-log
+   "gp" 'magit-push
+   "gw" 'magit-stage-file   ; "write"
+   "gr" 'magit-unstage-file ; "remove"
+   "gg" 'vc-git-grep)
+  (general-evil-define-key 'normal 'help-mode-map
+    "q" 'quit-window
+    "<" 'help-go-back
+    ">" 'help-go-forward)
+  (general-define-key
+   :keymaps 'dired-mode-map
+   ")" 'dired-omit-mode))
+
+(use-package restart-emacs
+  :commands (restart-emacs)
+  :bind ("C-x C-x" . restart-emacs))
 
 (use-package undo-tree
   :defer t
   :init
-  (setq undo-tree-visualizer-diff t)
-  (setq undo-tree-visualizer-timestamps t)
-  (setq undo-tree-auto-save-history t)
+  (setq
+   undo-tree-auto-save-history t
+   undo-tree-history-directory-alist `((".*" . "~/.emacs.d/tmp")))
+  ;; (setq undo-tree-visualizer-diff t)
+  ;; (setq undo-tree-visualizer-timestamps t)
   :config
   (undo-tree-mode)
   :diminish undo-tree-mode)
@@ -394,8 +637,8 @@
   :config
   (global-anzu-mode +1)
   (set-face-attribute 'anzu-mode-line nil :foreground "yellow" :weight 'normal)
-  (define-key isearch-mode-map [remap isearch-query-replace] #'anzu-isearch-query-replace)
-  (define-key isearch-mode-map [remap isearch-query-replace-regexp] #'anzu-isearch-query-replace-regexp)
+  (define-key isearch-mode-map [remap isearch-query-replace] 'anzu-isearch-query-replace)
+  (define-key isearch-mode-map [remap isearch-query-replace-regexp] 'anzu-isearch-query-replace-regexp)
   :diminish anzu-mode)
 
 (use-package telephone-line
@@ -443,13 +686,16 @@
 (use-package ggtags
   :defer t
   :commands ggtags-mode
-  :config (add-hook 'c-mode-common-hook 'ggtags-mode)
+  :config
+  (add-hook 'c-mode-common-hook 'ggtags-mode)
+  (add-hook 'ruby-mode-hook 'ggtags-mode)
+  (add-hook 'haml-mode-hook 'ggtags-mode)
   :diminish ggtags-mode)
 (use-package treemacs
   :init
   (setq
    treemacs-follow-after-init t
-   treemacs-width 25
+   treemacs-width 20
    treemacs-indentation 2
    treemacs-git-integration t
    treemacs-change-root-without-asking nil
@@ -458,36 +704,39 @@
    treemacs-never-persist nil
    treemacs-goto-tag-strategy 'refetch-index)
   :config
-  (use-package treemacs-evil :demand t)
-  (setq treemacs-header-function #'treemacs--create-header-projectile)
+  (setq treemacs-header-function 'treemacs--create-header-projectile)
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
-  :bind
-  (:map treemacs-mode-map
-        ("c" . treemacs-create-file)
-        ("C" . treemacs-create-dir)
-        ("d" . treemacs-delete)
-        ("i" . treemacs-visit-node-vertical-split)
-        ("o" . treemacs-visit-node-horizontal-split)
-        ("u" . treemacs-uproot)
-        ("h" . treemacs-toggle-show-dotfiles)
-        ("M-f" . treemacs-follow-mode)
-        ("M-W" . treemacs-toggle-fixed-width)
-        ("M-w" . treemacs-reset-width)
-        ("x" . treemacs-change-root)))
+  (general-evil-define-key 'normal 'treemacs-mode-map
+    "c" 'treemacs-create-file
+    "C" 'treemacs-create-dir
+    "d" 'treemacs-delete
+    "i" 'treemacs-visit-node-vertical-split
+    "o" 'treemacs-visit-node-horizontal-split
+    "M-j" 'treemacs-next-neighbour
+    "M-k" 'treemacs-previous-neighbour
+    "u" 'treemacs-uproot
+    "h" 'treemacs-toggle-show-dotfiles
+    "M-f" 'treemacs-follow-mode
+    "M-W" 'treemacs-toggle-fixed-width
+    "M-w" 'treemacs-reset-width
+    "M-r" 'treemacs-change-root))
 
 (use-package projectile
   :preface
   (defvar rc/projectile/ignored-dirs
-    '(".git" ".svn" "out" "repl" "project" "target" "venv"))
+    '(".git" ".svn" "out" "repl" "project"
+      "target" "venv" ".emacs.d" "elpa"))
   (defvar rc/projectile/ignored-files
-    '(".DS_Store" "TAGS" "*.gz" "*.pyc" "*.jar" "*.tar.gz" "*.tgz" "*.zip"))
+    '(".DS_Store" "TAGS" "*.gz" "*.pyc"
+      "*.jar" "*.tar.gz" "*.tgz" "*.zip"))
   :init
   ;; projectile requires this setting for ivy completion
   (setq projectile-completion-system 'ivy)
   ;; useful for very large projects
   (setq projectile-enable-caching t)
   (setq projectile-require-project-root nil)
+  (use-package projectile-rails)
   :config
   (setq projectile-globally-ignored-directories
         (append rc/projectile/ignored-dirs
@@ -501,7 +750,7 @@
   :delight '(:eval (concat " " (projectile-project-name)))
   :bind
   (:map global-map
-        ("C-x C-q" . projectile-find-file-in-known-projects)
+        ("C-x C-q" . projectile-find-file-in-known-projects) ; don't use this, it is super-slow
         ("C-x C-g" . projectile-ripgrep)))
 
 (use-package yasnippet
@@ -539,13 +788,19 @@
   (:map c-mode-base-map
         ("C-c d") 'disaster))
 
+(use-package git-gutter+
+  :config
+  :diminish git-gutter+-mode)
+
 (use-package flycheck
   :defer t
   :init
   (setq-default
    flycheck-disabled-checkers
    '(emacs-lisp-checkdoc javascript-jshint))
-  (setq flycheck-javascript-eslint-executable "eslint_d")
+  (setq
+   flycheck-mode-line-prefix "fly"
+   flycheck-javascript-eslint-executable "eslint_d")
   (use-package flycheck-rust)
   (use-package flycheck-clojure)
   (use-package flycheck-irony)
@@ -557,9 +812,42 @@
     (flycheck-mix-setup))
   (use-package flycheck-dialyzer) ;; for erlang
   (use-package flycheck-dialyxir) ;; for elixir
+  (use-package flycheck-color-mode-line
+    ;; seems to work only with powerline,
+    ;; not with telephone-line that I currently use
+    :disabled
+    :config
+    (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
   :config
+  ;; make the error list display like similar lists in contemporary IDEs
+  ;; like VisualStudio, Eclipse, etc.
+  (add-to-list
+   'display-buffer-alist
+   `(,(rx bos "*Flycheck errors*" eos)
+     (display-buffer-reuse-window display-buffer-in-side-window)
+     (side . bottom)
+     (reusable-frames . visible)
+     (window-height . 0.33)))
   (global-flycheck-mode 1)
-  :diminish flycheck-mode)
+  :bind
+  (:map global-map
+        ([f10] . flycheck-list-errors)))
+
+(setq flyspell-use-meta-tab nil
+      flyspell-mode-line-string " flys"
+      flyspell-auto-correct-binding (kbd ""))
+
+;; for programming modes, enable flyspell-prog-mode for
+;; spell checking in comments and strings.
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+(use-package flyspell-correct-ivy
+  :demand t
+  :config
+  (setq flyspell-correct-interface 'flyspell-correct-ivy)
+  :bind
+  (:map flyspell-mode-map
+        ("C-;" . flyspell-correct-previous-word-generic)))
 
 (use-package rust-mode
   :config
@@ -583,13 +871,17 @@
 
 (use-package ivy
   :init
-  ;; add 'recentf-mode' and bookmarks to 'ivy-switch-buffer'
-  (setq ivy-use-virtual-buffers t)
-  ;; number of result lines to display
-  (setq ivy-height 14)
-  (setq ivy-count-format "(%d/%d) ")
-  ;; omit ^ at the beginning of regexp
-  (setq ivy-initial-inputs-alist nil)
+  (setq
+   ;; add 'recentf-mode' and bookmarks to 'ivy-switch-buffer'
+   ivy-use-virtual-buffers t
+   ;; number of result lines to display
+   ivy-height 10
+   ;; wrap around ivy results
+   ivy-wrap t
+   ;; display current candidate
+   ivy-count-format "(%d/%d) "
+   ;; omit ^ at the beginning of regexp
+   ivy-initial-inputs-alist nil)
   :config
   (ivy-mode 1)
   ;; enable fuzzy matching
@@ -597,6 +889,15 @@
   (setq ivy-re-builders-alist
         '((ivy-switch-buffer . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
+  (general-define-key
+   :keymaps 'ivy-minibuffer-map
+   "C-j" 'ivy-next-line
+   "C-k" 'ivy-previous-line
+   "C-n" 'ivy-next-history-element
+   "C-p" 'ivy-previous-history-element
+   "<C-return>" 'ivy-immediate-done
+   "C-l" 'ivy-immediate-done
+   "C-w" 'ivy-backward-kill-word)
   :diminish ivy-mode)
 
 (use-package flx)
@@ -618,9 +919,14 @@
         ("C-c k" . counsel-rg)))
 
 (use-package swiper
-  :bind
-  (:map global-map
-        ("C-s" . swiper)))
+  :config
+  ;; recenter after swiper is finished
+  (setq swiper-action-recenter t)
+  (general-define-key
+   :keymaps 'swiper-map
+   "C-r" 'swiper-query-replace)
+  (general-define-key
+    "C-s" 'swiper))
 
 (use-package counsel-projectile
   :bind
@@ -629,9 +935,94 @@
         ("C-a" . counsel-projectile-switch-to-buffer)))
 
 (use-package hydra)
+
 (use-package ivy-hydra)
 
+;; dired ;;
+
+;; prevents dired from creating an annoying popup
+;; when dired-find-alternate-file is called
+(put 'dired-find-alternate-file 'disabled nil)
+;; human readable filesize
+(setq dired-listing-switches "-alh")
+;; recursive copy & delete
+(setq dired-recursive-deletes 'always)
+(setq dired-recursive-copies 'always)
+(setq
+ delete-by-moving-to-trash t
+ trash-directory "~/.emacs.d/trash")
+
+;; enable omit mode
+(setq-default
+ dired-omit-mode t
+ ;; uncomment these 2 lines below if you want to hide dot files
+ ;; dired-omit-files
+ ;; (concat dired-omit-files "\\|^\\.[^\\.]")
+ ;; autosave files
+ dired-omit-files "^\\.?#")
+
+(with-eval-after-load "dired"
+  (defhydra hydra-dired
+    (:color "pink" :hint nil)
+    "
+ ^Navigation^ | ^Mark^        | ^Actions^        | ^View^
+-^----------^-+-^----^--------+-^-------^--------+-^----^-------
+  _n_:    ʌ   | _m_: mark     | _D_: delete      | _g_: refresh
+ _RET_: visit | _u_: unmark   | _S_: save        | _s_: sort
+  _p_:    v   | _*_: specific | _a_: all actions | _/_: filter
+-^----------^-+-^----^--------+-^-------^--------+-^----^-------
+"
+    ("<" dired-prev-dirline)
+    ("n" dired-next-line)
+    ("RET" dired-do-view :color blue)
+    ("p" dired-previous-line)
+    (">" dired-next-dirline)
+
+    ("m" dired-mark)
+    ("u" dired-unmark-forward)
+    ("*" hydra-dired-mark/body :color blue)
+
+    ("D" dired-do-delete)
+    ("S" dired-do-save)
+    ("a" hydra-dired-action/body :color blue)
+
+    ("g" dired-update)
+    ("s" hydra-dired-sort/body :color blue)
+    ("/" hydra-dired-filter/body :color blue)
+
+    ("o" dired-visit-buffer-other-window "other window" :color blue)
+    ("q" dired-quit "quit dired" :color blue)
+    ("." nil "toggle hydra" :color blue))
+  (defhydra hydra-dired-mark
+    (:color teal :columns 5 :after-exit (hydra-dired/body))
+      "Mark"
+      ("z" dired-mark-compressed-file-buffers "compressed")
+      ("b" hydra-dired/body "back" :color blue))
+
+  (defhydra hydra-dired-action
+    (:color teal :columns 4 :after-exit
+            (if (eq major-mode 'dired-mode)
+                (hydra-dired/body)))
+      "Action"
+      ("X" dired-do-shell-command-pipe "shell-command-pipe")
+      ("b" nil "back"))
+    (defun rc/dired/up-dir ()
+      (interactive)
+      (find-alternate-file ".."))
+    (evil-make-overriding-map dired-mode-map 'normal)
+    (general-define-key :states 'normal "-" (kbd "C-x d RET"))
+    (general-evil-define-key 'normal 'dired-mode-map
+      ";" 'evil-ex
+      "-" 'rc/dired/up-dir
+      "RET" 'dired-find-alternate-file
+      "i" 'ido-find-file
+      "j" 'dired-next-line
+      "k" 'dired-previous-line
+      "gg" 'evil-goto-first-line
+      "G" 'evil-goto-line))
+
 (use-package dired+
+  :after dired
   :bind
   (:map global-map
         ;; instantly teleports to the currently
@@ -649,10 +1040,13 @@
     (switch-to-buffer "*Bookmark List*")))
 
 (use-package ace-window)
+
 (use-package ripgrep)
 (use-package projectile-ripgrep)
 
 (use-package multiple-cursors
+  ;; I use evil-mc and evil-multiedit instead
+  :disabled
   :bind
   (:map global-map
         ("C-M-n" . mc/mark-next-like-this)
@@ -677,6 +1071,12 @@
 
 (use-package solidity-mode)
 
+(use-package nyan-mode
+  :disabled
+  :config
+  (nyan-mode 1)
+  (nyan-start-animation))
+
 (use-package rainbow-mode
   :preface
   (defvar rc/rainbow/modes
@@ -690,14 +1090,32 @@
   (dolist (mode rc/rainbow/modes)
     (add-hook mode 'rainbow-mode)))
 
-(use-package emmet-mode)
+;; org mode ;;
+
+(setq org-ellipsis "•••") ; noticeable ellipsis
 
 (use-package magit
   :after ivy
+  :commands
+  (magit-status
+   magit-diff
+   magit-commit
+   magit-log
+   magit-push
+   magit-stage-file
+   magit-unstage-file)
   :init
   ;; magit requires this setting for ivy completion
   (setq magit-completing-read-function 'ivy-completing-read)
   :diminish magit-mode)
+
+;; measure how many time you execute commands
+;; see: http://blog.binchen.org/posts/how-to-be-extremely-efficient-in-emacs.html
+(use-package keyfreq
+  :demand t
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
 
 (use-package dockerfile-mode)
 (use-package purescript-mode)
@@ -707,17 +1125,27 @@
 (use-package nginx-mode)
 (use-package yaml-mode
   :delight " yaml")
+(use-package markdown-mode)
 (use-package toml-mode)
 (use-package kotlin-mode)
 (use-package glsl-mode)
 (use-package jade-mode)
+(use-package haml-mode)
+(use-package scss-mode
+  :delight " scss")
 (use-package lua-mode)
+(use-package robe
+  :config
+  (add-hook 'ruby-mode-hook 'robe-mode))
+(use-package rubocop
+  :delight rubocop-mode " rubocop"
+  :config
+  (add-hook 'ruby-mode-hook 'rubocop-mode))
 (use-package go-mode)
 
 (use-package erlang)
 
 (use-package elixir-mode
-  :after evil-leader
   :init
   (use-package alchemist
     :demand t
@@ -726,7 +1154,6 @@
      alchemist-goto-elixir-source-dir "~/projects/github/elixir"
      alchemist-goto-erlang-source-dir "/usr/local/Cellar/erlang/19.2.3")
     :config
-    ;; evil-leader/set-key-for-mode doesn't work here for some reason
     ;; elixir general key bindings
     (evil-define-minor-mode-key 'normal 'alchemist-mode " t" 'alchemist-mix-test)
     (evil-define-minor-mode-key 'normal 'alchemist-mode " T" 'alchemist-project-run-tests-for-current-file)
@@ -777,6 +1204,8 @@
 (setq ad-redefinition-action 'accept)
 
 (use-package winner
+  :demand t
+  :defer 5
   :config
   ;; restore split pane config, winner-undo, winner-redo
   (winner-mode 1))
@@ -843,13 +1272,16 @@
   (add-hook 'c++-mode-hook 'rc/compile/setup-make))
 
 ;; always use the latest & greatest
-(add-hook 'c++-mode-hook
-          (lambda () (setq
-                      flycheck-gcc-language-standard "c++17"
-                      flycheck-clang-language-standard "c++17")))
+(add-hook
+ 'c++-mode-hook
+ (lambda () (setq
+        flycheck-gcc-language-standard "c++17"
+        flycheck-clang-language-standard "c++17")))
 
 (with-eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
+
+(use-package emmet-mode)
 
 (use-package web-mode
   :after (flycheck company)
@@ -877,7 +1309,7 @@
 (use-package tern
   :commands tern-mode
   :config
-  ;; enable JavaScript completion between <script>...</script> etc.
+  ;; enable js completion between <script>...</script> etc
   (defadvice company-tern (before web-mode-set-up-ac-sources activate)
     "Set `tern-mode' based on current language before running company-tern."
     (message "advice")
@@ -888,6 +1320,12 @@
                 (unless tern-mode (tern-mode))
             (if tern-mode (tern-mode -1)))))))
 
+(use-package npm-mode
+  :commands (npm-mode npm-global-mode)
+  :config
+  (npm-global-mode)
+  :diminish npm-mode)
+
 (use-package js2-mode
   :init
   ;; indent step is 2 spaces
@@ -897,7 +1335,7 @@
     :preface
     (defun rc/xref-js2/add-backend ()
       (add-hook 'xref-backend-functions
-                #'xref-js2-xref-backend nil t))
+                'xref-js2-xref-backend nil t))
     :config
     (unbind-key "M-." js2-mode-map)
     (add-hook 'js2-mode-hook 'rc/xref-js2/add-backend))
@@ -923,25 +1361,40 @@
    typescript-indent-level 2
    flycheck-check-syntax-automatically '(save mode-enabled)
    flycheck-tslint-args . ("--type-check"))
-  :config
   (use-package tide
-    :config
-    (defun rc/tide-mode/setup ()
+    :preface
+    (defun rc/tide/setup ()
       (tide-setup)
       (flycheck-mode +1)
       (eldoc-mode +1)
       (tide-hl-identifier-mode +1)
       (add-to-list
        'compilation-error-regexp-alist
-       '("ERROR in \\(.*\\)\n(\\([0-9]+\\),\\([0-9]+\\)):" 1 2 3)))
+       '("ERROR in \\(.*\\)\n(\\([0-9]+\\),\\([0-9]+\\)):" 1 2 3))
       (company-mode +1))
-    (add-hook 'typescript-mode-hook 'rc/tide-mode/setup)
+    (defun rc/tide/setup-tsx ()
+      (when (string-equal "tsx" (file-name-extension buffer-file-name))
+        (rc/tide/setup)))
+    :config
+    (general-evil-define-key '(normal visual) tide-mode-map
+      "M-j" 'tide-find-next-reference
+      "M-k" 'tide-find-previous-reference
+      "M-l" 'tide-jump-to-definition
+      "M-h" 'tide-jump-back
+      "M-i" 'tide-jump-to-implementation)
+    (general-evil-define-key '(normal visual) tide-mode-map
+      :prefix "SPC"
+      "!" 'tide-restart-server
+      "." 'tide-documentation-at-point
+      "r" 'tide-references
+      "e" 'tide-project-errors
+      "n" 'tide-rename-symbol
+      "t" 'tide-format
+      "x" 'tide-fix
+      "@" 'tide-refactor)
+    (add-hook 'typescript-mode-hook 'rc/tide/setup)
     ;; enable tide for .tsx files
-    (add-hook
-     'web-mode-hook
-     (lambda ()
-       (when (string-equal "tsx" (file-name-extension buffer-file-name))
-         (rc/tide-mode/setup))))
+    (add-hook 'web-mode-hook 'rc/tide/setup-tsx))
   :delight " ts")
 
 (use-package google-translate
@@ -959,16 +1412,19 @@
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file)
 
-;; prevent quelpa from doing anyting
-;; that requires network connection
-(setq
-  quelpa-update-melpa-p nil    ;; don't update MELPA git repo
-  quelpa-checkout-melpa-p nil  ;; don't clone MELPA git repo
-  quelpa-upgrade-p nil         ;; don't try to update packages
-  quelpa-self-upgrade-p nil)   ;; don't upgrade quelpa automatically
+;; maximize Emacs on startup
+(set-frame-parameter nil 'fullscreen 'fullboth)
 
 ;; bootstrap quelpa ;;
 (if (require 'quelpa nil t)
+  ;; prevent quelpa from doing anyting
+  ;; that requires network connection
+  (setq
+    quelpa-update-melpa-p nil    ; don't update MELPA git repo
+    quelpa-checkout-melpa-p nil  ; don't clone MELPA git repo
+    quelpa-upgrade-p nil         ; don't try to update packages
+    quelpa-self-upgrade-p nil)   ; don't upgrade quelpa automatically
+
     ;; (quelpa-self-upgrade)
   (with-temp-buffer
     (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
