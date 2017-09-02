@@ -6,9 +6,13 @@ tap 'caskroom/fonts'
 tap 'thoughtbot/formulae'
 tap 'neovim/neovim'
 tap 'ethereum/ethereum'
+tap 'coursier/formulas'
 
 brew 'rcm'
 brew 'mas'
+
+cask 'java'
+cask 'java6'
 
 brew 'rust'
 brew 'elixir'
@@ -18,7 +22,7 @@ brew 'flow'
 brew 'go'
 brew 'ponyc'
 brew 'sbt'
-brew 'coursier/formulas/coursier'
+brew 'coursier/formulas/coursier', args: ['HEAD']
 
 brew 'sdl2'
 
@@ -115,7 +119,6 @@ cask 'showyedge'
 cask 'flux'
 cask 'toggldesktop'
 cask 'gyazo'
-cask 'dash2'
 cask 'ngrok'
 
 cask 'macvim'
@@ -137,10 +140,6 @@ cask 'wireshark'
 cask 'tunnelblick'
 cask 'gpgtools'
 cask 'keybase'
-
-cask 'java'
-cask 'java6'
-cask 'java7'
 
 cask 'pgadmin3'
 cask 'google-cloud-sdk'
@@ -171,7 +170,8 @@ cask 'webpquicklook'
 cask 'suspicious-package'
 cask 'quicklookase'
 cask 'qlvideo'
-cask 'unrarx'
+
+cask 'twitch'
 
 # fonts
 
@@ -192,3 +192,4 @@ mas 'Pixen', id: 525180431
 mas 'Noizio', id: 928871589
 mas 'TweetDeck', id: 485812721
 mas 'Monosnap', id: 540348655
+mas 'Twitter', id: 409789998

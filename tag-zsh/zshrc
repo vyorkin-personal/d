@@ -44,7 +44,8 @@ zplug "k4rthik/git-cal", as:command
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git +rustup)
-zplug "frmendes/geometry", as:theme
+PROMPT_GEOMETRY_COLORIZE_SYMBOL=true
+zplug "geometry-zsh/geometry"
 # zplug 'simnalamburt/shellder', as:theme
 # zplug "dracula/zsh", as:theme
 

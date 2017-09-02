@@ -21,6 +21,9 @@ I've tried hard to do this for you, so you may not require to do anyting at all,
 but I probably missed smth.
 
 Here is the things you should do manually.
+
+Run `C-SPC-I` in tmux session to install plugins.
+
 [Add your JDKs to jenv](http://davidcai.github.io/blog/posts/install-multiple-jdk-on-mac/) (use your JDK versions):
 
 ```
