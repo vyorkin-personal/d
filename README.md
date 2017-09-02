@@ -22,7 +22,18 @@ but I probably missed smth.
 
 Here is the things you should do manually.
 
+#### elixir & phoenix
+
+I should manually install phoenix:
+```
+mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+```
+
+#### tmux
+
 Run `C-SPC-I` in tmux session to install plugins.
+
+#### jenv & JDKs
 
 [Add your JDKs to jenv](http://davidcai.github.io/blog/posts/install-multiple-jdk-on-mac/) (use your JDK versions):
 

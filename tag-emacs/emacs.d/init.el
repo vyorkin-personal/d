@@ -329,6 +329,7 @@
              (elixir-mode " ex" elixir)
              (alchemist-mode " al" alchemist)
              (alchemist-hex-mode " alhex" alchemist)
+             (alchemist-test-mode " altest" alchemist)
              (rust-mode " rs" rust)
              (javascript-mode " js" js)
              (eldoc-mode " eldoc" eldoc)
