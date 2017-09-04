@@ -1,8 +1,8 @@
-# intro
+# Intro
 
 Here is find my dotfiles that I use specifically for Mac OS X.
 
-# installation
+# Installation
 
 ```
 $ git clone https://github.com/vyorkin-personal/d.git ~/.dotfiles
@@ -11,25 +11,61 @@ $ git submodule update --init
 $ make
 ```
 
-# setup
+# Setup
 
 If you use iTerm2, enable "Applications in terminal may access system
 clipboard"
 
 Some of the installed software requires additional setup, so examine the Brewfile and run `brew info someting` and `brew cask info something` accordingly to find out your post-installation steps.
-I've tried hard to do this for you, so you may not require to do anyting at all,
-but I probably missed smth.
+I've tried hard to do this for you, so you may not require to do anyting at all, but I probably missed smth.
 
 Here is the things you should do manually.
 
-#### elixir & phoenix
+#### Non-free software
+
+* MindNode
+* 2Do
+* SnippetsLab
+* DayOne
+* Typinator
+* Pixave
+* Pdf Expert
+* Timing
+* Airmail 3
+* Fantastical
+* Bartender
+* Focus
+* Reeder 3
+* Dropzone
+* PopClip
+* Next Meeting
+* Xccello
+* DaisyDisk
+* MonthlyCal
+* Spotify
+* Spotifree
+* Sketch
+* Adobe Photoshop, Illustrator, etc
+* Annotate
+* BeardedSpice
+* LittleSnitch
+* Texpad
+* Anki
+* Paw
+* Default Folder
+
+#### Safari extensions
+
+[Here](https://github.com/learn-anything/safari-extensions) you'll find anyting you need.
+
+#### Elixir & Phoenix
 
 I should manually install phoenix:
 ```
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 ```
 
-#### tmux
+#### Tmux
 
 Run `C-SPC-I` in tmux session to install plugins.
 
@@ -106,6 +142,22 @@ Common crates that I use:
 * [rustfmt](https://github.com/rust-lang-nursery/rustfmt)
 * [racer](https://github.com/phildawes/racer)
 
+#### NPM global packages
+
+* bower
+* yo
+* madge
+* speed-test
+* tldr
+* eslint_d
+* how-to-npm
+* psi
+* create-react-app
+* git-issues
+* vtop
+* now@beta
+* trash-cli
+
 # Troubleshooting
 
 Don't worry, be happy
@@ -116,21 +168,31 @@ Don't worry, be happy
 
 * remove old packages from the list below and automate the installation process somehow:
 ```
-  bower duo grunt-cli broccoli-cli gulp yo khaos jspm
-  npm-check npm-check-updates bower-check-updates avn avn-nvm browserify
-  madge forever nodemon jscs csslint how-to-npm
-  psi eslint eslint_d jsdoc stylelint doiuse
+  npm-check
+  npm-check-updates
+  npm-upgrade
+  bower-check-updates
+  avn
+  avn-nvm
+  browser
+  forever nodemon jscs csslint ify
+```
+
+```
+  jsdoc
+  stylelint
+  doiuse
   watch js-beautify nsp snyk gitbook-cli plato sloc npmd@1 live-server git-guilt doctoc
   trash localtunnel svgo git+https://github.com/ramitos/jsctags.git
-  jsfmt fixmyjs jsinspect tmi speed-test tldr commitizen
+  jsfmt fixmyjs jsinspect tmi  commitizen
   karma-cli istanbul foreman
   iron-node devtool disc stylelint-config-suitcss next-update semantic-release-cli
-  git-issues exact-semver fixpack cli-real-favicon greenkeeper npm-which budo
+  exact-semver fixpack cli-real-favicon greenkeeper npm-which budo
   del-cli json-package npm-quick-run center-code gtni alex typings
   tern recli webpack-validator all-nvm available-versions manpm center-code
   conventional-changelog-cli conventional-recommended-bump
   typed-css-modules chrome-webstore-upload-cli react-native-cli
-  create-webpack-config create-react-app node-pre-gyp npm-upgrade
+  create-webpack-config node-pre-gyp
   yarn-completions pkgcount typescript-formatter pulp
   git-recall
 ```

@@ -77,6 +77,10 @@ bind t:${hyper} focus 'Discord'
 bind r:${hyper} focus 'Preview'
 bind v:${hyper} focus 'VirtualBox VM'
 bind w:${hyper} focus 'VMware Fusion'
+bind 2:${hyper} focus '2Do'
+bind c:${hyper} focus 'Fantastical'
+bind k:${hyper} focus 'Spotify'
+bind m:${hyper} focus 'Airmail'
 
 # navigation & location bindings
 

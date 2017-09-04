@@ -301,15 +301,8 @@
 
 (use-package base16-theme
   :disabled
-  :preface
-  (defun rc/theme/grayscale-light ()
-    (load-theme 'base16-grayscale-light t)
-    (set-face-attribute 'vertical-border nil :foreground "#dddddd"))
-  (defun rc/theme/grayscale-dark ()
-    (load-theme 'base16-grayscale-dark t)
-    (set-face-attribute 'vertical-border nil :foreground "#000000"))
   :config
-  (rc/theme/grayscale-dark))
+  (load-theme 'base16-grayscale-light))
 
 (use-package dracula-theme :disabled)
 (use-package gotham-theme :disabled)

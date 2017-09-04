@@ -21,6 +21,9 @@ mkdir -p $HOME/.nvm
 
 ln -s $HOME/.dotfiles/rcrc $HOME/.rcrc
 
+# allow everything
+sudo spctl --master-disable
+
 # set zsh as a default shell for the current user
 sudo chsh -s $(which zsh) $USER
 

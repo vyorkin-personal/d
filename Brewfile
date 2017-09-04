@@ -37,11 +37,14 @@ brew 'graphviz'
 brew 'ripgrep'
 brew 'mosh'
 brew 'ispell'
+brew 'm-cli'
+brew 'ccat'
 brew 'asciinema'
 brew 'coreutils'
 brew 'slurm'
 brew 'gpg'
 brew 'ethereum'
+brew 'swagger-codegen'
 
 brew 'zsh'
 brew 'zplug'
@@ -135,6 +138,7 @@ cask 'slack-beta'
 cask 'screenhero'
 cask 'teamviewer'
 
+cask 'kap'
 cask 'vlc'
 cask 'wireshark'
 cask 'tunnelblick'
@@ -193,3 +197,5 @@ mas 'Noizio', id: 928871589
 mas 'TweetDeck', id: 485812721
 mas 'Monosnap', id: 540348655
 mas 'Twitter', id: 409789998
+
+# see README.md for a list of paid apps that I use

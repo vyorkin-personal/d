@@ -2,3 +2,4 @@ virtualenv
 speedtest-cli
 pgcli
 neovim
+howdoi
