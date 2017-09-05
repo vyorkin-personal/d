@@ -1,19 +1,20 @@
 #!/bin/sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	brew tap Homebrew/bundle
-	brew bundle
-	mas signin
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        brew tap Homebrew/bundle
+        brew bundle
+        brew install --HEAD https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb
+        mas signin
 
         sudo easy_install pip
 
-	mkdir -p ~/.karabiner.d/configuration/
-	touch $HOME/.karabiner.d/configuration/karabiner.json
+        mkdir -p ~/.karabiner.d/configuration/
+        touch $HOME/.karabiner.d/configuration/karabiner.json
 
-	defaults write -g InitialKeyRepeat -int 10 		# normal minimum is 15 (225 ms)
-	defaults write -g KeyRepeat -int 1 			# normal minimum is 2 (30 ms)
-	defaults write com.apple.finder AppleShowAllFiles YES	# display hidden files in Finder
+        defaults write -g InitialKeyRepeat -int 1               # normal minimum is 15 (225 ms)
+        defaults write -g KeyRepeat -int 1                      # normal minimum is 2 (30 ms)
+        defaults write com.apple.finder AppleShowAllFiles YES   # display hidden files in Finder
 fi
 
 # required for nvm

@@ -1128,6 +1128,9 @@
 (use-package yaml-mode
   :delight " yaml")
 (use-package markdown-mode)
+(use-package apib-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.apib\\'" . apib-mode)))
 (use-package toml-mode)
 (use-package kotlin-mode)
 (use-package glsl-mode)
