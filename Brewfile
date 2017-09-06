@@ -26,6 +26,9 @@ brew 'coursier/formulas/coursier', args: ['HEAD']
 
 brew 'sdl2'
 
+brew 'pgcli'
+brew 'mycli'
+
 brew 'git'
 brew 'gitsh'
 brew 'git-extras'
@@ -145,7 +148,7 @@ cask 'tunnelblick'
 cask 'gpgtools'
 cask 'keybase'
 
-cask 'pgadmin3'
+cask 'pgadmin4'
 cask 'google-cloud-sdk'
 
 cask 'torbrowser'

@@ -625,8 +625,8 @@
   (setq
    undo-tree-auto-save-history t
    undo-tree-history-directory-alist `((".*" . "~/.emacs.d/tmp")))
-  ;; (setq undo-tree-visualizer-diff t)
-  ;; (setq undo-tree-visualizer-timestamps t)
+  (setq undo-tree-visualizer-diff t)
+  (setq undo-tree-visualizer-timestamps t)
   :config
   (undo-tree-mode)
   :diminish undo-tree-mode)
