@@ -40,8 +40,8 @@
 
 ;; fonts ;;
 
-(add-to-list 'default-frame-alist '(font . "Fira Code 16"))
-(set-frame-font "Fira Code 16" nil t)
+(add-to-list 'default-frame-alist '(font . "Fira Code 14"))
+(set-frame-font "Fira Code 14" nil t)
 
 ;; (add-to-list 'default-frame-alist '(font . "Source Code Pro 14"))
 ;; (set-frame-font "Source Code Pro 14" nil t)
@@ -412,7 +412,7 @@
    evil-normal-state-cursor 'box
    evil-emacs-state-cursor `(,(face-foreground 'warning) box)
    evil-insert-state-cursor 'bar
-   evil-visual-state-cursor 'hollow)
+   evil-visual-state-cursor 'box)
   ;; disable evil-make-overriding/intercept-map at start-up,
   ;; otherwise, Evil will mess with other mode’s mappings
   (advice-add 'evil-make-intercept-map :override
@@ -440,7 +440,11 @@
     :config
     (global-evil-mc-mode 1)
     (add-hook 'rc/evil/esc-hook 'rc/evil-mc/esc))
-  (use-package evil-magit :demand t)
+  (use-package evil-magit
+    :after magit
+    :demand t
+    :config
+    (setq evil-magit-state 'normal))
   (use-package evil-ediff :demand t)
   (use-package evil-matchit
     :demand t
@@ -533,6 +537,8 @@
       "RET" 'bookmark-bmenu-this-window
       "j" 'evil-next-line
       "k" 'evil-previous-line))
+  ;; magit
+  ;; (evil-set-initial-state 'magit-status-mode 'emacs)
   ;; special
   (evil-make-overriding-map special-mode-map 'normal)
   ;; compilation
@@ -553,6 +559,7 @@
   (advice-add 'windmove-do-window-select :around 'rc/evil/restore-normal-state-on-windmove))
 
 (use-package general
+  :after evil
   :preface
   (defun rc/text-scale-reset ()
     "Reset the text scale to 0."
@@ -610,10 +617,7 @@
     ">" 'help-go-forward)
   (general-define-key
    :keymaps 'process-menu-mode-map
-   "M-d" 'process-menu-delete-process)
-  (general-define-key
-   :keymaps 'dired-mode-map
-   ")" 'dired-omit-mode))
+   "M-d" 'process-menu-delete-process))
 
 (use-package restart-emacs
   :commands (restart-emacs)
@@ -690,6 +694,9 @@
   (add-hook 'ruby-mode-hook 'ggtags-mode)
   (add-hook 'haml-mode-hook 'ggtags-mode)
   :diminish ggtags-mode)
+
+(use-package all-the-icons :demand t)
+
 (use-package treemacs
   :init
   (setq
@@ -881,6 +888,15 @@
    ivy-count-format "(%d/%d) "
    ;; omit ^ at the beginning of regexp
    ivy-initial-inputs-alist nil)
+  (use-package all-the-icons-ivy
+    ;; doesn't work for some reason
+    ;; works only when enabled manually
+    :disabled
+    :demand t
+    :after all-the-icons
+    :commands (all-the-icons-ivy-setup)
+    :config
+    (all-the-icons-ivy-setup))
   :config
   (ivy-mode 1)
   ;; enable fuzzy matching
@@ -939,89 +955,131 @@
 
 ;; dired ;;
 
-;; prevents dired from creating an annoying popup
-;; when dired-find-alternate-file is called
-(put 'dired-find-alternate-file 'disabled nil)
-;; human readable filesize
-(setq dired-listing-switches "-alh")
-;; recursive copy & delete
-(setq dired-recursive-deletes 'always)
-(setq dired-recursive-copies 'always)
-(setq
- delete-by-moving-to-trash t
- trash-directory "~/.emacs.d/trash")
-
-;; enable omit mode
-(setq-default
- dired-omit-mode t
- ;; uncomment these 2 lines below if you want to hide dot files
- ;; dired-omit-files
- ;; (concat dired-omit-files "\\|^\\.[^\\.]")
- ;; autosave files
- dired-omit-files "^\\.?#")
-
-(with-eval-after-load "dired"
-  (defhydra hydra-dired
-    (:color "pink" :hint nil)
-    "
- ^Navigation^ | ^Mark^        | ^Actions^        | ^View^
--^----------^-+-^----^--------+-^-------^--------+-^----^-------
-  _n_:    ʌ   | _m_: mark     | _D_: delete      | _g_: refresh
- _RET_: visit | _u_: unmark   | _S_: save        | _s_: sort
-  _p_:    v   | _*_: specific | _a_: all actions | _/_: filter
--^----------^-+-^----^--------+-^-------^--------+-^----^-------
-"
-    ("<" dired-prev-dirline)
-    ("n" dired-next-line)
-    ("RET" dired-do-view :color blue)
-    ("p" dired-previous-line)
-    (">" dired-next-dirline)
-
-    ("m" dired-mark)
-    ("u" dired-unmark-forward)
-    ("*" hydra-dired-mark/body :color blue)
-
-    ("D" dired-do-delete)
-    ("S" dired-do-save)
-    ("a" hydra-dired-action/body :color blue)
-
-    ("g" dired-update)
-    ("s" hydra-dired-sort/body :color blue)
-    ("/" hydra-dired-filter/body :color blue)
-
-    ("o" dired-visit-buffer-other-window "other window" :color blue)
-    ("q" dired-quit "quit dired" :color blue)
-    ("." nil "toggle hydra" :color blue))
-  (defhydra hydra-dired-mark
-    (:color teal :columns 5 :after-exit (hydra-dired/body))
-      "Mark"
-      ("z" dired-mark-compressed-file-buffers "compressed")
-      ("b" hydra-dired/body "back" :color blue))
-
-  (defhydra hydra-dired-action
-    (:color teal :columns 4 :after-exit
-            (if (eq major-mode 'dired-mode)
-                (hydra-dired/body)))
-      "Action"
-      ("X" dired-do-shell-command-pipe "shell-command-pipe")
-      ("b" nil "back"))
-    (defun rc/dired/up-dir ()
-      (interactive)
-      (find-alternate-file ".."))
-    (evil-make-overriding-map dired-mode-map 'normal)
-    (general-define-key :states 'normal "-" (kbd "C-x d RET"))
-    (general-evil-define-key 'normal 'dired-mode-map
-      ";" 'evil-ex
-      "-" 'rc/dired/up-dir
-      "RET" 'dired-find-alternate-file
-      "i" 'ido-find-file
-      "j" 'dired-next-line
-      "k" 'dired-previous-line
-      "gg" 'evil-goto-first-line
-      "G" 'evil-goto-line))
+(use-package dired
+  :ensure nil
+  :commands (dired)
+  :init
+  ;; prevents dired from creating an annoying popup
+  ;; when dired-find-alternate-file is called
+  (put 'dired-find-alternate-file 'disabled nil)
+  (setq
+   ;; if there is a dired buffer displayed in the next window,
+   ;; use its current directory
+   dired-dwim-target t
+   dired-omit-verbose nil
+   ;; human readable filesize
+   dired-listing-switches "-alh"
+   ;; recursive copy & delete
+   dired-recursive-deletes 'always
+   dired-recursive-copies 'always)
+  (setq
+   delete-by-moving-to-trash t
+   trash-directory "~/.emacs.d/trash")
+  ;; enable omit mode
+  ;; (setq-default dired-omit-mode t)
+  ;; hide autosave files
+  (setq-default dired-omit-files "^\\.?#")
+  ;; uncomment the line below if you want to hide dot files
+  ;; (setq-default dired-omit-files (concat dired-omit-files "\\|^\\.[^\\.]"))
+  (use-package all-the-icons-dired
+    :demand t
+    :config
+    (all-the-icons-dired-mode))
+  :config
+  (defun rc/dired/previous-line ()
+    (interactive)
+    (dired-previous-line 1)
+    (if (bobp) (dired-next-line 1)))
+  (defun rc/dired/next-line ()
+    (interactive)
+    (dired-next-line 1)
+    (if (eobp) (dired-next-line -1)))
+  (defun rc/dired/up-directory (&optional other-window)
+    (interactive "P")
+    (let* ((dir (dired-current-directory))
+           (orig (current-buffer))
+           (up (file-name-directory (directory-file-name dir))))
+      (or (dired-goto-file (directory-file-name dir))
+          (and (cdr dired-subdir-alist)
+               (dired-goto-subdir up))
+          (progn
+            (kill-buffer orig)
+            (dired up)
+            (dired-goto-file dir)))))
+  (defun rc/dired/go-home ()
+    (interactive)
+    (find-alternate-file "~/"))
+  (defun rc/dired/diff ()
+    "Ediff marked files in dired or selected files in separate window"
+    (interactive)
+    (let* ((marked-files (dired-get-marked-files nil nil))
+           (other-win
+            (get-window-with-predicate
+             (lambda (window)
+               (with-current-buffer (window-buffer window)
+                 (and (not (eq window (selected-window)))
+                      (eq major-mode 'dired-mode))))))
+           (other-marked-files
+            (and other-win
+                 (with-current-buffer (window-buffer other-win)
+                   (dired-get-marked-files nil)))))
+      (cond ((= (length marked-files) 2)
+             (ediff-files (nth 0 marked-files)
+                          (nth 1 marked-files)))
+            ((= (length marked-files) 3)
+             (ediff-files3 (nth 0 marked-files)
+                           (nth 1 marked-files)
+                           (nth 2 marked-files)))
+            ((and (= (length marked-files) 1)
+                  (= (length other-marked-files) 1))
+             (ediff-files (nth 0 marked-files)
+                          (nth 0 other-marked-files)))
+            ((= (length marked-files) 1)
+             (dired-diff))
+            (t (error "mark exactly 2 files, at least 1 locally")))))
+  (defun rc/dired/toggle-marks (arg)
+    (save-restriction
+      (narrow-to-region (point-at-bol) (point-at-eol))
+      (dired-toggle-marks))
+    (dired-previous-line arg))
+  (defun rc/dired/mark-up () (interactive) (rc/dired/toggle-marks 1))
+  (defun rc/dired/mark-down () (interactive) (rc/dired/toggle-marks -1))
+  (evil-make-overriding-map dired-mode-map 'normal)
+  (general-define-key :states 'normal "-" (kbd "C-x d RET"))
+  (general-evil-define-key 'visual 'dired-mode-map
+    "m" 'dired-mark
+    "u" 'dired-unmark)
+  (general-evil-define-key 'normal 'dired-mode-map
+    ";" 'evil-ex
+    "-" 'rc/dired/up-directory
+    "=" 'rc/dired/diff
+    "RET" 'dired-find-alternate-file
+    "~" 'rc/dired/go-home
+    "a" 'dired-create-directory
+    "d" 'dired-do-delete
+    "C" 'dired-do-copy
+    ;; "d" 'diredp-delete-this-file
+    "f" 'counsel-find-file
+    "K" 'rc/dired/mark-up
+    "J" 'rc/dired/mark-down
+    "k" 'rc/dired/previous-line
+    "j" 'rc/dired/next-line
+    "h" 'dired-hide-details-mode
+    "I" 'all-the-icons-dired-mode
+    "r" 'dired-do-rename
+    "R" 'dired-do-redisplay
+    "gg" 'evil-goto-first-line
+    "G" 'evil-goto-line))
 
 (use-package dired+
   :after dired
+  :init
+  ;; target directory can be in a window in another frame
+  (setq diredp-dwim-any-frame-flag t)
+  (general-evil-define-key 'normal 'dired-mode-map
+    "?" 'diredp-describe-mode
+    "c" 'diredp-copy-this-file
+    "m" 'diredp-do-move-recursive)
   :bind
   (:map global-map
         ;; instantly teleports to the currently
@@ -1098,14 +1156,6 @@
 
 (use-package magit
   :after ivy
-  :commands
-  (magit-status
-   magit-diff
-   magit-commit
-   magit-log
-   magit-push
-   magit-stage-file
-   magit-unstage-file)
   :init
   ;; magit requires this setting for ivy completion
   (setq magit-completing-read-function 'ivy-completing-read)
