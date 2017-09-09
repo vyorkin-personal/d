@@ -16,7 +16,7 @@
      (:inherit company-tooltip-selection))))
  '(custom-safe-themes
    (quote
-    ("8cf1002c7f805360115700144c0031b9cfa4d03edc6a0f38718cef7b7cabe382" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "a94f1a015878c5f00afab321e4fef124b2fc3b823c8ddd89d360d710fc2bddfc" default)))
+    ("12670281275ea7c1b42d0a548a584e23b9c4e1d2dabb747fd5e2d692bcd0d39b" "8cf1002c7f805360115700144c0031b9cfa4d03edc6a0f38718cef7b7cabe382" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "a94f1a015878c5f00afab321e4fef124b2fc3b823c8ddd89d360d710fc2bddfc" default)))
  '(flycheck-javascript-flow-args nil)
  '(package-selected-packages
    (quote

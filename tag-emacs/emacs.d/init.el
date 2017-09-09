@@ -1066,7 +1066,6 @@
     "j" 'rc/dired/next-line
     "h" 'dired-hide-details-mode
     "I" 'all-the-icons-dired-mode
-    "r" 'dired-do-rename
     "R" 'dired-do-redisplay
     "gg" 'evil-goto-first-line
     "G" 'evil-goto-line))
@@ -1079,6 +1078,7 @@
   (general-evil-define-key 'normal 'dired-mode-map
     "?" 'diredp-describe-mode
     "c" 'diredp-copy-this-file
+    "r" 'diredp-rename-this-file
     "m" 'diredp-do-move-recursive)
   :bind
   (:map global-map
