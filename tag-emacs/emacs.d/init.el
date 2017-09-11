@@ -1006,9 +1006,6 @@
             (kill-buffer orig)
             (dired up)
             (dired-goto-file dir)))))
-  (defun rc/dired/go-home ()
-    (interactive)
-    (find-alternate-file "~/"))
   (defun rc/dired/diff ()
     "Ediff marked files in dired or selected files in separate window"
     (interactive)
@@ -1052,13 +1049,12 @@
   (general-evil-define-key 'normal 'dired-mode-map
     ";" 'evil-ex
     "-" 'rc/dired/up-directory
+    "u" 'rc/dired/up-directory
     "=" 'rc/dired/diff
     "RET" 'dired-find-alternate-file
-    "~" 'rc/dired/go-home
     "a" 'dired-create-directory
     "d" 'dired-do-delete
     "C" 'dired-do-copy
-    ;; "d" 'diredp-delete-this-file
     "f" 'counsel-find-file
     "K" 'rc/dired/mark-up
     "J" 'rc/dired/mark-down
@@ -1066,7 +1062,7 @@
     "j" 'rc/dired/next-line
     "h" 'dired-hide-details-mode
     "I" 'all-the-icons-dired-mode
-    "R" 'dired-do-redisplay
+    "R" 'revert-buffer
     "gg" 'evil-goto-first-line
     "G" 'evil-goto-line))
 
