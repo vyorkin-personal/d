@@ -82,6 +82,10 @@ bind c:${hyper} focus 'Fantastical'
 bind k:${hyper} focus 'Spotify'
 bind m:${hyper} focus 'Airmail'
 
+# extra app bindings
+
+bind s:${hyper};shift focus 'SnippetsLab'
+
 # navigation & location bindings
 
 bind e:cmd ${showNormalHint}

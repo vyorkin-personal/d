@@ -192,6 +192,9 @@ cask 'font-source-serif-pro'
 cask 'font-hack'
 cask 'font-fira-code'
 
+cask 'osxfuse' # for dired-avfs (which is required for dired-hacks)
+brew 'avfs'    # because it depends on osxfuse
+
 # apps from appstore
 
 mas 'Xcode', id: 497799835

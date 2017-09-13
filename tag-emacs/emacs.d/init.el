@@ -40,14 +40,13 @@
 
 ;; fonts ;;
 
-(add-to-list 'default-frame-alist '(font . "Fira Code 14"))
-(set-frame-font "Fira Code 14" nil t)
+;; (add-to-list 'default-frame-alist '(font . "VT220-mod 28"))
+;; (set-frame-font "VT220-mod 28" nil t)
 
 ;; (add-to-list 'default-frame-alist '(font . "Source Code Pro 14"))
 ;; (set-frame-font "Source Code Pro 14" nil t)
-
-;; (add-to-list 'default-frame-alist '(font . "VT220-mod 28"))
-;; (set-frame-font "VT220-mod 28" nil t)
+(add-to-list 'default-frame-alist '(font . "Fira Code 14"))
+(set-frame-font "Fira Code 14" nil t)
 
 ;; disable *GNU Emacs* buffer on startup
 (setq inhibit-startup-screen t)
@@ -99,9 +98,6 @@
 ;; enable automatic line breaking
 (auto-fill-mode t)
 
-;; automatically save place in each file
-(save-place-mode t)
-
 ;; highlight the current line in the buffer
 (global-hl-line-mode 1)
 
@@ -122,6 +118,9 @@
 
 ;; when gdb debugging, show the many windows (stack trace, break points,etc.)
 (setq gdb-many-windows t)
+
+;; automatically save place in each file
+(save-place-mode 1)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -175,7 +174,13 @@
 ;; makes managing multiple terminals easier
 (use-package multi-term)
 
+(use-package highlight-chars
+  :config
+  (add-hook 'font-lock-mode-hook 'hc-highlight-tabs)
+  (add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace))
+
 (use-package whitespace
+  :disabled
   :init
   (setq whitespace-style '(face spaces tabs newline space-mark tab-mark))
   (setq whitespace-display-mappings
@@ -227,6 +232,9 @@
   ;; see: https://github.com/company-mode/company-mode/pull/245#issuecomment-232943098
   (advice-add 'company-pseudo-tooltip-unhide :before 'rc/whitespace/pre-popup-draw)
   (advice-add 'company-pseudo-tooltip-hide :after 'rc/whitespace/post-popup-draw)
+  ;; (general-define-key
+  ;;  :prefix "SPC"
+  ;;  "W" 'whitespace-mode)
   :diminish whitespace-mode)
 
 ;; see http://company-mode.github.io/
@@ -299,22 +307,124 @@
     (add-hook mode 'highlight-indentation-mode))
   :diminish highlight-indentation-mode)
 
+(defvar after-load-theme-hook nil
+  "Hook run after a color theme is loaded using `load-theme'.")
+(defadvice load-theme (after run-after-load-theme-hook activate)
+  "Run `after-load-theme-hook'."
+  (run-hooks 'after-load-theme-hook))
+
+(defun rc/customize-appearance ()
+  ;; set the foreground and background of the vertical-border face to
+  ;; the same value so there is no line up the middle
+  (set-face-background 'vertical-border "#222222")
+  (set-face-foreground 'vertical-border (face-background 'vertical-border))
+
+  ;; set the fringe colors to whatever is the background color
+  (set-face-attribute
+   'fringe nil
+   :foreground (face-foreground 'default)
+   :background (face-background 'default)))
+
+(add-hook 'after-load-theme-hook 'rc/customize-appearance)
+
 (use-package base16-theme
-  :disabled
   :config
-  (load-theme 'base16-grayscale-light))
+  (load-theme 'base16-chalk t)
+  ;; (load-theme 'base16-default-dark t)
+  ;; (load-theme 'base16-grayscale-dark t)
+  ;; (load-theme 'base16-pop t)
+  ;; (load-theme 'base16-tomorrow-night t)
+  ;; (load-theme 'base16-twilight t)
+  ;; (load-theme 'base16-irblack t)
+  )
 
 (use-package dracula-theme :disabled)
 (use-package gotham-theme :disabled)
 (use-package sublime-themes :disabled)
 
 (use-package doom-themes
+  :disabled
   :config
   ;; enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; corrects (and improves) org-mode's native fontification
   (doom-themes-org-config)
   (load-theme 'doom-one t))
+
+(use-package twilight-theme
+  :disabled
+  :config
+  (load-theme 'twilight t))
+
+(use-package gruber-darker-theme
+  :disabled
+  :config
+  (load-theme 'gruber-darker t))
+
+(use-package monokai-theme
+  :disabled
+  :config
+  (load-theme 'monokai t))
+
+(use-package kaolin-theme
+  :disabled
+  :config
+  (load-theme 'kaolin t))
+
+(use-package badwolf-theme
+  :disabled
+  :config
+  (load-theme 'badwolf t))
+
+(use-package boron-theme
+  :disabled
+  :config
+  (load-theme 'boron t))
+
+(use-package bliss-theme
+  :disabled
+  :config
+  (load-theme 'bliss t))
+
+(use-package busybee-theme
+  :disabled
+  :config
+  (load-theme 'busybee t))
+
+(use-package color-theme-sanityinc-tomorrow
+  :disabled
+  :config
+  (color-theme-sanityinc-tomorrow-night))
+
+(use-package badger-theme
+  :disabled
+  :config
+  (load-theme 'badger t))
+
+(use-package atom-one-dark-theme
+  :disabled
+  :config
+  (load-theme 'atom-one-dark t))
+
+(use-package zenburn-theme
+  :disabled
+  :config
+  (load-theme 'zenburn t))
+
+(use-package hemisu-theme
+  :disabled
+  :config
+  (load-theme 'hemisu-dark t))
+
+(use-package paganini-theme
+  :disabled
+  :config
+  (load-theme 'paganini t))
+
+(use-package yoshi-theme
+  :disabled
+  :config
+  (load-theme 'yoshi t))
 
 (use-package delight
   :config
@@ -592,7 +702,6 @@
    "d" 'delete-window
    "o" 'other-window
    "w" 'ace-window
-   "W" 'whitespace-mode
    "H" 'highlight-indentation-mode
    "G" 'global-git-gutter+-mode
    "T" 'counsel-load-theme
@@ -839,6 +948,8 @@
   (:map global-map
         ([f10] . flycheck-list-errors)))
 
+;; flycheck-error-list-goto-error
+
 (setq flyspell-use-meta-tab nil
       flyspell-mode-line-string " flys"
       flyspell-auto-correct-binding (kbd ""))
@@ -985,6 +1096,22 @@
     :demand t
     :config
     (all-the-icons-dired-mode))
+  (use-package dash)
+  (use-package dired-hacks-utils)
+  (use-package dired-avfs)
+  (use-package dired-open)
+  (use-package dired-rainbow :demand t)
+  (use-package dired-subtree
+    :config
+    (general-evil-define-key 'normal 'dired-mode-map
+      "<tab>" 'dired-subtree-toggle
+      "M" 'dired-subtree-mark-subtree
+      "U" 'dired-subtree-unmark-subtree))
+  (use-package dired-narrow)
+  (use-package dired-collapse)
+  ;; (use-package dired-quick-sort
+  ;;   :config
+  ;;   (dired-quick-sort-setup))
   :config
   (defun rc/dired/previous-line ()
     (interactive)
@@ -1054,7 +1181,8 @@
     "RET" 'dired-find-alternate-file
     "a" 'dired-create-directory
     "d" 'dired-do-delete
-    "C" 'dired-do-copy
+    "c" 'dired-do-copy
+    "r" 'dired-rename-file
     "f" 'counsel-find-file
     "K" 'rc/dired/mark-up
     "J" 'rc/dired/mark-down
@@ -1064,23 +1192,23 @@
     "I" 'all-the-icons-dired-mode
     "R" 'revert-buffer
     "gg" 'evil-goto-first-line
-    "G" 'evil-goto-line))
-
-(use-package dired+
-  :after dired
-  :init
-  ;; target directory can be in a window in another frame
-  (setq diredp-dwim-any-frame-flag t)
-  (general-evil-define-key 'normal 'dired-mode-map
-    "?" 'diredp-describe-mode
-    "c" 'diredp-copy-this-file
-    "r" 'diredp-rename-this-file
-    "m" 'diredp-do-move-recursive)
+    "G" 'evil-goto-line)
   :bind
   (:map global-map
         ;; instantly teleports to the currently
         ;; edited file's position in a dired buffer
         ("C-x C-j" . dired-jump)))
+
+;; left here to play around with it later
+(use-package direx
+  :disabled
+  :init
+  (use-package dired-k)
+  :bind
+  (:map global-map
+        ("C-x C-k" . direx:jump-to-directory)))
+
+;; (use-package ranger)
 
 (use-package bookmark+
   :config
