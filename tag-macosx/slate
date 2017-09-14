@@ -45,7 +45,7 @@ alias leftless      move screenOriginX+screenSizeX/4;screenOriginY screenSizeX/4
 
 alias center        move screenOriginX+((screenSizeX-windowSizeX)/2);screenOriginY+((screenSizeY-windowSizeY)/2) windowSizeX;windowSizeY
 alias small         move screenOriginX+80;screenOriginY+50 screenSizeX-160;screenSizeY-100
-alias tiny    move screenOriginX+180;screenOriginY+140 screenSizeX-360;screenSizeY-280
+alias tiny          move screenOriginX+180;screenOriginY+140 screenSizeX-360;screenSizeY-280
 
 # app aliases
 

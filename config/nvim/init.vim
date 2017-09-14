@@ -135,13 +135,13 @@ set nowritebackup               " don't write backups
 set background=dark
 
 if &background=="dark"
-  colorscheme strange
+  colorscheme Tomorrow-Night
 else
   colorscheme tomorrow
 endif
 
 " colorscheme switching for vimdiff
-au FilterWritePre * if &diff | colorscheme strange | AirlineTheme tomorrow | endif
+au FilterWritePre * if &diff | colorscheme Tomorrow-Night | AirlineTheme tomorrow | endif
 
 " conceal settings
 set conceallevel=2              " concealed text is completely hidden

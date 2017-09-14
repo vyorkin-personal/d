@@ -1593,6 +1593,15 @@
     (add-hook 'web-mode-hook 'rc/tide/setup-tsx))
   :delight " ts")
 
+(use-package prettier-js
+  :preface
+  (defvar rc/prettier-js/modes
+    '(js2-mode-hook
+      web-mode-hook))
+  :config
+  (dolist (mode rc/prettier-js/modes)
+    (add-hook mode 'prettier-js-mode)))
+
 (use-package google-translate
   :init
   (setq google-translate-default-source-language "en")
