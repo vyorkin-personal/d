@@ -84,7 +84,7 @@ bind m:${hyper} focus 'Airmail'
 
 # extra app bindings
 
-bind s:${hyper};shift focus 'SnippetsLab'
+bind l:${hyper} focus 'SnippetsLab'
 
 # navigation & location bindings
 
