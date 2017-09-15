@@ -67,6 +67,8 @@ zplug "Russell91/sshrc", from:github, as:command, use:"sshrc"
 
 # completions
 
+zplug "lukechilds/zsh-better-npm-completion", defer:2
+
 zplug "zplug/zplug", hook-build: "zplug --self-manage"
 
 # install plugins if there are plugins that have not been installed
