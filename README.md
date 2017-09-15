@@ -179,6 +179,7 @@ Don't worry, be happy
 ```
 
 ```
+  git-labelmaker
   jsdoc
   stylelint
   doiuse
