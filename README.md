@@ -157,6 +157,9 @@ Common crates that I use:
 * vtop
 * now@beta
 * trash-cli
+* purescript
+* git-labelmaker
+* json-package
 
 # Troubleshooting
 
@@ -179,7 +182,6 @@ Don't worry, be happy
 ```
 
 ```
-  git-labelmaker
   jsdoc
   stylelint
   doiuse
@@ -189,7 +191,7 @@ Don't worry, be happy
   karma-cli istanbul foreman
   iron-node devtool disc stylelint-config-suitcss next-update semantic-release-cli
   exact-semver fixpack cli-real-favicon greenkeeper npm-which budo
-  del-cli json-package npm-quick-run center-code gtni alex typings
+  del-cli npm-quick-run center-code gtni alex typings
   tern recli webpack-validator all-nvm available-versions manpm center-code
   conventional-changelog-cli conventional-recommended-bump
   typed-css-modules chrome-webstore-upload-cli react-native-cli
