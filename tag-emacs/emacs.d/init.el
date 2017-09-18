@@ -1428,7 +1428,7 @@
   (setq merlin-command 'opam)))
 
 ;; setup / init tuareg
-(load "~/.opam/system/share/emacs/site-lisp/tuareg-site-file")
+;; (load "~/.opam/system/share/emacs/site-lisp/tuareg-site-file")
 
 ;; c, c++ ;;
 
