@@ -85,7 +85,7 @@ zplug load
 
 # see output of `brew info nvm` for details
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+source "/usr/local/opt/nvm/nvm.sh"
 
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
