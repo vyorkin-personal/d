@@ -182,6 +182,7 @@ Don't worry, be happy
 ```
 
 ```
+  prettier
   jsdoc
   stylelint
   doiuse
