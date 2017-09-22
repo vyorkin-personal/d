@@ -1092,10 +1092,10 @@
   (setq-default dired-omit-files "^\\.?#")
   ;; uncomment the line below if you want to hide dot files
   ;; (setq-default dired-omit-files (concat dired-omit-files "\\|^\\.[^\\.]"))
-  (use-package all-the-icons-dired
-    :demand t
-    :config
-    (all-the-icons-dired-mode))
+  (when (display-graphic-p)
+    (use-package all-the-icons-dired
+      :config
+      (all-the-icons-dired-mode)))
   (use-package dash)
   (use-package dired-hacks-utils)
   (use-package dired-avfs)
@@ -1501,6 +1501,7 @@
     (add-to-list 'auto-mode-alist `(,ext . web-mode))))
 
 (use-package json-mode)
+(use-package json-navigator)
 
 (use-package tern
   :commands tern-mode
