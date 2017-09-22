@@ -1600,7 +1600,8 @@
       web-mode-hook))
   :config
   (dolist (mode rc/prettier-js/modes)
-    (add-hook mode 'prettier-js-mode)))
+    (add-hook mode 'prettier-js-mode))
+  :delight " prttr")
 
 (use-package google-translate
   :init
