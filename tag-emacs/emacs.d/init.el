@@ -1182,7 +1182,7 @@
     "a" 'dired-create-directory
     "d" 'dired-do-delete
     "c" 'dired-do-copy
-    "r" 'dired-rename-file
+    "r" 'dired-do-rename
     "f" 'counsel-find-file
     "K" 'rc/dired/mark-up
     "J" 'rc/dired/mark-down
