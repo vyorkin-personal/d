@@ -121,6 +121,7 @@ cask 'kitematic'
 cask 'dropbox'
 cask 'transmission'
 
+cask 'the-unarchiver'
 cask 'slate'
 cask 'amethyst'
 cask 'showyedge'
