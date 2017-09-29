@@ -80,7 +80,7 @@ bind w:${hyper} focus 'VMware Fusion'
 bind 2:${hyper} focus '2Do'
 bind c:${hyper} focus 'Fantastical'
 bind k:${hyper} focus 'Spotify'
-bind m:${hyper} focus 'Airmail'
+bind m:${hyper} focus 'Nylas Mail'
 
 # extra app bindings
 
