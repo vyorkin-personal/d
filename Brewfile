@@ -150,6 +150,7 @@ cask 'wireshark'
 cask 'tunnelblick'
 cask 'gpgtools'
 cask 'keybase'
+cask 'nylas-mail'
 
 cask 'pgadmin4'
 cask 'google-cloud-sdk'
