@@ -1620,7 +1620,7 @@
 (load custom-file)
 
 ;; maximize Emacs on startup
-(set-frame-parameter nil 'fullscreen 'fullboth)
+;; (set-frame-parameter nil 'fullscreen 'fullboth)
 
 ;; bootstrap quelpa ;;
 (if (require 'quelpa nil t)
