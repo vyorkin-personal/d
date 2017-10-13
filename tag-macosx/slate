@@ -83,6 +83,7 @@ bind k:${hyper} focus 'Spotify'
 bind h:${hyper} focus 'iTunes'
 bind m:${hyper} focus 'Nylas Mail'
 bind .:${hyper} focus 'zoom.us'
+bind j:${hyper} focus 'VimR'
 
 # extra app bindings
 
