@@ -136,8 +136,10 @@ cask 'toggldesktop'
 cask 'gyazo'
 cask 'ngrok'
 
-cask 'macvim'
-cask 'emacs'
+# cask 'emacs'  # fuck emacs, emacs-plus ftw
+# cask 'macvim' # fuck macvim, vimrc is ftw
+
+cask 'vimrc'
 cask 'visual-studio-code'
 cask 'lighttable'
 cask 'intellij-idea-ce'

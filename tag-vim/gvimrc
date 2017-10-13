@@ -20,11 +20,11 @@ set showtabline=0             " never show line with tab page labels
 set noballooneval             " dont show this crazy distracting thing
 
 if has("gui_gtk2")
-  set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline\ Plus\ Nerd\ File\ Types:h12
+  set guifont=Fira\ Code:h12
 elseif has("gui_macvim")
-  set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline\ Plus\ Nerd\ File\ Types:h12
+  set guifont=Fira\ Code:h14
 elseif has("gui_win32")
-  set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline\ Plus\ Nerd\ File\ Types:h12
+  set guifont=Fira\ Code:h12
 endif
 
 " set transparency=20
