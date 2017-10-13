@@ -74,7 +74,7 @@ zplug "zplug/zplug", hook-build: "zplug --self-manage"
 
 # install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
-  printf "install fucking plugs? [y/N]: "
+  printf "install fucking plugins? [y/N]: "
   if read -q; then
     echo; zplug install
   fi
@@ -90,7 +90,7 @@ source "/usr/local/opt/nvm/nvm.sh"
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 export GOPATH="$HOME/go"
-export PATH="/usr/local/sbin:$HOME/.rbenv/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/opt/llvm/bin:/usr/local/i386elfgcc/bin/:/usr/local/x8664pcelfgcc/bin/:$HOME/Library/Python/3.6/bin:$PATH"
+export PATH="/usr/local/sbin:$HOME/.rbenv/bin:$HOME/.local/bin:/usr/local/opt/llvm/bin:/usr/local/i386elfgcc/bin/:/usr/local/x8664pcelfgcc/bin/:$HOME/Library/Python/3.6/bin:$PATH"
 
 if [[ `uname` == 'Darwin' ]] then
   # find a way to install them by zplug

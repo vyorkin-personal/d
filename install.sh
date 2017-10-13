@@ -7,6 +7,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         brew install --HEAD https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb
         mas signin
 
+        # install rust
+        curl https://sh.rustup.rs -sSf | sh
+
         sudo easy_install pip
 
         mkdir -p ~/.karabiner.d/configuration/

@@ -7,6 +7,7 @@ tap 'thoughtbot/formulae'
 tap 'neovim/neovim'
 tap 'ethereum/ethereum'
 tap 'coursier/formulas'
+tap 'd12frosted/emacs-plus'
 
 brew 'rcm'
 brew 'mas'
@@ -14,7 +15,10 @@ brew 'mas'
 cask 'java'
 cask 'java6'
 
-brew 'rust'
+# brew 'rust'
+# rust is installed in Makefile
+# see https://rustup.rs/ to understand how rust is installed
+
 brew 'elixir'
 brew 'python'
 brew 'python3'
@@ -57,6 +61,7 @@ brew 'fish'
 brew 'the_silver_searcher'
 brew 'fzf'
 
+brew 'emacs-plus'
 brew 'neovim'
 brew 'vim', args: ['override-system-vi', 'with-lua', 'with-perl', 'with-python3', 'with-ruby']
 
