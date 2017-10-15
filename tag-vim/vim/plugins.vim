@@ -104,6 +104,7 @@ Plug 'kchmck/vim-coffee-script'
 
 " typescript
 Plug 'Quramy/tsuquyomi'
+" Plug 'runoshun/tscompletejob'
 Plug 'leafgarland/typescript-vim'
 " Plug 'HerringtonDarkholme/yats.vim'
 Plug 'Shougo/vimproc.vim'
