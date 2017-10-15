@@ -38,9 +38,9 @@ let g:syntastic_style_warning_symbol = '!'
 let g:syntastic_enable_balloons = 1
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_auto_jump = 0
-let g:syntastic_enable_signs = 0
+let g:syntastic_enable_signs = 1
 
 " see
 " https://github.com/vim-syntastic/syntastic/issues/1082#issuecomment-43449150
