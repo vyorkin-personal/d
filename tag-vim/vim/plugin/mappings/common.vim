@@ -43,6 +43,10 @@ nn <silent> ,qo :copen<CR>
 nn <silent> ,z :bp<CR>
 nn <silent> ,x :bn<CR>
 
+" easily move between next and previous errors
+nn <silent> <leader>en :lnext<CR>
+nn <silent> <leader>ep :lprevious<CR>
+
 " copy current filename into system clipboard - mnemonic: (c)urrent(f)ilename
 nn <silent> ,cf :let @* = expand("%:~")<CR>
 nn <silent> ,cn :let @* = expand("%:t")<CR>
