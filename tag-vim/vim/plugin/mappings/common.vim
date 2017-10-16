@@ -14,7 +14,7 @@ nn 0 ^
 nn ^ 0
 
 " toggle paste mode
-set pastetoggle=<F11>
+nn ,tt :set invpaste<CR>
 
 " toggle numbers
 nn <silent> <F12> :set number! relativenumber!<CR>
