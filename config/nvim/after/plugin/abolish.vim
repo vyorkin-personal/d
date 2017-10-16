@@ -41,6 +41,7 @@ Abolish {E,e}mtpy {}mpty
 Abolish {F,f}tler {}lter
 
 Abolish stirng string
+Abolish evetn event
 
 Abolish {I,i}nstru{em}nts instruments
 
