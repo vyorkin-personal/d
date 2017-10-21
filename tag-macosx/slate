@@ -53,7 +53,7 @@ alias browser 'Google Chrome'
 alias editor 'Emacs'
 alias terminal 'iTerm2'
 
-alias hyper ctrl;alt;cmd
+alias hyper ctrl;alt;cmd;shift
 
 # common bindings
 
