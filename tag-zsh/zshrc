@@ -38,6 +38,7 @@ zplug "zsh-users/zsh-autosuggestions"
 bindkey '^T' autosuggest-toggle
 
 zplug "k4rthik/git-cal", as:command
+zplug "mafredri/zsh-async", from:github
 
 # set the priority when loading
 # e.g., zsh-syntax-highlighting must be loaded
@@ -45,9 +46,16 @@ zplug "k4rthik/git-cal", as:command
 # (If the defer tag is given 2 or above, run after compinit command)
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git +rustup)
-PROMPT_GEOMETRY_COLORIZE_SYMBOL=false
-zplug "geometry-zsh/geometry"
+# GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git +rustup)
+# PROMPT_GEOMETRY_COLORIZE_SYMBOL=false
+# zplug "geometry-zsh/geometry"
+
+# zplug "cusxio/delta-prompt", use:delta.zsh
+
+zplug "halfo/lambda-mod-zsh-theme", as:theme
+# zplug "NelsonBrandao/absolute", as:theme
+# zplug "marszall87/lambda-pure"
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 # zplug 'simnalamburt/shellder', as:theme
 # zplug "dracula/zsh", as:theme
@@ -62,9 +70,33 @@ zplug "geometry-zsh/geometry"
 # POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 # zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 
+export ZSH_PLUGINS_ALIAS_TIPS_TEXT="next time USE THE FUCKING ALIAS: "
+zplug "djui/alias-tips"
+
+export EMOJI_CLI_KEYBIND="^v"
+zplug "b4b4r07/emoji-cli"
+
+zplug "tysonwolker/iterm-tab-colors"
+zplug "Seinh/git-prune"
+zplug "uvaes/fzf-marks"
+zplug "AlexisBRENON/oh-my-zsh-reminder"
+zplug "unixorn/tumult.plugin.zsh"
+zplug "dbz/zsh-kubernetes"
+
+zplug "psprint/zsh-morpho"
+zstyle ":morpho" screen-saver "zmorpho" # select screen saver "zmorpho"; available: zmorpho, zmandelbrot, zblank, pmorpho
+                                        # this  can also be a command, e.g. "cmatrix"
+zstyle ":morpho" arguments "-s"         # arguments given to screen saver program; -s - every key press ends
+zstyle ":morpho" delay "30"             # 10 seconds before screen saver starts
+zstyle ":morpho" check-interval "30"    # check every 10 seconds if to run screen saver
+
+zplug "denolfe/zsh-travis"
 zplug "rimraf/k"
 zplug "rupa/z", use:z.sh
+zplug "iam4x/zsh-iterm-touchbar"
 zplug "Russell91/sshrc", from:github, as:command, use:"sshrc"
+# zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+# zplug "gko/ssh-connect", use:ssh-connect.sh
 
 # completions
 
