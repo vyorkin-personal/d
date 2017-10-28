@@ -54,6 +54,7 @@ brew 'slurm'
 brew 'gpg'
 brew 'ethereum'
 brew 'swagger-codegen'
+brew 'pev'
 
 brew 'zsh'
 brew 'zplug'
