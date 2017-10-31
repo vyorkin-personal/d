@@ -55,6 +55,7 @@ brew 'gpg'
 brew 'ethereum'
 brew 'swagger-codegen'
 brew 'pev'
+brew 'cmatrix'
 
 brew 'zsh'
 brew 'zplug'
