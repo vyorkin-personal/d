@@ -8,7 +8,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         mas signin
 
         # install rust
-        curl https://sh.rustup.rs -sSf | sh
+        curl -sSf https://static.rust-lang.org/rustup.sh | sh
+        # install some useful rust packages
+        cargo install bingrep
 
         sudo easy_install pip
 
