@@ -56,6 +56,8 @@ brew 'ethereum'
 brew 'swagger-codegen'
 brew 'pev'
 brew 'upx'
+brew 'capstone'
+brew 'libmagic'
 
 brew 'zsh'
 brew 'zplug'

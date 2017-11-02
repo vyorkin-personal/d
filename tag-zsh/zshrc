@@ -76,7 +76,7 @@ zplug "djui/alias-tips"
 export EMOJI_CLI_KEYBIND="^v"
 zplug "b4b4r07/emoji-cli"
 
-zplug "tysonwolker/iterm-tab-colors"
+# zplug "tysonwolker/iterm-tab-colors"
 zplug "Seinh/git-prune"
 zplug "uvaes/fzf-marks"
 zplug "AlexisBRENON/oh-my-zsh-reminder"
@@ -115,6 +115,8 @@ source "/usr/local/opt/nvm/nvm.sh"
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 export GOPATH="$HOME/go"
+export DYLD_LIBRARY_PATH=/usr/local/opt/capstone/lib/:$DYLD_LIBRARY_PATH
+
 export PATH="/usr/local/sbin:$HOME/bin:$HOME/.rbenv/bin:$HOME/.local/bin:/usr/local/opt/llvm/bin:/usr/local/i386elfgcc/bin/:/usr/local/x8664pcelfgcc/bin/:$HOME/Library/Python/3.6/bin:$PATH"
 
 if [[ `uname` == 'Darwin' ]] then
