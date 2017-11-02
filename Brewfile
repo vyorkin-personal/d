@@ -58,6 +58,7 @@ brew 'pev'
 brew 'upx'
 brew 'capstone'
 brew 'libmagic'
+brew 'yara'
 
 brew 'zsh'
 brew 'zplug'
