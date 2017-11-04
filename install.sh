@@ -20,8 +20,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         sudo sysctl -w kern.maxfiles=1000000
         sudo sysctl -w kern.maxfilesperproc=18000
 
-        defaults write -g InitialKeyRepeat -int 1               # normal minimum is 15 (225 ms)
-        defaults write -g KeyRepeat -int 1                      # normal minimum is 2 (30 ms)
         defaults write com.apple.finder AppleShowAllFiles YES   # display hidden files in Finder
 fi
 

@@ -84,7 +84,7 @@ bind h:${hyper} focus 'iTunes'
 bind m:${hyper} focus 'Nylas Mail'
 bind .:${hyper} focus 'zoom.us'
 bind j:${hyper} focus 'VimR'
-bind a:${hyper} focus 'Screenhero'
+bind a:${hyper} focus 'VLC'
 
 # extra app bindings
 
