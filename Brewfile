@@ -59,6 +59,7 @@ brew 'upx'
 brew 'capstone'
 brew 'libmagic'
 brew 'yara'
+brew 'exercism'
 
 brew 'zsh'
 brew 'zplug'
