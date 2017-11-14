@@ -65,6 +65,12 @@ I should manually install phoenix:
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 ```
 
+##### Haskell
+
+```
+stack install stylish-haskell
+```
+
 #### Tmux
 
 Run `C-SPC-I` in tmux session to install plugins.

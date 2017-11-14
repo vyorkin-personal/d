@@ -191,6 +191,7 @@ Plug 'eagletmt/ghcmod-vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'hspec/hspec.vim'
 Plug 'eagletmt/neco-ghc'
+Plug 'nbouscal/vim-stylish-haskell'
 " Plug 'dag/vim2hs'
 
 " elm
