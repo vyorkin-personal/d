@@ -111,7 +111,7 @@ brew 'gcc'
 brew 'jenv'
 brew 'rbenv'
 brew 'nvm'
-brew 'yarn'
+brew 'yarn', args: ['without-node']
 
 brew 'kubectl'
 brew 'leiningen'
