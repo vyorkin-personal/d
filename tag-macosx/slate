@@ -49,7 +49,7 @@ alias tiny          move screenOriginX+180;screenOriginY+140 screenSizeX-360;scr
 
 # app aliases
 
-alias browser 'Google Chrome'
+alias browser 'Firefox'
 alias editor 'Emacs'
 alias terminal 'iTerm2'
 
