@@ -111,6 +111,7 @@ brew 'gcc'
 brew 'jenv'
 brew 'rbenv'
 brew 'nvm'
+brew 'yarn'
 
 brew 'kubectl'
 brew 'leiningen'
