@@ -33,6 +33,7 @@ brew 'sdl2'
 brew 'pgcli'
 brew 'mycli'
 
+brew 'darcs'
 brew 'git'
 brew 'gitsh'
 brew 'git-extras'
