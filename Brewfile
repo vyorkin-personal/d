@@ -96,6 +96,7 @@ brew 'purescript'
 brew 'haskell-stack'
 brew 'ocaml'
 brew 'opam'
+brew 'coq'
 
 brew 'autoconf'
 brew 'automake'
