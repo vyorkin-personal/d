@@ -331,9 +331,9 @@
   :config
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
-  ;; (load-theme 'base16-grayscale-dark t)
+  (load-theme 'base16-grayscale-dark t)
   ;; (load-theme 'base16-pop t)
-  (load-theme 'base16-tomorrow-night t)
+  ;; (load-theme 'base16-tomorrow-night t)
   ;; (load-theme 'base16-twilight t)
   ;; (load-theme 'base16-irblack t)
   )
@@ -919,7 +919,21 @@
   (use-package flycheck-rust)
   (use-package flycheck-clojure)
   (use-package flycheck-irony)
-  (use-package flycheck-purescript)
+
+  ;; should be superseeded by psc-ide-mode's flycheck integration
+  ;; https://github.com/dysinger/purescript-mode/pull/8
+  (use-package flycheck-purescript
+    :disabled
+    :preface
+    (defun rc/flycheck-purescript/setup ()
+      (setq default-directory (locate-dominating-file default-directory "node_modules")))
+    :after purescript-mode
+    :init
+    (eval-after-load 'flycheck
+      '(add-hook 'flycheck-mode-hook 'flycheck-purescript-setup))
+    :config
+    (add-hook 'purescript-mode-hook 'rc/flycheck-purescript/setup))
+
   (use-package flycheck-flow)
   (use-package flycheck-elixir)
   (use-package flycheck-mix
@@ -1294,7 +1308,20 @@
   (keyfreq-autosave-mode 1))
 
 (use-package dockerfile-mode)
+
+;; purescript
 (use-package purescript-mode)
+
+(use-package psc-ide
+  :preface
+  (defun rc/psc-ide/setup ()
+    (psc-ide-mode)
+    (turn-on-purescript-indentation))
+  :after purescript-mode
+  :init
+  (setq psc-ide-use-npm-bin t)
+  :config
+  (add-hook 'purescript-mode-hook 'rc/psc-ide/setup))
 
 (use-package d-mode)
 
