@@ -127,6 +127,7 @@ brew 'irssi'
 
 cask 'iterm2'
 cask 'nvalt'
+cask 'insomnia'
 
 cask 'virtualbox'
 cask 'vagrant'

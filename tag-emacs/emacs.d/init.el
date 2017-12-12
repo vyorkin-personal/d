@@ -122,6 +122,13 @@
 ;; automatically save place in each file
 (save-place-mode 1)
 
+;; shutdown emacs server instance
+(defun rc/server-shutdown ()
+  "Save buffers, quit and shutdown (kill) server"
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs))
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
@@ -1325,6 +1332,8 @@
   :init
   (setq psc-ide-use-npm-bin t)
   :config
+  (general-evil-define-key 'normal 'psc-ide-mode-map
+    "M-l" 'psc-ide-goto-definition)
   (add-hook 'purescript-mode-hook 'rc/psc-ide/setup))
 
 (use-package psci
