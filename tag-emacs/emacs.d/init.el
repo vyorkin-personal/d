@@ -314,11 +314,11 @@
   (run-hooks 'after-load-theme-hook))
 
 (defun rc/customize-appearance ()
+  (interactive)
   ;; set the foreground and background of the vertical-border face to
   ;; the same value so there is no line up the middle
   (set-face-background 'vertical-border "#222222")
   (set-face-foreground 'vertical-border (face-background 'vertical-border))
-
   ;; set the fringe colors to whatever is the background color
   (set-face-attribute
    'fringe nil
@@ -331,7 +331,9 @@
   :config
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
+
   (load-theme 'base16-grayscale-dark t)
+
   ;; (load-theme 'base16-pop t)
   ;; (load-theme 'base16-tomorrow-night t)
   ;; (load-theme 'base16-twilight t)
@@ -708,6 +710,7 @@
    "j" 'counsel-bookmark
    "q" 'treemacs-toggle
    "SPC" 'counsel-M-x
+   "`" 'rc/customize-appearance
    "RET" 'sublimity-mode
    "a" 'counsel-projectile-switch-project
    "c" 'projectile-invalidate-cache
@@ -1315,6 +1318,7 @@
 (use-package psc-ide
   :preface
   (defun rc/psc-ide/setup ()
+    (setq-local evil-auto-indent nil)
     (psc-ide-mode)
     (turn-on-purescript-indentation))
   :after purescript-mode
@@ -1322,6 +1326,11 @@
   (setq psc-ide-use-npm-bin t)
   :config
   (add-hook 'purescript-mode-hook 'rc/psc-ide/setup))
+
+(use-package psci
+  :after purescript-mode
+  :config
+  (add-hook 'purescript-mode-hook 'inferior-psci-mode))
 
 (use-package d-mode)
 
@@ -1401,13 +1410,16 @@
 (use-package scala-mode)
 
 (use-package haskell-mode
+  :preface
+  (defun rc/haskell-mode/setup ()
+    (setq-local evil-auto-indent nil)
+    (haskell-indent-mode)
+    (haskell-doc-mode))
   :commands (haskell-indent-mode
              interactive-haskell-mode
              haskell-doc-mode)
   :config
-  (add-hook 'haskell-mode-hook 'haskell-indent-mode)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook 'haskell-doc-mode))
+  (add-hook 'haskell-mode-hook 'rc/haskell-mode/setup))
 
 (use-package idris-mode)
 
