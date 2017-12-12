@@ -738,6 +738,18 @@
    :keymaps 'process-menu-mode-map
    "M-d" 'process-menu-delete-process))
 
+;; text-scale-increase/decrease doesn't play well with
+;; company (suggestions popup alignment issue)
+;; more info: https://github.com/company-mode/company-mode/issues/299#issuecomment-115056397
+(use-package zoom-frm
+  :after general
+  :config
+  (general-define-key
+   "C-=" 'zoom-in/out
+   "C--" 'zoom-in/out
+   "<s-triple-wheel-up>" 'zoom-frm-in
+   "<s-triple-wheel-down>" 'zoom-frm-out))
+
 (use-package restart-emacs
   :commands (restart-emacs)
   :bind ("C-x C-x" . restart-emacs))
