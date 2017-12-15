@@ -86,7 +86,10 @@ zplug "dbz/zsh-kubernetes"
 zplug "denolfe/zsh-travis"
 zplug "rimraf/k"
 zplug "rupa/z", use:z.sh
-zplug "iam4x/zsh-iterm-touchbar"
+
+# slow as fuck
+# zplug "iam4x/zsh-iterm-touchbar"
+
 zplug "Russell91/sshrc", from:github, as:command, use:"sshrc"
 # zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 # zplug "gko/ssh-connect", use:ssh-connect.sh
@@ -108,10 +111,6 @@ fi
 # source plugins and add commands to $PATH
 zplug load
 
-# see output of `brew info nvm` for details
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 export GOPATH="$HOME/go"
@@ -119,29 +118,9 @@ export DYLD_LIBRARY_PATH=/usr/local/opt/capstone/lib/:$DYLD_LIBRARY_PATH
 
 export PATH="/usr/local/sbin:$HOME/bin:$HOME/.rbenv/bin:$HOME/.local/bin:/usr/local/opt/llvm/bin:/usr/local/i386elfgcc/bin/:/usr/local/x8664pcelfgcc/bin/:$HOME/Library/Python/3.6/bin:$PATH"
 
-if [[ `uname` == 'Darwin' ]] then
-  # find a way to install them by zplug
-  # https://github.com/littleq0903/gcloud-zsh-completion
-  # others: https://github.com/unixorn/awesome-zsh-plugins#even-more-completions
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
-fi
-
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
-
-if [ -f $HOME/.bashhub/bashhub.zsh ]; then
-    source $HOME/.bashhub/bashhub.zsh
-fi
-
-source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-
-eval "$(rbenv init -)"
-eval "$(jenv init -)"
 
 # load custom functions & aliases
 source $HOME/.helpers/index
-
-# added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
 export ERL_AFLAGS="-kernel shell_history enabled"
