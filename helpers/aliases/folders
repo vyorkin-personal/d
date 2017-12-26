@@ -9,5 +9,4 @@ alias gith='cd ~/projects/github'
 
 # my
 alias dots='cd ~/.dotfiles'
-alias dotsecrets='cd ~/projects/dotsecrets'
 alias blog='cd ~/projects/vyorkin.github.io'

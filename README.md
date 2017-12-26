@@ -157,6 +157,9 @@ Common crates that I use:
 * now@beta
 * trash-cli
 * purescript
+* pulp
+* pscid
+* purescript-emmet
 * git-labelmaker
 * json-package
 
@@ -196,7 +199,7 @@ Don't worry, be happy
   conventional-changelog-cli conventional-recommended-bump
   typed-css-modules chrome-webstore-upload-cli react-native-cli
   create-webpack-config node-pre-gyp
-  yarn-completions pkgcount typescript-formatter pulp
+  yarn-completions pkgcount typescript-formatter
   git-recall
 ```
 
