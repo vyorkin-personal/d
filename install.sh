@@ -26,7 +26,9 @@ fi
 # required for nvm
 mkdir -p $HOME/.nvm
 
+# manual linking
 ln -s $HOME/.dotfiles/rcrc $HOME/.rcrc
+ln -s $HOME/.dotfiles/dotsecrets/netrc ~/.netrc
 
 # allow everything
 sudo spctl --master-disable
