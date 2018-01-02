@@ -1,4 +1,5 @@
 (use-package treemacs
+  :disabled
   :init
   (setq
    treemacs-follow-after-init t

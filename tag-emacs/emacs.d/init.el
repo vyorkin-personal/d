@@ -192,6 +192,8 @@
 (load-file "~/.emacs.d/evil.el")
 (load-file "~/.emacs.d/general.el")
 
+(load-file "~/.emacs.d/shell.el")
+
 ;; text-scale-increase/decrease doesn't play well with
 ;; company (suggestions popup alignment issue)
 ;; more info: https://github.com/company-mode/company-mode/issues/299#issuecomment-115056397
@@ -206,7 +208,7 @@
 
 (use-package restart-emacs
   :commands (restart-emacs)
-  :bind ("C-x C-x" . restart-emacs))
+  :bind ("C-x C-/" . restart-emacs))
 
 (load-file "~/.emacs.d/undo-tree.el")
 ;; (load-file "~/.emacs.d/anzu.el")
@@ -225,6 +227,13 @@
 
 (use-package ripgrep)
 (use-package projectile-ripgrep)
+
+(use-package perspective
+  :init
+  (use-package persp-projectile
+    :demand t)
+  :config
+  (persp-mode))
 
 (load-file "~/.emacs.d/projectile.el")
 (load-file "~/.emacs.d/navigation.el")

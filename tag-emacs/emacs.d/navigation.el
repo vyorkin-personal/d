@@ -41,9 +41,15 @@
 (use-package flx)
 
 (use-package counsel
-  :config
-  ;; install projectile replacements (counsel-projectile)
-  (counsel-projectile-on)
+  :init
+  (use-package counsel-projectile
+    :demand t
+    :config
+    ;; install projectile replacements (counsel-projectile)
+    (counsel-projectile-on)
+    :bind
+    (("C-q" . counsel-projectile-find-file)
+     ("C-a" . counsel-projectile-switch-to-buffer)))
   :bind
   (("M-x" . counsel-M-x)
    ("C-x C-r" . find-file)
@@ -64,11 +70,6 @@
    "C-r" 'swiper-query-replace)
   (general-define-key
     "C-s" 'swiper))
-
-(use-package counsel-projectile
-  :bind
-  (("C-q" . counsel-projectile-find-file)
-   ("C-a" . counsel-projectile-switch-to-buffer)))
 
 (use-package hydra)
 (use-package ivy-hydra)

@@ -4,6 +4,7 @@
   (add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace))
 
 (use-package highlight-indentation
+  :disabled
   :preface
   (defvar rc/highlight-indentation/modes
     '(reason-mode-hook
