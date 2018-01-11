@@ -343,6 +343,7 @@
 (load-file "~/.emacs.d/elixir.el")
 ;; (load-file "~/.emacs.d/scala.el")
 (load-file "~/.emacs.d/haskell.el")
+(load-file "~/.emacs.d/coq.el")
 
 (use-package idris-mode)
 

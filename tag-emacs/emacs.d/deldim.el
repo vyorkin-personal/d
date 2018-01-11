@@ -6,6 +6,7 @@
              (alchemist-hex-mode " alhex" alchemist)
              (alchemist-test-mode " altest" alchemist)
              (rust-mode " rs" rust)
+             (purescript-mode " purs" rust)
              (javascript-mode " js" js)
              (eldoc-mode " eldoc" eldoc)
              (auto-revert-mode " ar" autorevert)
@@ -13,6 +14,7 @@
 
 (use-package diminish
   :config
+  (eval-after-load "purescript-indentation" '(diminish 'purescript-indentation-mode))
   (eval-after-load "simple" '(diminish 'overwrite-mode))
   (eval-after-load "dired" '(diminish 'dired-omit-mode))
   (eval-after-load "hideshow" '(diminish 'hs-minor-mode))

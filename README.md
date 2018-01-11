@@ -141,6 +141,10 @@ Common crates that I use:
 * [rustfmt](https://github.com/rust-lang-nursery/rustfmt)
 * [racer](https://github.com/phildawes/racer)
 
+#### Coq
+
+* [emacs company-coq](https://github.com/cpitclaudel/company-coq#proof-general) install Proof General manually
+
 #### NPM global packages
 
 * bower

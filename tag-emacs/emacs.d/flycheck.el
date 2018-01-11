@@ -55,7 +55,7 @@
 ;; flycheck-error-list-goto-error
 
 (setq flyspell-use-meta-tab nil
-      flyspell-mode-line-string " flys"
+      flyspell-mode-line-string ""
       flyspell-auto-correct-binding (kbd ""))
 
 ;; for programming modes, enable flyspell-prog-mode for

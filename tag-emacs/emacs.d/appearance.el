@@ -23,7 +23,7 @@
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
 
-  (load-theme 'base16-grayscale-dark t)
+  ;; (load-theme 'base16-grayscale-dark t)
 
   ;; (load-theme 'base16-pop t)
   ;; (load-theme 'base16-tomorrow-night t)
@@ -100,7 +100,7 @@
   (load-theme 'atom-one-dark t))
 
 (use-package zenburn-theme
-  :disabled
+  ;; :disabled
   :config
   (load-theme 'zenburn t))
 
