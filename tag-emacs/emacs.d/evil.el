@@ -127,7 +127,11 @@
     (setq vimish-fold-indication-mode 'right-fringe)
     :commands evil-vimish-fold-mode
     :config
-    (evil-vimish-fold-mode 1))
+    (evil-vimish-fold-mode 1)
+    ;; (general-define-key
+    ;;  "z n" 'vimish-fold-unfold-all
+    ;;  "z m" 'vimish-fold-refold-all)
+    )
   (use-package evil-args
     :demand t
     :commands
@@ -175,6 +179,8 @@
   ;; enable evil-mode globally,
   ;; good for ex-vimmers like me
   (evil-mode 1)
+  ;; (general-define-key
+  ;;    "//" 'evil-ex-nohighlight)
   (rc/setup-esc-quits)
   (with-eval-after-load "bookmark"
     (evil-set-initial-state 'bookmark-bmenu-mode 'normal)

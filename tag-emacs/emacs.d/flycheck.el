@@ -60,7 +60,7 @@
 
 ;; for programming modes, enable flyspell-prog-mode for
 ;; spell checking in comments and strings.
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 (use-package flyspell-correct-ivy
   :demand t

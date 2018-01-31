@@ -5,5 +5,5 @@
   :config
   (paradox-require 'google-translate-default-ui)
   :bind
-  (("C-c C-t" . google-translate-at-point)
-   ("C-c C-q" . google-translate-query-translate)))
+  (("C-c t" . google-translate-at-point)
+   ("C-c q" . google-translate-query-translate)))

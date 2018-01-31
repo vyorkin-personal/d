@@ -61,6 +61,7 @@ brew 'capstone'
 brew 'libmagic'
 brew 'yara'
 brew 'exercism'
+brew 'homebrew/emacs/markdown-mode'
 
 brew 'zsh'
 brew 'zplug'

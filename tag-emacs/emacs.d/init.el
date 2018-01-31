@@ -203,6 +203,8 @@
   (general-define-key
    "C-=" 'zoom-in/out
    "C--" 'zoom-in/out
+   "M-=" 'increase-frame-transparency
+   "M--" 'decrease-frame-transparency
    "<s-triple-wheel-up>" 'zoom-frm-in
    "<s-triple-wheel-down>" 'zoom-frm-out))
 

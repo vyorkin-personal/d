@@ -6,9 +6,10 @@
 
 (defun rc/customize-appearance ()
   (interactive)
+  ;; set the background or vertical border to the main area background color
+  (set-face-background 'vertical-border (face-background 'default))
   ;; set the foreground and background of the vertical-border face to
   ;; the same value so there is no line up the middle
-  (set-face-background 'vertical-border "#222222")
   (set-face-foreground 'vertical-border (face-background 'vertical-border))
   ;; set the fringe colors to whatever is the background color
   (set-face-attribute
@@ -23,7 +24,8 @@
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
 
-  ;; (load-theme 'base16-grayscale-dark t)
+  (load-theme 'base16-grayscale-dark t)
+  ; (load-theme 'base16-rebecca t)
 
   ;; (load-theme 'base16-pop t)
   ;; (load-theme 'base16-tomorrow-night t)
@@ -100,7 +102,7 @@
   (load-theme 'atom-one-dark t))
 
 (use-package zenburn-theme
-  ;; :disabled
+  :disabled
   :config
   (load-theme 'zenburn t))
 
