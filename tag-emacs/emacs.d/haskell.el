@@ -16,11 +16,11 @@
     (intero-global-mode 1)
     (general-evil-define-key 'normal 'intero-mode-map
       "M-l" 'intero-goto-definition)
-    :delight " int")
+    :delight "[int]")
   :config
   (general-evil-define-key 'normal 'haskell-mode-map
     "C-c C-b" 'haskell-compile
     "C-c C-u" 'haskell-navigate-imports
     "C-c C-f" 'haskell-mode-format-imports)
   (add-hook 'haskell-mode-hook 'rc/haskell-mode/setup)
-  :delight " hs")
+  :delight "[hs]")

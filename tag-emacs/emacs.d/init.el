@@ -1,3 +1,7 @@
+;; save customizations somewhere other than your initialization file
+(setq custom-file "~/.emacs-custom.el")
+(load custom-file)
+
 ;; less GC during startup
 ;; see: https://github.com/nilcons/emacs-use-package-fast#a-trick-less-gc-during-startup
 (setq gc-cons-threshold 64000000)
@@ -198,6 +202,7 @@
 ;; company (suggestions popup alignment issue)
 ;; more info: https://github.com/company-mode/company-mode/issues/299#issuecomment-115056397
 (use-package zoom-frm
+  :disabled ;; isn't on melpa yet
   :after general
   :config
   (general-define-key
@@ -213,9 +218,8 @@
   :bind ("C-x C-/" . restart-emacs))
 
 (load-file "~/.emacs.d/undo-tree.el")
+(load-file "~/.emacs.d/mode-line.el")
 ;; (load-file "~/.emacs.d/anzu.el")
-;; (load-file "~/.emacs.d/telephone-line.el")
-;; (load-file "~/.emacs.d/powerline.el")
 ;; (load-file "~/.emacs.d/sublimity.el")
 ;; (load-file "~/.emacs.d/tags.el")
 ;; (load-file "~/.emacs.d/treemacs.el")
@@ -231,6 +235,7 @@
 (use-package projectile-ripgrep)
 
 (use-package perspective
+  :disabled
   :init
   (use-package persp-projectile
     :demand t)
@@ -318,9 +323,18 @@
 
 (use-package nginx-mode)
 (use-package yaml-mode
-  :delight " yaml")
-(use-package markdown-mode)
+  :delight "[yaml]")
+(use-package markdown-mode
+  :disabled
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown")
+  :delight "[md]")
 (use-package apib-mode
+  :disabled
   :config
   (add-to-list 'auto-mode-alist '("\\.apib\\'" . apib-mode)))
 (use-package toml-mode)
@@ -329,7 +343,7 @@
 (use-package jade-mode)
 (use-package haml-mode)
 (use-package scss-mode
-  :delight " scss")
+  :delight "[scss]")
 (use-package lua-mode)
 (use-package robe
   :config
@@ -337,7 +351,7 @@
 (use-package rubocop
   :config
   (add-hook 'ruby-mode-hook 'rubocop-mode)
-  :delight " rubocop")
+  :delight "[rcop]")
 (use-package go-mode)
 
 (use-package erlang)
@@ -368,10 +382,6 @@
 (load-file "~/.emacs.d/javascript.el")
 (load-file "~/.emacs.d/typescript.el")
 (load-file "~/.emacs.d/google-translate.el")
-
-;; save customizations somewhere other than your initialization file
-(setq custom-file "~/.emacs-custom.el")
-(load custom-file)
 
 ;; maximize Emacs on startup
 ;; (set-frame-parameter nil 'fullscreen 'fullboth)

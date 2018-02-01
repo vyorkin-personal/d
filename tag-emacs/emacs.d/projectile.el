@@ -23,7 +23,8 @@
   ;; use projectile everywhere
   (projectile-mode)
   ;; remove the mode name for projectile-mode, but show the project name
-  :delight '(:eval (concat " " (projectile-project-name)))
+  ;; :delight '(:eval (concat " " (projectile-project-name)))
+  :diminish projectile-mode
   :bind
   (("C-x C-q" . projectile-find-file-in-known-projects) ; don't use this, it is super-slow
    ("C-x C-g" . projectile-ripgrep)))

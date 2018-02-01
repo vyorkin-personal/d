@@ -86,7 +86,8 @@
         t))
     :config
     (global-evil-mc-mode 1)
-    (add-hook 'rc/evil/esc-hook 'rc/evil-mc/esc))
+    (add-hook 'rc/evil/esc-hook 'rc/evil-mc/esc)
+    :diminish evil-mc-mode)
   (use-package evil-magit
     :after magit
     :demand t

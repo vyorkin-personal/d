@@ -40,7 +40,7 @@
   :commands js2-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-  :delight " js2")
+  :delight "[js2]")
 
 (use-package rjsx-mode
   :commands rjsx-mode
@@ -55,4 +55,4 @@
   :config
   (dolist (mode rc/prettier-js/modes)
     (add-hook mode 'prettier-js-mode))
-  :delight " prttr")
+  :delight "[prttr]")

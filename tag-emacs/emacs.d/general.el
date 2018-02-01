@@ -19,6 +19,7 @@
    "C-l" 'windmove-right
    "C-k" 'windmove-up
    "C-j" 'windmove-down
+   "M-q" 'rc/server-shutdown
    "M-l" (kbd "\\ M-.")
    "M-h" 'xref-pop-marker-stack)
   (general-define-key

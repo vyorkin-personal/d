@@ -38,4 +38,4 @@
     (add-hook 'typescript-mode-hook 'rc/tide/setup)
     ;; enable tide for .tsx files
     (add-hook 'web-mode-hook 'rc/tide/setup-tsx))
-  :delight " ts")
+  :delight "[ts]")

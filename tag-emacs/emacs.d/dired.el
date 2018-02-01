@@ -28,6 +28,9 @@
     (use-package all-the-icons-dired
       :config
       (all-the-icons-dired-mode)))
+  ;; Mac OS ls command doesn't support "--dired" option
+  (when (string= system-type "darwin")
+    (setq dired-use-ls-dired nil))
   (use-package dash)
   (use-package dired-hacks-utils)
   (use-package dired-avfs)
@@ -128,7 +131,8 @@
   :bind
   (;; instantly teleports to the currently
    ;; edited file's position in a dired buffer
-   ("C-x C-j" . dired-jump)))
+   ("C-x C-j" . dired-jump))
+  :diminish dired-mode)
 
 ;; left here to play around with it later
 (use-package direx

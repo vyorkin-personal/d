@@ -29,10 +29,10 @@
   (general-evil-define-key 'normal 'psc-ide-mode-map
     "M-l" 'psc-ide-goto-definition)
   (add-hook 'purescript-mode-hook 'rc/psc-ide/setup)
-  :delight " psc-ide")
+  :delight "[psc-ide]")
 
 (use-package psci
   :after purescript-mode
   :config
   (add-hook 'purescript-mode-hook 'inferior-psci-mode)
-  :delight " psci")
+  :delight "[psci]")

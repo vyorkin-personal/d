@@ -50,7 +50,8 @@
      (window-height . 0.33)))
   (global-flycheck-mode 1)
   :bind
-  (([f10] . flycheck-list-errors)))
+  (([f10] . flycheck-list-errors))
+  :delight "[fly]")
 
 ;; flycheck-error-list-goto-error
 
