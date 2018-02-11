@@ -29,6 +29,11 @@ brew 'sbt'
 brew 'coursier/formulas/coursier', args: ['HEAD']
 
 brew 'sdl2'
+brew 'sdl2_image'
+brew 'sdl2_gfx'
+brew 'sdl2_mixer'
+brew 'sdl2_net'
+brew 'sdl2_ttf'
 
 brew 'pgcli'
 brew 'mycli'
