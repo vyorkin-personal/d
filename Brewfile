@@ -38,6 +38,7 @@ brew 'sdl2_ttf'
 brew 'pgcli'
 brew 'mycli'
 
+brew 'hg'
 brew 'darcs'
 brew 'git'
 brew 'gitsh'
