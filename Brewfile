@@ -128,7 +128,7 @@ brew 'leiningen'
 brew 'nginx'
 
 brew 'imagemagick'
-brew 'ffmpeg'
+brew 'ffmpeg', args: ['with-libvpx', 'with-libvorbis']
 
 brew 'weechat', args: ['with-python', 'with-perl']
 brew 'irssi'
