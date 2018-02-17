@@ -14,4 +14,5 @@
   :bind
   (:map rust-mode-map
         ([tab] . company-indent-or-complete-common)
+        ("C-c C-b" . rust-compile)
         ("C-c <tab>" . rust-format-buffer)))

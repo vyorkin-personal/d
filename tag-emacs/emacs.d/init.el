@@ -198,21 +198,6 @@
 
 (load-file "~/.emacs.d/shell.el")
 
-;; text-scale-increase/decrease doesn't play well with
-;; company (suggestions popup alignment issue)
-;; more info: https://github.com/company-mode/company-mode/issues/299#issuecomment-115056397
-(use-package zoom-frm
-  :disabled ;; isn't on melpa yet
-  :after general
-  :config
-  (general-define-key
-   "C-=" 'zoom-in/out
-   "C--" 'zoom-in/out
-   "M-=" 'increase-frame-transparency
-   "M--" 'decrease-frame-transparency
-   "<s-triple-wheel-up>" 'zoom-frm-in
-   "<s-triple-wheel-down>" 'zoom-frm-out))
-
 (use-package restart-emacs
   :commands (restart-emacs)
   :bind ("C-x C-/" . restart-emacs))
@@ -246,7 +231,7 @@
 (load-file "~/.emacs.d/navigation.el")
 (load-file "~/.emacs.d/dired.el")
 (load-file "~/.emacs.d/flycheck.el")
-;; (load-file "~/.emacs.d/rust.el")
+(load-file "~/.emacs.d/rust.el")
 
 (use-package clojure-mode)
 (use-package ace-window)
@@ -414,3 +399,19 @@
 (use-package reason-mode
   :ensure nil
   :quelpa (reason-mode :repo "arichiardi/reason-mode" :fetcher github :stable t))
+
+;; text-scale-increase/decrease doesn't play well with
+;; company (suggestions popup alignment issue)
+;; more info: https://github.com/company-mode/company-mode/issues/299#issuecomment-115056397
+(use-package zoom-frm
+  :after general
+  :quelpa (zoom-frm :fetcher github :repo "emacsmirror/zoom-frm")
+  :config
+  (general-define-key
+   "C-=" 'zoom-in/out
+   "C--" 'zoom-in/out
+   "M-=" 'increase-frame-transparency
+   "M--" 'decrease-frame-transparency
+   "<s-triple-wheel-up>" 'zoom-frm-in
+   "<s-triple-wheel-down>" 'zoom-frm-out))
+
