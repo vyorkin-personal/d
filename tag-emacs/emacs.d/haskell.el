@@ -15,6 +15,7 @@
     :config
     (intero-global-mode 1)
     (general-evil-define-key 'normal 'intero-mode-map
+      "C-c C-r" 'intero-restart
       "M-l" 'intero-goto-definition)
     :delight "[int]")
   :config
