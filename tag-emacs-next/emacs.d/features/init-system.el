@@ -16,4 +16,6 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
+(use-package use-package-ensure-system-package)
+
 (provide 'init-system)

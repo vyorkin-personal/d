@@ -1,4 +1,5 @@
 (use-package tern
+  :ensure-system-package (tern . "npm i -g tern")
   :commands tern-mode
   :config
   ;; enable js completion between <script>...</script> etc

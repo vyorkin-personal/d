@@ -27,6 +27,7 @@
 
 (use-package disable-mouse
   :config
-  (global-disable-mouse-mode))
+  (global-disable-mouse-mode)
+  :diminish disable-mouse-mode)
 
 (provide 'init-appearance)

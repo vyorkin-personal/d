@@ -67,24 +67,31 @@
 (defconst *spell-check-support-enabled* nil)
 (defconst *is-a-mac* (eq system-type 'darwin))
 
-;; user-specific settings to load before others
-(require 'init-preload-local nil t)
-
-(require 'init-defaults)
-(require 'init-ui)
-(require 'init-fira-code)
-(require 'init-appearance)
-(require 'init-themes)
-(require 'init-utils)
-(require 'init-osx-keys)
-(require 'init-system)
-(require 'init-general)
-(require 'init-evil)
-(require 'init-process-menu)
-(require 'init-dired)
-(require 'init-magit)
+(use-package evil
+  ;; don't block emacs when starting,
+  ;; load evil immediately after startup 
+  ; :defer .1
+  :init
+  (setq evil-want-integration nil)
 
-;; user-specific settings
-(require 'init-local nil t)
+  :config
 
-(provide 'init)
+  ;; enable evil-mode globally,
+  ;; good for ex-vimmers like me
+  (evil-mode t)
+  ;; special
+  (evil-make-overriding-map special-mode-map 'normal)
+  ;; compilation
+  (evil-set-initial-state 'compilation-mode 'normal)
+  ;; occur
+  (evil-make-overriding-map occur-mode-map 'normal)
+  (evil-set-initial-state 'occur-mode 'normal))
+
+(use-package evil-collection
+  :init
+  (setq
+    evil-collection-setup-minibuffer t
+    evil-collection-company-use-tgn nil)
+  :config
+  (evil-collection-init))
+
