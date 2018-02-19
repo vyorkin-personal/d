@@ -46,16 +46,16 @@ zplug "mafredri/zsh-async", from:github
 # (If the defer tag is given 2 or above, run after compinit command)
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-# GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git +rustup)
-# PROMPT_GEOMETRY_COLORIZE_SYMBOL=false
-# zplug "geometry-zsh/geometry"
+GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git +rustup)
+PROMPT_GEOMETRY_COLORIZE_SYMBOL=false
+zplug "geometry-zsh/geometry"
 
 # zplug "cusxio/delta-prompt", use:delta.zsh
 
 # zplug "halfo/lambda-mod-zsh-theme", as:theme
 # zplug "NelsonBrandao/absolute", as:theme
 # zplug "marszall87/lambda-pure"
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 # zplug 'simnalamburt/shellder', as:theme
 # zplug "dracula/zsh", as:theme
@@ -110,6 +110,10 @@ fi
 
 # source plugins and add commands to $PATH
 zplug load
+
+# see output of `brew info nvm` for details
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
 
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
