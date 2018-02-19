@@ -21,12 +21,14 @@
   (require 'use-package))
 
 (use-package evil
+  :ensure t
   :init
   (setq evil-want-integration nil)
   :config
-  (evil-mode t))
+  (evil-mode 1))
 
 (use-package evil-collection
+  :after evil
+  :ensure t
   :config
   (evil-collection-init))
-
