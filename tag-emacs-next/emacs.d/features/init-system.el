@@ -1,6 +1,7 @@
 ;; modernizing Emacs' Package Menu
 ;; with package ratings, usage statistics, customizability, and more
 (use-package paradox
+  :defer 0.1
   :init
   (setq
    paradox-execute-asynchronously t

@@ -35,15 +35,7 @@
 (add-hook 'minibuffer-exit-hook #'rc/restore-gc)
 
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.milkbox.net/packages/") t)
-;; include the org repository for completeness,
-;; but don't normally use it
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/"))
-;; elpy (emacs python dev env) packages
-(add-to-list 'package-archives
-             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;; its ok to use both package-initialize and
 ;; use-package for a well behaved package:
@@ -68,24 +60,10 @@
 (defconst *is-a-mac* (eq system-type 'darwin))
 
 (use-package evil
-  ;; don't block emacs when starting,
-  ;; load evil immediately after startup 
-  ; :defer .1
   :init
   (setq evil-want-integration nil)
-
   :config
-
-  ;; enable evil-mode globally,
-  ;; good for ex-vimmers like me
-  (evil-mode t)
-  ;; special
-  (evil-make-overriding-map special-mode-map 'normal)
-  ;; compilation
-  (evil-set-initial-state 'compilation-mode 'normal)
-  ;; occur
-  (evil-make-overriding-map occur-mode-map 'normal)
-  (evil-set-initial-state 'occur-mode 'normal))
+  (evil-mode t))
 
 (use-package evil-collection
   :init

@@ -34,6 +34,13 @@
 (add-hook 'minibuffer-setup-hook #'rc/disable-gc)
 (add-hook 'minibuffer-exit-hook #'rc/restore-gc)
 
+;; enable with t if you prefer
+(defconst *spell-check-support-enabled* nil)
+(defconst *is-a-mac* (eq system-type 'darwin))
+
+(require 'init-defaults)
+(require 'init-ui)
+
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.milkbox.net/packages/") t)
@@ -63,15 +70,9 @@
   use-package-always-ensure t
   use-package-verbose nil)
 
-;; enable with t if you prefer
-(defconst *spell-check-support-enabled* nil)
-(defconst *is-a-mac* (eq system-type 'darwin))
-
 ;; user-specific settings to load before others
 (require 'init-preload-local nil t)
-
-(require 'init-defaults)
-(require 'init-ui)
+
 (require 'init-fira-code)
 (require 'init-appearance)
 (require 'init-themes)

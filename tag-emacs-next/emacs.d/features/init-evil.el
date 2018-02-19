@@ -2,8 +2,8 @@
 
 (use-package evil
   ;; don't block emacs when starting,
-  ;; load evil immediately after startup 
-  ; :defer .1
+  ;; load evil immediately after startup
+  :defer .1
   :init
   (setq
     ;; required by evil-collection

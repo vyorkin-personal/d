@@ -19,9 +19,12 @@
 (when (fboundp 'pixel-scroll-mode)
   (pixel-scroll-mode 1))
 
-(let ((no-border '(internal-border-width . 0)))
-  (add-to-list 'default-frame-alist no-border)
-  (add-to-list 'initial-frame-alist no-border))
+;; disable native fullscreen support
+;; I don't like sliding animation on Mac OS X
+(setq ns-use-native-fullscreen nil)
+
+;; start maximized
+(toggle-frame-maximized)
 
 ;; use spaces instead of tabs everywhere
 (setq-default indent-tabs-mode nil)
@@ -44,10 +47,6 @@
 (add-hook
   'term-mode-hook
   (lambda () (setq line-spacing 0)))
-
-;; disable native fullscreen support
-;; I don't like sliding animation on Mac OS X
-(setq ns-use-native-fullscreen nil)
 
 ;; highlight parens
 (setq show-paren-style 'parenthesis)
@@ -100,5 +99,9 @@
 
 ;; convert certain words into symbols, e.g. lambda becomes λ.
 (global-prettify-symbols-mode t)
+
+(setq
+  mode-line-position
+  '((line-number-mode ("%l" (column-number-mode ":%c")))))
 
 (provide 'init-ui)
