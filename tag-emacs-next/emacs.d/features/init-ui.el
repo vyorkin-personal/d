@@ -8,7 +8,7 @@
 ;; I generally prefer to hide the menu bar,
 ;; but doing this on OS X simply makes it
 ;; update unreliably in GUI frames, so we make an exception
-(if *is-a-mac*
+(if (eq system-type 'darwin)
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (set-frame-parameter frame 'menu-bar-lines
@@ -19,12 +19,23 @@
 (when (fboundp 'pixel-scroll-mode)
   (pixel-scroll-mode 1))
 
+(when (boundp 'window-divider-mode)
+  (setq window-divider-default-places t
+        window-divider-default-bottom-width 1
+        window-divider-default-right-width 1)
+  (window-divider-mode +1))
+
 ;; disable native fullscreen support
 ;; I don't like sliding animation on Mac OS X
 (setq ns-use-native-fullscreen nil)
 
 ;; start maximized
 (toggle-frame-maximized)
+
+;; toggle fullscreen later
+(run-with-idle-timer
+  2 nil
+  (lambda () (toggle-frame-fullscreen)))
 
 ;; use spaces instead of tabs everywhere
 (setq-default indent-tabs-mode nil)
@@ -52,8 +63,8 @@
 (setq show-paren-style 'parenthesis)
 (show-paren-mode 1)
 
-;; hide the fringe
-(set-fringe-style 18)
+;; set fringe size
+(fringe-mode '(12 . 12))
 
 ;; over-write selection to make things
 ;; slightly less uncomfortable to others
@@ -99,6 +110,9 @@
 
 ;; convert certain words into symbols, e.g. lambda becomes λ.
 (global-prettify-symbols-mode t)
+
+;; turn-off tooltips on cursor hover-over
+(setq mode-line-default-help-echo nil)
 
 (setq
   mode-line-position

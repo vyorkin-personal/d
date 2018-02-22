@@ -28,9 +28,11 @@
     (use-package all-the-icons-dired
       :config
       (all-the-icons-dired-mode)))
+
   ;; Mac OS ls command doesn't support "--dired" option
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired nil))
+
   (use-package dash)
   (use-package dired-hacks-utils)
   (use-package dired-avfs)
@@ -47,6 +49,7 @@
   ;; (use-package dired-quick-sort
   ;;   :config
   ;;   (dired-quick-sort-setup))
+
   :config
   (defun rc/dired/previous-line ()
     (interactive)

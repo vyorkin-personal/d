@@ -6,11 +6,13 @@
 ;; see: https://github.com/nilcons/emacs-use-package-fast#a-trick-less-gc-during-startup
 (setq gc-cons-threshold 64000000)
 ;; restore after startup
-(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
+;; see why its set to 20000000:
+;; https://github.com/lewang/flx/tree/9c5cb5de0202b4eaac9359c84ca7ce9cbd7ee835#gc-optimization
+(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (setq gc-cons-threshold 20000000))))
 ;; disable garbage collection in minibuffer
 ;; see: http://tiny.cc/7wd7ay
 (add-hook 'minibuffer-setup-hook (lambda () (setq gc-cons-threshold most-positive-fixnum)))
-(add-hook 'minibuffer-exit-hook (lambda () (setq gc-cons-threshold 800000)))
+(add-hook 'minibuffer-exit-hook (lambda () (setq gc-cons-threshold (setq gc-cons-threshold 20000000))))
 
 ;; don't create lock files, fuck collisions
 (setq create-lockfiles nil)
@@ -309,6 +311,7 @@
 (use-package nginx-mode)
 (use-package yaml-mode
   :delight "[yaml]")
+
 (use-package markdown-mode
   :disabled
   :ensure t
@@ -318,10 +321,12 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown")
   :delight "[md]")
+
 (use-package apib-mode
   :disabled
   :config
   (add-to-list 'auto-mode-alist '("\\.apib\\'" . apib-mode)))
+
 (use-package toml-mode)
 (use-package kotlin-mode)
 (use-package glsl-mode)
@@ -329,7 +334,9 @@
 (use-package haml-mode)
 (use-package scss-mode
   :delight "[scss]")
+
 (use-package lua-mode)
+
 (use-package robe
   :config
   (add-hook 'ruby-mode-hook 'robe-mode))

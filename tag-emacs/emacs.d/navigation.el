@@ -1,4 +1,4 @@
-(use-package ivy
+(use-package ivy
   :init
   (setq
    ;; add 'recentf-mode' and bookmarks to 'ivy-switch-buffer'
@@ -58,7 +58,6 @@
    ("C-x v" . counsel-describe-variable)
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
-   ("C-c l" . counsel-ag)
    ("C-c k" . counsel-rg)))
 
 (use-package swiper

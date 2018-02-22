@@ -9,4 +9,4 @@
   :config
   (dolist (mode rc/emmet/modes)
     (add-hook mode 'emmet-mode))
-  :delight "[emmet]")
+  :delight "emmet")

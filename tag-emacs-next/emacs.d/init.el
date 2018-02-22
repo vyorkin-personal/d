@@ -9,8 +9,10 @@
 (defvar rc/gc-threshold-increased 402653184)
 (defvar rc/gc-percentage-increased 0.6)
 
-(defvar rc/gc-threshold-normal 16777216)
-(defvar rc/gc-percentage-normal 0.1)
+;; see why its set to 20000000:
+;; https://github.com/lewang/flx/tree/9c5cb5de0202b4eaac9359c84ca7ce9cbd7ee835#gc-optimization
+(defvar rc/gc-threshold-normal 20000000)
+(defvar rc/gc-percentage-normal 0.2)
 
 (defun rc/disable-gc ()
   (setq
@@ -36,7 +38,6 @@
 
 ;; enable with t if you prefer
 (defconst *spell-check-support-enabled* nil)
-(defconst *is-a-mac* (eq system-type 'darwin))
 
 (require 'init-defaults)
 (require 'init-ui)
@@ -49,8 +50,8 @@
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/"))
 ;; elpy (emacs python dev env) packages
-(add-to-list 'package-archives
-             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+;; (add-to-list 'package-archives
+;;              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
 ;; its ok to use both package-initialize and
 ;; use-package for a well behaved package:
@@ -70,22 +71,79 @@
   use-package-always-ensure t
   use-package-verbose nil)
 
+(require 'init-benchmarking)
+
 ;; user-specific settings to load before others
 (require 'init-preload-local nil t)
 
-(require 'init-fira-code)
+(require 'init-quelpa)
+(require 'init-font)
+(require 'init-general)
+(require 'init-hydra)
 (require 'init-appearance)
 (require 'init-themes)
 (require 'init-utils)
 (require 'init-osx-keys)
 (require 'init-system)
-(require 'init-general)
+(require 'init-osx)
+(require 'init-behavior)
+(require 'init-editor)
+(require 'init-bookmarks)
+(require 'init-dashboard)
 (require 'init-evil)
+(require 'init-mode-line)
+(require 'init-helm)
 (require 'init-process-menu)
+(require 'init-company)
 (require 'init-dired)
-(require 'init-magit)
+(require 'init-navigation)
+(require 'init-projectile)
+(require 'init-git)
+(require 'init-shell)
+(require 'init-undo-tree)
+(require 'init-neotree)
+(require 'init-smartparens)
+(require 'init-yasnippet)
+(require 'init-org)
+(require 'init-translate)
+(require 'init-elisp)
+(require 'init-markdown)
+(require 'init-emmet)
+(require 'init-flycheck)
+(require 'init-flyspell)
+(require 'init-web)
+(require 'init-typescript)
+(require 'init-flow)
+(require 'init-javascript)
+(require 'init-json)
+(require 'init-clojure)
+(require 'init-rust)
+(require 'init-scala)
+(require 'init-ocaml)
+(require 'init-reason)
+(require 'init-erlang)
+(require 'init-elixir)
+(require 'init-haskell)
+(require 'init-idris)
+(require 'init-purescript)
+(require 'init-elm)
+(require 'init-ruby)
+(require 'init-python)
+(require 'init-go)
+(require 'init-cxx)
+(require 'init-coq)
+(require 'init-docker)
+(require 'init-rest)
+(require 'init-irc)
+(require 'init-email)
+(require 'init-ticker)
+(require 'init-transmission)
+(require 'init-pomodoro)
+(require 'init-stats)
+(require 'init-entertainment)
+(require 'init-misc)
 
-;; user-specific settings
+;; USER-specific settings
 (require 'init-local nil t)
 
 (provide 'init)

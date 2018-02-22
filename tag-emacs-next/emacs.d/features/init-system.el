@@ -19,4 +19,12 @@
 
 (use-package use-package-ensure-system-package)
 
+(use-package use-package-chords
+  :config (key-chord-mode 1))
+
+(use-package server
+  :config
+  (unless (server-running-p)
+    (server-start)))
+
 (provide 'init-system)
