@@ -32,4 +32,9 @@
 ;; automatically save place in each file
 (save-place-mode 1)
 
+;; set the location
+(setq calendar-location-name "Moscow, RU")
+(setq calendar-latitude 55.84)
+(setq calendar-longitude 37.34)
+
 (provide 'init-defaults)

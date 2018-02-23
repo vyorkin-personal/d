@@ -4,6 +4,8 @@
 (require 'init-flycheck)
 
 (use-package typescript-mode
+  :requires (init-osx init-flycheck)
+  :after flycheck
   :init
   (setq
    typescript-indent-level 2
@@ -16,7 +18,16 @@
 ;; most of key bindings
 ;; are provided by evil-collection
 (use-package tide
-  :after typescript-mode
+  :requires
+  (init-osx
+   init-general
+   init-flycheck
+   init-company)
+  :after
+  (typescript-mode
+   general
+   company
+   flycheck)
   :preface
   (defun rc/tide/setup ()
     (tide-setup)

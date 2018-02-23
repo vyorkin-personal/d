@@ -1,8 +1,14 @@
 (require 'init-ui)
 (require 'init-general)
-(require 'init-editor)
 
 (use-package evil
+  :preface
+  (defvar rc/evil/esc-hook '(t)
+    "A hook run after ESC is pressed in normal mode (invoked by `evil-force-normal-state').
+    If a hook returns non-nil, all hooks after it are ignored.")
+  (defun rc/evil/attach-esc-hook ()
+    "Run all escape hooks, if any returns non-nil, then stop there"
+    (run-hook-with-args-until-success 'rc/evil/esc-hook))
   :init
   (setq
     ;; required by evil-collection
@@ -44,7 +50,8 @@
   (evil-set-initial-state 'compilation-mode 'normal)
   ;; occur
   (evil-make-overriding-map occur-mode-map 'normal)
-  (evil-set-initial-state 'occur-mode 'normal))
+  (evil-set-initial-state 'occur-mode 'normal)
+  (advice-add 'evil-force-normal-state :after #'rc/evil/attach-esc-hook))
 
 (use-package evil-collection
   :after evil
@@ -116,9 +123,17 @@
 
 (use-package evil-mc
   :after evil
+  :preface
+  (defun rc/evil-mc/esc ()
+    "Clear evil-mc cursors and restore state."
+    (when (evil-mc-has-cursors-p)
+      (evil-mc-undo-all-cursors)
+      (evil-mc-resume-cursors)
+      t))
   :demand t
   :config
   (global-evil-mc-mode 1)
+  (add-hook #'rc/evil/esc-hook #'rc/evil-mc/esc)
   :diminish evil-mc-mode)
 
 (use-package evil-ediff

@@ -2,11 +2,6 @@
 (require 'init-company)
 (require 'init-flycheck)
 
-;; setup / init tuareg
-;; (load "~/.opam/system/share/emacs/site-lisp/tuareg-site-file")
-
-;; c, c++ ;;
-
 (use-package compile
   :preface
   (paradox-require 'cl)
@@ -59,6 +54,7 @@
 
 ;; disassemble C/C++ code under cursor
 (use-package disaster
+  :requires init-general
   ;; here is why: https://github.com/jart/disaster/issues/13
   :disabled
   :config
@@ -67,15 +63,21 @@
         ("C-c d") 'disaster))
 
 (use-package company-irony
+  :requires init-company
+  :after (company irony)
   :demand t
   :config
   (add-to-list 'company-backends 'company-irony))
 
 (use-package company-irony-c-headers
+  :requires init-company
+  :after (company irony)
   :demand t
   :config
   (add-to-list 'company-backends 'company-irony-c-headers))
 
-(use-package flycheck-irony)
+(use-package flycheck-irony
+  :requires init-flycheck
+  :after (flycheck irony))
 
 (provide 'init-cxx)

@@ -9,6 +9,8 @@ bindkey -e
 
 export EDITOR=nvim
 
+source $HOME/.dotsecrets/secret_tokens
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename "~/.zshrc"
@@ -84,7 +86,6 @@ zplug "unixorn/tumult.plugin.zsh"
 zplug "dbz/zsh-kubernetes"
 
 zplug "denolfe/zsh-travis"
-zplug "rimraf/k"
 zplug "rupa/z", use:z.sh
 
 # slow as fuck

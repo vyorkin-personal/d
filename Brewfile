@@ -25,6 +25,8 @@ brew 'python3'
 brew 'flow'
 brew 'go'
 brew 'ponyc'
+brew 'racket'
+brew 'scala'
 brew 'sbt'
 brew 'coursier/formulas/coursier', args: ['HEAD']
 

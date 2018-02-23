@@ -1,5 +1,6 @@
 (require 'init-general)
 (require 'init-quelpa)
+(require 'init-evil)
 
 (use-package frame-fns
   :demand t
@@ -13,6 +14,7 @@
 ;; company (suggestions popup alignment issue)
 ;; more info: https://github.com/company-mode/company-mode/issues/299#issuecomment-115056397
 (use-package zoom-frm
+  :requires init-general
   :quelpa (zoom-frm :fetcher github :repo "emacsmirror/zoom-frm")
   :config
   (nmap
@@ -27,6 +29,7 @@
   (seethru-recommended-keybinds))
 
 (use-package ace-window
+  :requires init-general
   :config
   (nmap
    :prefix rc/leader
@@ -43,6 +46,7 @@
 
 ;; restore split pane config, winner-undo, winner-redo
 (use-package winner
+  :requires init-general
   :demand t
   :defer 1
   :config
@@ -53,15 +57,15 @@
     "U" 'winner-undo
     "R" 'winner-redo))
 
-(use-package avy
+(use-package helpful)
+
+(use-package with-editor
+  :requires init-evil
   :demand t
   :config
-  (mmap
-    :prefix "C-c j"
-    "c" 'avy-goto-char
-    "w" 'avy-goto-word-1
-    "l" 'avy-goto-line))
-
-(use-package helpful)
+  (nmap 'with-editor-mode-map
+    "RET" 'with-editor-finish
+    [escape] 'with-editor-cancel)
+  (evil-set-initial-state 'with-editor-mode 'insert))
 
 (provide 'init-editor)

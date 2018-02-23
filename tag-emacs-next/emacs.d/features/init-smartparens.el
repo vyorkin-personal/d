@@ -1,6 +1,7 @@
 (require 'init-general)
 
 (use-package smartparens
+  :requires init-general
   :commands (smartparens-mode sp-with-modes sp-local-pairs)
   :hook ((conf-mode text-mode prog-mode) . smartparens-mode)
   :init
@@ -45,6 +46,6 @@
   (sp-pair "[" "]" :wrap "s-[")
   (sp-pair "\"" "\"" :wrap "C-\"")
   (sp-pair "{" "}" :wrap "C-{")
-  :delight "sp")
+  :diminish smartparens-mode)
 
 (provide 'init-smartparens)

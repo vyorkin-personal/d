@@ -1,2 +1,4 @@
+source $HOME/.dotsecrets/secret_tokens
+
 # added by travis gem
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh

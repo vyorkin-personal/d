@@ -1,4 +1,9 @@
+(require 'init-general)
+(require 'init-navigation)
+
 (use-package projectile
+  :requires (init-general init-navigation)
+  :after (general ivy)
   :preface
   (defvar rc/projectile/ignored-dirs
     '(".git" ".svn" "out" "repl" "project"
@@ -24,27 +29,6 @@
   (projectile-mode)
   ;; remove the mode name for projectile-mode, but show the project name
   ;; :delight '(:eval (concat " " (projectile-project-name)))
-  :diminish projectile-mode
-  :bind
-  (("C-x C-q" . projectile-find-file-in-known-projects) ; don't use this, it is super-slow
-   ("C-x C-g" . projectile-ripgrep)))
-
-(when (executable-find "rg")
-  (progn
-    (defconst modi/rg-arguments
-              `("--line-number" ; line numbers
-                "--smart-case"
-                "--follow"      ; follow symlinks
-                "--mmap")       ; apply memory map optimization when possible
-              "Default rg arguments used in the functions in `projectile' package.")
-    (defun advice-projectile-use-rg ()
-      "Always use `rg' for getting a list of all files in the project."
-      (mapconcat 'identity
-                 (append '("\\rg") ; used unaliased version of `rg': \rg
-                         modi/rg-arguments
-                         '("--null" ; output null separated results,
-                           "--files")) ; get file names matching the regex '' (all files)
-                 " "))
-      (advice-add 'projectile-get-ext-command :override 'advice-projectile-use-rg)))
+  :diminish projectile-mode)
 
 (provide 'init-projectile)

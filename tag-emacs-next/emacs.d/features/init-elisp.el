@@ -3,31 +3,24 @@
 (require 'init-smartparens)
 
 (use-package elisp-mode
+  :requires (init-general init-company init-smartparens)
+  :after (general company smartparens)
   :ensure nil
-  :after (:both general company smartparens)
   :config
-  (nmap
+  (nmap 'emacs-lisp-mode-map
    "M-." 'find-function-at-point
-   "M-," 'find-variable-at-point
-   "C-c e r" 'eval-region)
-
-  (general-define-key
-   :keymaps 'emacs-lisp-mode-map
-   "e"  '(:ignore t :which-key "Emacs")
-   "ev" '(:ignore t :which-key "Describe Variable")
-   "ed" '(:ignore t :which-key "Docs & Help"))
-
+   "M-," 'find-variable-at-point)
   (add-to-list 'company-backends 'company-elisp)
-
-  (with-eval-after-load 'smartparens
-    (sp-with-modes 'emacs-lisp-mode
-                   (sp-local-pair "'" nil :actions nil))))
+  (sp-with-modes 'emacs-lisp-mode
+    (sp-local-pair "'" nil :actions nil)))
 
 (use-package elisp-refs
   :after elisp-mode)
 
 (use-package macrostep
+  :requires init-general
   :after elisp-mode
+  :demand t
   :commands macrostep-expand
   :mode ("\\*.el\\'" . emacs-lisp-mode)
   :config
@@ -36,8 +29,9 @@
    :keymaps 'macrostep-keymap
    "q" #'macrostep-collapse-all
    "e" #'macrostep-expand)
-  (general-define-key
+  (nmap
    :keymaps 'emacs-lisp-mode-map
-   "em" #'macrostep-expand))
+   :prefix rc/leader
+   "m e" #'macrostep-expand))
 
 (provide 'init-elisp)

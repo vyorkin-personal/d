@@ -1,4 +1,3 @@
-
 (use-package emmet-mode
   :after sgml-mode
   :preface

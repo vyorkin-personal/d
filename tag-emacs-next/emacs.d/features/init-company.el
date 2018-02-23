@@ -1,6 +1,7 @@
 (require 'init-general)
 
 (use-package company
+  :requires init-general
   :preface
   :init
   ;; adjust this setting according to your typing speed
@@ -18,9 +19,10 @@
   :config
   ;; use company-mode in all buffers
   (add-hook 'after-init-hook 'global-company-mode)
-
+  (imap
+    "TAB" 'company-complete)
   ;; some of the key bindings are
-  ;; provide by the evil-collection
+  ;; provided by the evil-collection
   (general-define-key
    :keymaps 'company-active-map
    "C-j" 'company-select-next-or-abort
@@ -30,6 +32,7 @@
   :diminish company-mode)
 
 (use-package company-quickhelp
+  :requires init-general
   :after company
   :demand t
   :config

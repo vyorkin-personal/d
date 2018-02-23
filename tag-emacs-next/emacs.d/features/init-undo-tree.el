@@ -1,3 +1,7 @@
+(use-package undohist
+  :config
+  (undohist-initialize))
+
 (use-package undo-tree
   :defer 1
   :init

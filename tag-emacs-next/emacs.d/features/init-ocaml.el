@@ -1,5 +1,8 @@
 (require 'init-osx)
 (require 'init-company)
+(require 'init-flycheck)
+
+(load "~/.opam/4.02.3/share/emacs/site-lisp/tuareg-site-file")
 
 ;; setup / init merlin
 (let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
@@ -17,5 +20,15 @@
   (add-to-list 'company-backends 'merlin-company-backend))
 
 (add-to-list 'dash-at-point-mode-alist '(merlin-mode . "ocaml"))
+
+(use-package flycheck-ocaml
+  :requires init-flycheck
+  :after flycheck
+  :config
+  (with-eval-after-load 'merlin
+    ;; disable merlin's own error checking
+    (setq merlin-error-after-save nil)
+    ;; enable flycheck checker
+    (flycheck-ocaml-setup)))
 
 (provide 'init-ocaml)

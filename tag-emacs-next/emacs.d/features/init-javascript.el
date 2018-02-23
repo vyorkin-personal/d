@@ -23,10 +23,20 @@
   :diminish npm-mode)
 
 (use-package js2-mode
+  :requires (init-osx)
+  :after dash-at-point
   :init
   ;; indent step is 2 spaces
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
+  (setq
+   ;; configure indentation
+   js2-enter-indents-newline t
+   js2-auto-indent-p t
+   ;; Idle timeout before reparsing buffer
+   js2-idle-timer-delay 0.5
+   ;; disable error parsing in favor of Flycheck
+   js2-strict-missing-semi-warning nil)
   :commands js2-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -65,8 +75,9 @@
   :delight "pr")
 
 (use-package company-tern
+  :requires init-company
+  :after (company tern)
   :demand t
-  :after (:both company tern)
   :config
   (add-to-list 'company-backends 'company-tern))
 

@@ -1,19 +1,19 @@
 (require 'init-general)
 (require 'init-company)
 (require 'init-flycheck)
+(require 'init-org)
 
 (use-package clojure-mode :ensure t
+  :requires (init-general init-company init-org)
+  :after (general company org)
   :mode (("\\.clj\\'" . clojure-mode)
          ("\\.edn\\'" . clojure-mode)
          ("\\.boot\\'" . clojure-mode)
-         ("\\.cljs.*\\'" . clojure-mode)
-         ("lein-env" . ruby-mode))
+         ("\\.cljs.*\\'" . clojure-mode))
   :init
   (setq inferior-lisp-program "lein repl")
-  (eval-after-load 'org-mode
-    (lambda ()
-      (add-to-list 'org-babel-load-languages '(clojure . t))))
   :config
+  (add-to-list 'org-babel-load-languages '(clojure . t))
   (nmap 'clojure-mode
     :prefix rc/leader
     "c s" 'cider-start-http-server
@@ -47,6 +47,9 @@
   (add-hook 'eldoc-mode #'cider-mode-hook))
 
 (use-package flycheck-clojure
-  :after clojure-mode)
+  :requires init-flycheck
+  :after (flycheck clojure-mode))
+
+(use-package 4clojure)
 
 (provide 'init-clojure)

@@ -3,3 +3,5 @@ speedtest-cli
 pgcli
 neovim
 howdoi
+wakatime
+yamllint

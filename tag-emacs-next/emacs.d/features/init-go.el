@@ -1,6 +1,9 @@
 (require 'init-company)
+(require 'init-flycheck)
 
 (use-package go-mode
+  :requires (init-company init-flycheck)
+  :after (company flycheck)
   :preface
   (defun rc/go-mode/setup ()
       (add-hook 'before-save-hook 'gofmt-before-save)
@@ -13,6 +16,8 @@
   (add-hook 'go-mode-hook #'rc/go-mode/setup))
 
 (use-package company-go
+  :requires init-company
+  :after (company go-mode)
   :config
   (add-hook 'go-mode-hook 'company-mode)
   (add-to-list 'company-backends 'company-go))

@@ -1,4 +1,7 @@
+(require 'init-general)
+
 (use-package company-coq
+  :requires init-general
   :disabled
   :init
   (load "~/.emacs.d/lisp/PG/generic/proof-site.el")

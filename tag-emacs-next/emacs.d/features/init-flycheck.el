@@ -1,6 +1,8 @@
 (require 'init-general)
 
 (use-package flycheck
+  :requires init-general
+  :after general
   :defer 1.8
   :init
   (setq-default
@@ -14,7 +16,7 @@
   ;; like VisualStudio, Eclipse, etc.
   (add-to-list
    'display-buffer-alist
-   `(,(rx bos "*Flycheck errors*" eos)
+   `(,(rx bos "*fucking errors*" eos)
      (display-buffer-reuse-window display-buffer-in-side-window)
      (side . bottom)
      (reusable-frames . visible)
@@ -22,31 +24,21 @@
   (global-flycheck-mode 1)
   (nmap
     :prefix rc/leader
-    "E" 'flycheck-list-errors)
+    "e e" 'flycheck-list-errors
+    "e c" 'flycheck-clear
+    "e i" 'flycheck-manual
+    "e C" 'flycheck-compile
+    "e n" 'flycheck-next-error
+    "e p" 'flycheck-previous-error
+    "e b" 'flycheck-buffer
+    "e v" 'flycheck-verify-setup
+    "e V" 'flycheck-verify-checker)
   :diminish flycheck-mode)
 
-(use-package flycheck-color-mode-line
-  ;; seems to work only with powerline
-  :disabled
-  :config
-  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
-
-;; flycheck-error-list-goto-error
-
-(setq flyspell-use-meta-tab nil
-      flyspell-mode-line-string ""
-      flyspell-auto-correct-binding (kbd ""))
-
-;; for programming modes, enable flyspell-prog-mode for
-;; spell checking in comments and strings.
-;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
-(use-package flyspell-correct-ivy
+(use-package flycheck-inline
+  :after flycheck
   :demand t
   :config
-  (setq flyspell-correct-interface 'flyspell-correct-ivy)
-  :bind
-  (:map flyspell-mode-map
-        ("C-;" . flyspell-correct-previous-word-generic)))
+  (add-hook 'flycheck-mode-hook 'flycheck-inline-enable))
 
 (provide 'init-flycheck)

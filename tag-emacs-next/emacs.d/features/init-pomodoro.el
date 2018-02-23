@@ -1,14 +1,16 @@
 (require 'init-general)
 
 (use-package pomidor
-  :init
-  (setq
-;; pomidor-sound-overwork nil
-   pomidor-sound-tick nil
-   pomidor-sound-tack nil)
+  :requires init-general
+  :after general
+  ;; :init
+  ;; (setq
+   ;; pomidor-sound-overwork nil
+   ;; pomidor-sound-tick nil
+   ;; pomidor-sound-tack nil)
   :config
   (nmap
     :prefix rc/leader
-    "g" #'pomidor))
+    "G" #'pomidor))
 
 (provide 'init-pomodoro)

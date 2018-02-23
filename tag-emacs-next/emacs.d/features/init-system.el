@@ -14,6 +14,7 @@
   :init
   (setq exec-path-from-shell-check-startup-files nil)
   :config
+  (exec-path-from-shell-copy-envs '("WAKATIME_API_KEY"))
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 

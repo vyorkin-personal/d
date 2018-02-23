@@ -2,6 +2,7 @@
 (require 'init-flycheck)
 
 (use-package elixir-mode
+  :requires init-general
   :init
   (use-package alchemist
     :demand t
@@ -48,10 +49,24 @@
                      (string-equal "mix" (file-name-base buffer-file-name)))
                 (alchemist-hex-mode 1)))))
 
-(use-package flycheck-elixir)
+(use-package flycheck-elixir
+  :requires init-flycheck
+  :after (flycheck elixir-mode))
+
 (use-package flycheck-mix
+  :requires init-flycheck
+  :after (flycheck elixir-mode)
   :config
   (flycheck-mix-setup))
-(use-package flycheck-dialyxir)
+
+(use-package flycheck-dialyxir
+  :requires init-flycheck
+  :after (flycheck elixir-mode))
+
+(use-package flycheck-credo
+  :requires init-flycheck
+  :after (flycheck elixir-mode)
+  :config
+  (flycheck-credo-setup))
 
 (provide 'init-elixir)

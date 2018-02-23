@@ -23,8 +23,8 @@
 (add-hook 'after-load-theme-hook 'rc/customize-appearance)
 
 (nmap
- :prefix rc/leader
- "`" 'rc/customize-appearance)
+  :prefix rc/leader
+  "`" 'rc/customize-appearance)
 
 (use-package delight
   :config
@@ -37,7 +37,7 @@
              (purescript-mode "purs" purescript)
              (javascript-mode "js" js)
              (eldoc-mode "eldoc" eldoc)
-          ;; (hi-lock-mode "hi" hi-lock)
+             ;; (hi-lock-mode "hi" hi-lock)
              (auto-revert-mode "ar" autorevert))))
 
 (use-package diminish
@@ -68,8 +68,8 @@
   :demand t
   :config
   (setq
-    beacon-color "#DEFF00"
-    beacon-dont-blink-commands nil)
+   beacon-color "#deff00"
+   beacon-dont-blink-commands nil)
   (beacon-mode 1)
   :diminish beacon-mode)
 
@@ -98,10 +98,10 @@
   :defer 0.6
   :init
   (setq
-    linum-relative-current-symbol "")
+   linum-relative-current-symbol "")
   :config
-  ; (add-hook 'text-mode-hook 'linum-relative-mode)
-  ; (add-hook 'prog-mode-hook 'linum-relative-mode)
+  ;; (add-hook 'text-mode-hook 'linum-relative-mode)
+  ;; (add-hook 'prog-mode-hook 'linum-relative-mode)
   (nmap
     :prefix rc/leader
     "t n" 'linum-relative-toggle))
@@ -117,14 +117,17 @@
   (add-hook 'lisp-mode-hook #'rc/highlight-chars/setup)
   (add-hook 'prog-mode-hook #'rc/highlight-chars/setup))
 
+(use-package rainbow-blocks
+  :config
+  (add-hook 'clojure-mode-hook 'rainbow-blocks-mode))
+
 (use-package highlight-blocks
   :defer 0.2
   :init
   (setq highlight-blocks-delay 0.05)
   :config
-  ;; highlight blocks only in lisp-mode
-  (add-hook 'prog-mode-hook 'highlight-blocks-mode)
-  (add-hook 'emacs-lisp-mode-hook 'highlight-blocks-mode)
+  ;; (add-hook 'prog-mode-hook 'highlight-blocks-mode)
+  ;; (add-hook 'emacs-lisp-mode-hook 'highlight-blocks-mode)
   (nmap
     :prefix rc/leader
     "t h" 'highlight-blocks-mode
@@ -155,15 +158,70 @@
     :prefix rc/leader
     "t s" 'highlight-leading-spaces-mode))
 
+(use-package golden-ratio
+  :init
+  (setq golden-ratio-auto-scale t)
+  ;; (setq
+  ;;  golden-ratio-adjust-factor .8
+  ;;  golden-ratio-wide-adjust-factor .8)
+  :config
+  (golden-ratio-mode 1)
+  :diminish golden-ratio-mode)
+
+(use-package vi-tilde-fringe
+  :config
+  (global-vi-tilde-fringe-mode))
+
+(use-package hl-todo
+  :config
+  (global-hl-todo-mode))
+
+(use-package indent-guide
+  :requires init-general
+  :after general
+  :config
+  (indent-guide-global-mode)
+  (nmap
+    :prefix rc/leader
+    "t i" 'indent-guide-mode))
+
 (use-package highlight-indent-guides
+  ;; slow
   :disabled
+  :requires init-general
+  :after general
   :defer 0.2
   :init
   (setq highlight-indent-guides-method 'character)
   :config
-  ; (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  ;; (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
   (nmap
     :prefix rc/leader
     "t i" 'highlight-indent-guides-mode))
+
+(use-package smeargle
+  ;; slow
+  :disabled
+  :config
+  (custom-set-variables
+   '(smeargle-age-colors
+     '((0 . nil)
+       (1 . "grey8")
+       (2 . "grey7")
+       (3 . "grey6")
+       (4 . "grey5")
+       (5 . "grey4")
+       (6 . "grey3")
+       (7 . "grey2")
+       (8 . "grey1"))))
+  (nmap
+    :prefix rc/leader
+    "t S t" 'smeargle
+    "t S c" 'smeargle-commits
+    "t S C" 'smeargle-clear))
+
+(use-package smooth-scrolling
+  :config
+  (smooth-scrolling-mode 1))
 
 (provide 'init-appearance)

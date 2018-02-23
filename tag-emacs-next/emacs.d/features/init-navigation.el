@@ -1,9 +1,22 @@
 (require 'init-general)
+(require 'init-company)
+(require 'init-flycheck)
+(require 'init-flyspell)
 
 (use-package flx)
 
+(use-package company-flx
+  :requires init-company
+  :after (company flx)
+  :demand t
+  :config
+  ;; use C-o to switch backend and
+  ;; enable company mode fuzzyness
+  (company-flx-mode +1))
+
 (use-package ivy
-  :after flx
+  :requires init-general
+  :after (general flx)
   :preface
   (defun rc/ivy/switch-buffer-occur ()
     "Occur function for `ivy-switch-buffer' using `ibuffer'."
@@ -44,7 +57,19 @@
    "C-w" 'ivy-backward-kill-word)
   :diminish ivy-mode)
 
+(use-package flyspell-correct-ivy
+  :requires (init-general init-flyspell)
+  :after (general flyspell ivy)
+  :demand t
+  :init
+  (setq flyspell-correct-interface 'flyspell-correct-ivy)
+  :config
+  (nmap 'flyspell-mode-map
+    "C-;" 'flyspell-correct-previous-word-generic))
+
 (use-package counsel
+  :requires init-general
+  :after general
   :init
   ;; much faster than grep
   (setq
@@ -82,18 +107,45 @@
    "j" 'counsel-bookmark))
 
 (use-package swiper
-  :config
+  :requires init-general
+  :after general
+  :init
   ;; recenter after swiper is finished
   (setq swiper-action-recenter t)
+  :config
   (general-define-key
     :keymaps 'swiper-map
     "C-r" 'swiper-query-replace)
   (nmap
     "C-s" 'swiper))
 
-(use-package hydra)
-(use-package ivy-hydra)
+(use-package ivy-hydra
+  :requires init-hydra
+  :after hydra)
 
 ;; (use-package ranger)
+
+(use-package avy
+  :requires init-general
+  :demand t
+  :config
+  (mmap
+    :prefix "C-c j"
+    "c" 'avy-goto-char
+    "w" 'avy-goto-word-1
+    "l" 'avy-goto-line))
+
+(use-package avy-flycheck
+  :requires (init-general init-flycheck)
+  :after (general avy flycheck)
+  :init
+  (setq avy-flycheck-style 'pre)
+  :config
+  (avy-flycheck-setup)
+  (nmap
+    :prefix rc/leader
+    "n e" #'avy-flycheck-goto-error))
+
+(setq asdf 1)
 
 (provide 'init-navigation)

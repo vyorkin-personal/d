@@ -23,7 +23,8 @@
     (add-to-list 'dash-at-point-mode-alist '(purescript-mode . "purs"))))
 
 (use-package psc-ide
-  :after purescript-mode
+  :requires init-general
+  :after (general purescript-mode)
   :preface
   (defun rc/psc-ide/setup ()
     (setq-local evil-auto-indent nil)
@@ -49,6 +50,8 @@
 ;; should be superseeded by psc-ide-mode's flycheck integration
 ;; https://github.com/dysinger/purescript-mode/pull/8
 (use-package flycheck-purescript
+  :requires init-flycheck
+  :after flycheck
   :disabled
   :preface
   (defun rc/flycheck-purescript/setup ()

@@ -3,8 +3,8 @@
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
 
-  ; (load-theme 'base16-grayscale-dark t)
-  (load-theme 'base16-rebecca t)
+  ;; (load-theme 'base16-grayscale-dark t)
+  ;; (load-theme 'base16-rebecca t)
 
   ;; (load-theme 'base16-pop t)
   ;; (load-theme 'base16-tomorrow-night t)
@@ -99,5 +99,14 @@
   :disabled
   :config
   (load-theme 'yoshi t))
+
+(use-package moe-theme
+  :disabled
+  :config
+  (load-theme 'moe-dark t))
+
+(use-package theme-changer
+  :config
+  (change-theme 'base16-default-light 'base16-rebecca))
 
 (provide 'init-themes)

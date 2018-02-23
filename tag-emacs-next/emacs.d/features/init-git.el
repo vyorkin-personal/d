@@ -3,8 +3,8 @@
 (require 'init-editor)
 
 (use-package evil-magit
-  :requires (:both init-general init-evil init-editor)
-  :after fullframe
+  :requires (init-general init-evil)
+  :after (evil fullframe)
   :init
   (setq evil-magit-state 'normal)
   :config
@@ -21,7 +21,15 @@
    "g l" 'magit-log
    "g p" 'magit-push))
 
+(use-package magithub
+  :after magit
+  :config
+  (magithub-feature-autoinject t)
+  (setq magithub-clone-default-directory "~/github"))
+
 (use-package git-gutter
+  :requires init-general
+  :after general
   :config
   (global-git-gutter-mode t)
   ;; (git-gutter:linum-setup)
@@ -38,6 +46,16 @@
     :prefix rc/leader
     "t g" 'git-gutter-mode)
   :diminish git-gutter-mode)
+
+(use-package git-timemachine)
+
+(use-package gitattributes-mode)
+(use-package gitignore-mode)
+(use-package gitconfig-mode)
+
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode))
 
 (use-package gist)
 

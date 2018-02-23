@@ -16,6 +16,6 @@
           (agenda . 5)
           (registers . 5)))
   :config
-  (dashboard-setup-startup-hook)) 
+  (dashboard-setup-startup-hook))
 
 (provide 'init-dashboard)
