@@ -14,7 +14,10 @@
 
 (use-package aggressive-indent
   :config
-  (global-aggressive-indent-mode 1))
+  (global-aggressive-indent-mode 1)
+  (add-to-list
+    'aggressive-indent-excluded-modes
+    '(haskell-mode purescript-mode html-mode)))
 
 (use-package goto-chg)
 

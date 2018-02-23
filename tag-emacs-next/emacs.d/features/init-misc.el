@@ -12,6 +12,7 @@
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
 
+(use-package 0xc)
 (use-package define-word)
 
 (use-package speed-type)

@@ -137,10 +137,12 @@
 (use-package highlight-thing
   :defer 0.2
   :init
-  (setq highlight-thing-case-sensitive-p t)
-  ;; don't highlight the thing at point itself
-  (setq highlight-thing-exclude-thing-under-point t)
-  (setq highlight-thing-prefer-active-region t)
+  (setq
+   highlight-thing-case-sensitive-p t
+   ;; don't highlight the thing at point itself
+   highlight-thing-exclude-thing-under-point t
+   highlight-thing-prefer-active-region t
+   highlight-thing-ignore-list '("False" "True" "--"))
   :config
   (global-highlight-thing-mode)
   :diminish)
@@ -159,6 +161,8 @@
     "t s" 'highlight-leading-spaces-mode))
 
 (use-package golden-ratio
+  :requires init-general
+  :after general
   :init
   (setq golden-ratio-auto-scale t)
   ;; (setq
@@ -166,11 +170,15 @@
   ;;  golden-ratio-wide-adjust-factor .8)
   :config
   (golden-ratio-mode 1)
+  (nmap
+    :prefix rc/leader
+    "t G" 'golden-ratio-mode)
   :diminish golden-ratio-mode)
 
 (use-package vi-tilde-fringe
   :config
-  (global-vi-tilde-fringe-mode))
+  (global-vi-tilde-fringe-mode)
+  :diminish vi-tilde-fringe-mode)
 
 (use-package hl-todo
   :config
@@ -180,7 +188,7 @@
   :requires init-general
   :after general
   :config
-  (indent-guide-global-mode)
+  ;; (indent-guide-global-mode)
   (nmap
     :prefix rc/leader
     "t i" 'indent-guide-mode))
@@ -202,6 +210,8 @@
 (use-package smeargle
   ;; slow
   :disabled
+  :requires init-general
+  :after general
   :config
   (custom-set-variables
    '(smeargle-age-colors

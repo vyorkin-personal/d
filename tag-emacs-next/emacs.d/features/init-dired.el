@@ -13,9 +13,9 @@
   "XML files extensions")
 (defconst rc/dired-document-files-extensions
   '("doc" "docx" "ppt" "pptx" "xls" "xlsx"
-   "csv" "rtf" "djvu" "epub""wps" "pdf" "texi" "tex"
-   "odt" "ott" "odp" "otp" "ods" "ots"
-   "odg" "otg")
+    "csv" "rtf" "djvu" "epub""wps" "pdf" "texi" "tex"
+    "odt" "ott" "odp" "otp" "ods" "ots"
+    "odg" "otg")
   "Document files extensions")
 (defconst rc/dired-text-files-extensions
   '("txt" "md" "org" "ini" "conf" "rc" "vim" "vimrc" "exrc")
@@ -148,8 +148,8 @@
       ("svg" (extension "svg"))
       ("shell"
        (extension
-         "sh" "bash" "zsh" "fish" "csh" "ksh"
-         "awk" "ps1" "psm1" "psd1" "bat" "cmd"))
+        "sh" "bash" "zsh" "fish" "csh" "ksh"
+        "awk" "ps1" "psm1" "psd1" "bat" "cmd"))
       ("audio"
        (extension
         "mp3" "ogg" "flac" "wav"))
@@ -209,7 +209,7 @@
   (dired-rainbow-define
    log (:inherit default :italic t) ".*\\.log")
 
-  ; highlight executable files, but not directories
+                                        ; highlight executable files, but not directories
   (dired-rainbow-define-chmod
    executable-unix "Green" "-[rw-]+x.*"))
 
@@ -238,7 +238,7 @@
    dired-k-human-readable t)
   :config
   (nmap 'dired-mode-map
-   "C-c C-k" 'dired-k))
+    "C-c C-k" 'dired-k))
 
 ;; peep at files in another window from dired buffers
 (use-package peep-dired
@@ -264,8 +264,8 @@
   (general-define-key
    :states '(normal)
    :keymaps 'peep-dired-mode-map
-    "j" 'peep-dired-next-file
-    "k" 'peep-dired-prev-file)
+   "j" 'peep-dired-next-file
+   "k" 'peep-dired-prev-file)
   (add-hook 'peep-dired-hook 'evil-normalize-keymaps))
 
 (provide 'init-dired)

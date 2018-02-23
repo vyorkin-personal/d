@@ -8,17 +8,24 @@
   :preface
   ;; temporary disable fill column indicator
   ;; while showing company mode popup
-  (defun on-off-fci-before-company (command)
-    (when (string= "show" command)
+  (defun rc/fci/before-company (command)
+    (when (and (bound-and-true-p fci-mode)
+               (string= "show" command))
       (turn-off-fci-mode))
-    (when (string= "hide" command)
+    (when (and (bound-and-true-p fci-mode)
+               (string= "hide" command))
       (turn-on-fci-mode)))
   :init
   (setq
    fci-rule-color "#cd3278"
    fci-rule-use-dashes t)
   :config
-  (advice-add 'company-call-frontends :before #'on-off-fci-before-company)
-  (fci-mode))
+  (fci-mode)
+  (advice-add
+   'company-call-frontends
+   :before #'rc/fci/before-company)
+  (nmap
+    :prefix rc/leader
+    "t F" 'fci-mode))
 
 (provide 'init-fill-column)

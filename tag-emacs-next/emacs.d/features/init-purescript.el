@@ -17,10 +17,10 @@
         (end (save-excursion (beginning-of-line-text) (point))))
     (call-process-region start end "purescript-emmet" t t)))
 
-(eval-after-load 'purescript-mode
-  '((imap 'purescript-mode-map
-      "C-c C-e" #'rc/purescript-emmet)
-    (add-to-list 'dash-at-point-mode-alist '(purescript-mode . "purs"))))
+;; (eval-after-load 'purescript-mode
+;;   '((imap 'purescript-mode-map
+;;       "C-c C-e" 'rc/purescript-emmet)
+;;     (add-to-list 'dash-at-point-mode-alist '(purescript-mode . "purs"))))
 
 (use-package psc-ide
   :requires init-general
@@ -35,9 +35,9 @@
   (setq psc-ide-use-npm-bin t)
   :config
   (general-define-key
-    :states 'normal
-    :keymaps 'psc-ide-mode-map
-    "C-t" 'psc-ide-goto-definition)
+   :states 'normal
+   :keymaps 'psc-ide-mode-map
+   "C-t" 'psc-ide-goto-definition)
   (add-hook 'purescript-mode-hook 'rc/psc-ide/setup)
   :delight "psc-ide")
 

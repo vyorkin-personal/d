@@ -60,6 +60,8 @@
   :config
   (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion))
 
+(use-package hayoo)
+
 (use-package hindent
   ;; TODO: try
   :disabled

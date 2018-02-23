@@ -148,6 +148,7 @@
 (require 'init-coq)
 (require 'init-docker)
 (require 'init-octave)
+(require 'init-infra)
 (require 'init-k8s)
 (require 'init-prodigy)
 (require 'init-rest)

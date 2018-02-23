@@ -5,26 +5,38 @@
   :requires (init-general init-navigation)
   :after (general ivy)
   :preface
-  (defvar rc/projectile/ignored-dirs
-    '(".git" ".svn" "out" "repl" "project"
-      "target" "venv" ".emacs.d" "elpa"))
-  (defvar rc/projectile/ignored-files
-    '(".DS_Store" "TAGS" "*.gz" "*.pyc"
-      "*.jar" "*.tar.gz" "*.tgz" "*.zip"))
+  (defconst rc/projectile/ignored-dirs
+    '(".git" ".svn" ".hg" "_darcs"
+      "out" "output" "repl" "dist" ".vagrant"
+      "project" "target" "compiled" ".bundle"
+      "project/target" "build" "jar"
+      "venv" ".virtualenv"
+      "*__pycache__*" "*.egg-info"
+      ".tox" ".cache" ".cabal-sandbox" ".stack-work"
+      ".emacs.d" "elpa" "site-lisp"
+      "bin" "eclipse-bin" ".ensime_cache" ".idea"
+      ".eunit" ".bzr"
+      "vendor" "uploads" "assets"
+      "node_modules" "bower_components"
+      ".psci_modules")
+    "Ignored dirs")
+  (defconst rc/projectile/ignored-files
+    '(".DS_Store" "TAGS" ".nrepl-port" "*.gz" "*.pyc"
+      "*.jar" "*.tar.gz" "*.tgz" "*.zip")
+    "Ignored files")
   :init
   ;; projectile requires this setting for ivy completion
-  (setq projectile-completion-system 'ivy)
-  ;; useful for very large projects
-  (setq projectile-enable-caching t)
-  (setq projectile-require-project-root nil)
-  (use-package projectile-rails)
+  (setq
+   projectile-indexing-method 'alien
+   projectile-completion-system 'ivy
+   ;; useful for very large projects
+   projectile-enable-caching t
+   projectile-file-exists-remote-cache-expire (* 10 60)
+   projectile-file-exists-local-cache-expire (* 5 60)
+   projectile-require-project-root nil
+   projectile-globally-ignored-directories rc/projectile/ignored-dirs
+   projectile-globally-ignored-files rc/projectile/ignored-files)
   :config
-  (setq projectile-globally-ignored-directories
-        (append rc/projectile/ignored-dirs
-                projectile-globally-ignored-directories))
-  (setq projectile-globally-ignored-files
-        (append rc/projectile/ignored-files
-                projectile-globally-ignored-files))
   ;; use projectile everywhere
   (projectile-mode)
   ;; remove the mode name for projectile-mode, but show the project name
