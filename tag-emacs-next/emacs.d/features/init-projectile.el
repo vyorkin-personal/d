@@ -18,11 +18,11 @@
       ".eunit" ".bzr"
       "vendor" "uploads" "assets"
       "node_modules" "bower_components"
-      ".psci_modules")
+      ".psci_modules" ".purs-repl" ".pulp-cache")
     "Ignored dirs")
   (defconst rc/projectile/ignored-files
     '(".DS_Store" "TAGS" ".nrepl-port" "*.gz" "*.pyc"
-      "*.jar" "*.tar.gz" "*.tgz" "*.zip")
+      "*.jar" "*.tar.gz" "*.tgz" "*.zip" "package-lock.json")
     "Ignored files")
   :init
   ;; projectile requires this setting for ivy completion
