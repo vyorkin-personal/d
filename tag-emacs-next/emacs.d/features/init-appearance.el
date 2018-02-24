@@ -161,6 +161,8 @@
     "t s" 'highlight-leading-spaces-mode))
 
 (use-package golden-ratio
+  ;; distracting
+  :disabled
   :requires init-general
   :after general
   :init

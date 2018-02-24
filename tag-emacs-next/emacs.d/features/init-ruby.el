@@ -30,7 +30,7 @@
   :init
   (setq rbenv-modeline-function #'rc/rbenv/modeline)
   :config
-  (global-rbenv-mode))
+  (add-hook 'ruby-mode-hook 'rbenv-mode))
 
 (use-package rake
   :requires (init-general init-projectile)

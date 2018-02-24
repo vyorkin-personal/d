@@ -13,11 +13,14 @@
   :diminish ws-butler-mode)
 
 (use-package aggressive-indent
+  :preface
+  (defun rc/aggressive-indent/excluded-modes
+    '(haskell-mode haskell-indentation-mode purescript-mode html-mode))
   :config
-  (global-aggressive-indent-mode 1)
   (add-to-list
     'aggressive-indent-excluded-modes
-    '(haskell-mode purescript-mode html-mode)))
+    rc/aggressive-indent/excluded-modes)
+  (global-aggressive-indent-mode 1))
 
 (use-package goto-chg)
 

@@ -18,10 +18,10 @@
       ".eunit" ".bzr"
       "vendor" "uploads" "assets"
       "node_modules" "bower_components"
-      ".psci_modules" ".purs-repl" ".pulp-cache")
+      ".psci_modules" ".pulp-cache")
     "Ignored dirs")
   (defconst rc/projectile/ignored-files
-    '(".DS_Store" "TAGS" ".nrepl-port" "*.gz" "*.pyc"
+    '(".DS_Store" "TAGS" ".nrepl-port" "*.gz" "*.pyc" ".purs-repl"
       "*.jar" "*.tar.gz" "*.tgz" "*.zip" "package-lock.json")
     "Ignored files")
   :init
