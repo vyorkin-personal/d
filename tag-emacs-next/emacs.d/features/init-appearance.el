@@ -142,7 +142,11 @@
    ;; don't highlight the thing at point itself
    highlight-thing-exclude-thing-under-point t
    highlight-thing-prefer-active-region t
-   highlight-thing-ignore-list '("False" "True" "--"))
+   highlight-thing-ignore-list
+   '("False" "True"
+     "--" "|"
+     "+" "-" "*" "/" "=" ">" "<"
+     "&&" "||" "%" "$" "#"))
   :config
   (global-highlight-thing-mode)
   :diminish)

@@ -196,7 +196,7 @@
   (dired-rainbow-define compressed "#ad7fa8" rc/dired-compressed-files-extensions)
   (dired-rainbow-define packaged "#e6a8df" ("deb" "rpm"))
   (dired-rainbow-define encrypted "LightBlue" ("gpg" "pgp"))
-  (dired-rainbow-define misc "gray50" 'rc/dired-misc-files-extensions)
+  (dired-rainbow-define misc "gray50" rc/dired-misc-files-extensions)
 
   ;; highlight executable files, but not directories
   (dired-rainbow-define-chmod executable-unix "green" "-[rw-]+x.*")

@@ -13,14 +13,9 @@
   :diminish ws-butler-mode)
 
 (use-package aggressive-indent
-  :preface
-  (defun rc/aggressive-indent/excluded-modes
-    '(haskell-mode haskell-indentation-mode purescript-mode html-mode))
   :config
-  (add-to-list
-    'aggressive-indent-excluded-modes
-    rc/aggressive-indent/excluded-modes)
-  (global-aggressive-indent-mode 1))
+  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+  (add-hook 'css-mode-hook #'aggressive-indent-mode))
 
 (use-package goto-chg)
 

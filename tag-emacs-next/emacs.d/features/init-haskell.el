@@ -13,9 +13,9 @@
   :after
   (general
    company
-   org
+   ;; org
    dash-at-point)
-  :if (executable-find "gch")
+  :if (executable-find "ghc")
   :mode
   (("\\.hs\\(c\\|-boot\\)?\\'" . haskell-mode)
    ("\\.lhs\\'" . literate-haskell-mode)
@@ -25,9 +25,6 @@
     (custom-set-variables '(haskell-process-type 'ghci))
     (setq-local evil-auto-indent nil)
     (setq haskell-compile-cabal-build-command "stack build")
-    (set (make-local-variable 'company-backends)
-         (append '((company-capf company-dabbrev-code))
-                 company-backends))
     (turn-on-haskell-indentation)
     ;; (interactive-haskell-mode)
     (turn-on-haskell-unicode-input-method))
@@ -36,13 +33,13 @@
    haskell-process-log t
    haskell-process-type 'stack-ghci)
   :config
-  (add-to-list 'org-babel-load-languages '(haskell . t))
+  (add-hook 'haskell-mode-hook 'rc/haskell-mode/setup)
   (nmap 'haskell-mode-map
     "C-c C-b" 'haskell-compile
     "C-c C-u" 'haskell-navigate-imports
     "C-c C-f" 'haskell-mode-format-imports)
   (add-to-list 'dash-at-point-mode-alist '(haskell-mode . "h"))
-  (add-hook 'haskell-mode-hook 'rc/haskell-mode/setup)
+  (add-to-list 'org-babel-load-languages '(haskell . t))
   :delight "hs")
 
 (use-package intero
