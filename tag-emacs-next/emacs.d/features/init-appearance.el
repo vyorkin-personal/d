@@ -20,7 +20,7 @@
    :foreground (face-foreground 'default)
    :background (face-background 'default)))
 
-(add-hook 'after-load-theme-hook 'rc/customize-appearance)
+(add-hook 'after-load-theme-hook #'rc/customize-appearance)
 
 (nmap
   :prefix rc/leader

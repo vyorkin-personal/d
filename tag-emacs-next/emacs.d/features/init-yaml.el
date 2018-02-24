@@ -6,7 +6,7 @@
   :after dash-at-point
   :config
   (add-to-list 'dash-at-point-mode-alist '(yaml-mode . "yaml"))
-  :delight "yafml")
+  :delight "yaml")
 
 (use-package flycheck-yamllint
   :requires (init-flycheck)
