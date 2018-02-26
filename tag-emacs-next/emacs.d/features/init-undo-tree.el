@@ -1,8 +1,12 @@
+(require 'init-general)
+
 (use-package undohist
   :config
   (undohist-initialize))
 
 (use-package undo-tree
+  :requires init-general
+  :after general
   :defer 1
   :init
   (setq
@@ -13,6 +17,9 @@
   ;; (setq undo-tree-visualizer-timestamps t)
   :config
   (undo-tree-mode)
+  (nmap
+    :prefix rc/leader
+    "u" 'undo-tree-visualize)
   :diminish undo-tree-mode)
 
 (provide 'init-undo-tree)

@@ -77,6 +77,7 @@
     (shut-up-silence-emacs)))
 
 (require 'init-benchmarking)
+(require 'init-utils)
 
 ;; user-specific settings to load before others
 (require 'init-preload-local nil t)
@@ -88,7 +89,6 @@
 (require 'init-hydra)
 (require 'init-appearance)
 (require 'init-themes)
-(require 'init-utils)
 (require 'init-osx-keys)
 (require 'init-system)
 (require 'init-osx)
@@ -128,6 +128,7 @@
 (require 'init-geiser)
 (require 'init-scheme)
 (require 'init-racket)
+(require 'init-sml)
 (require 'init-clojure)
 (require 'init-rust)
 (require 'init-scala)
@@ -146,6 +147,7 @@
 (require 'init-go)
 (require 'init-cxx)
 (require 'init-coq)
+(require 'init-brainfuck)
 (require 'init-docker)
 (require 'init-octave)
 (require 'init-infra)

@@ -99,7 +99,8 @@
 (auto-fill-mode t)
 
 ;; cursor position
-(global-hl-line-mode t)
+(when window-system
+  (global-hl-line-mode t))
 (line-number-mode t)
 (column-number-mode t)
 

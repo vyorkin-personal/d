@@ -9,7 +9,7 @@
    company-dabbrev-ignore-case nil
    company-dabbrev-code-ignore-case nil
    company-dabbrev-downcase nil
-   company-idle-delay 0
+   company-idle-delay 0.5
    company-minimum-prefix-length 1
    ;; company-show-numbers t
    ;; aligns annotation to the right hand side
@@ -20,7 +20,7 @@
   ;; use company-mode in all buffers
   (add-hook 'after-init-hook 'global-company-mode)
   (imap
-    "TAB" 'company-complete)
+    "C-SPC" 'company-complete)
   ;; some of the key bindings are
   ;; provided by the evil-collection
   (general-define-key

@@ -30,7 +30,7 @@
   :requires (init-general)
   :after (general markdown-mode)
   :config
-  (nmap 'markdown-mode
+  (nmap 'markdown-mode-map
     :prefix rc/leader
     "r" 'gh-md-render-region
     "b" 'gh-md-render-buffer))

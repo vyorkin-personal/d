@@ -9,7 +9,7 @@
     '(".git" ".svn" ".hg" "_darcs"
       "out" "output" "repl" "dist" ".vagrant"
       "project" "target" "compiled" ".bundle"
-      "project/target" "build" "jar"
+      "build" "jar"
       "venv" ".virtualenv"
       "*__pycache__*" "*.egg-info"
       ".tox" ".cache" ".cabal-sandbox" ".stack-work"

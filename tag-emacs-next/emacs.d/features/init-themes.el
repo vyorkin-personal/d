@@ -1,3 +1,5 @@
+(require 'init-quelpa)
+
 (use-package base16-theme
   :config
   ;; (load-theme 'base16-chalk t)
@@ -15,14 +17,17 @@
 (use-package sublime-themes :defer t)
 
 (use-package doom-themes
-  :disabled
+  :init
+  (setq
+   doom-themes-enable-bold nil
+   doom-themes-enable-italic nil)
   :config
   ;; enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; corrects (and improves) org-mode's native fontification
-  (doom-themes-org-config)
-  (load-theme 'doom-one t))
+  (doom-themes-org-config))
 
+(use-package color-theme-modern :defer t)
 (use-package twilight-theme :defer t)
 (use-package gruber-darker-theme :defer t)
 (use-package monokai-theme :defer t)
@@ -38,9 +43,39 @@
 (use-package paganini-theme :defer t)
 (use-package yoshi-theme :defer t)
 (use-package moe-theme :defer t)
+(use-package arjen-grey-theme :defer t)
+(use-package darkmine-theme :defer t)
+(use-package flatland-theme :defer t)
+(use-package tao-theme :defer t)
+(use-package liso-theme :defer t)
+(use-package jazz-theme :defer t)
+(use-package material-theme :defer t)
+(use-package challenger-deep-theme :defer t) ;; ****
+(use-package ample-theme
+  :init
+  (progn (load-theme 'ample t t)
+         (load-theme 'ample-flat t t)
+         (load-theme 'ample-light t t)
+         (enable-theme 'ample-flat))
+  :defer t)
+(use-package cyberpunk-theme :defer t)
+(use-package phoenix-dark-mono-theme :defer t)
+(use-package phoenix-dark-pink-theme :defer t)
+(use-package cyberpunk-theme :defer t)
+(use-package blackboard-theme :defer t)      ;; ***
+(use-package mustard-theme :defer t)         ;; ****
+(use-package labburn-theme :defer t)         ;; *****
+(use-package green-phosphor-theme :defer t)  ;; *****
+(use-package exotica-theme :defer t)         ;; **
+(use-package lush-theme :defer t)            ;; ****
+
+(use-package deep-thought-theme
+  :disabled
+  :quelpa (deep-thought-theme :fetcher github :repo "emacsfodder/emacs-deep-thought-theme")
+  :defer t)
 
 (use-package theme-changer
   :config
-  (change-theme 'base16-rebecca 'base16-chalk))
+  (change-theme 'doom-one 'bliss))
 
 (provide 'init-themes)

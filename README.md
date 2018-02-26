@@ -21,6 +21,14 @@ I've tried hard to do this for you, so you may not require to do anyting at all,
 
 Here is the things you should do manually.
 
+#### Coq
+
+[install Proof General](https://github.com/ProofGeneral/PG)
+
+#### Sufring keys for Chrome
+
+[my settings gist](https://gist.github.com/vyorkin/c5d9cfa63da9811ed0062c5f1440f754)
+
 #### Non-free software
 
 * MindNode

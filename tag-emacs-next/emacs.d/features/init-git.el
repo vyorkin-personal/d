@@ -54,8 +54,12 @@
 (use-package gitconfig-mode)
 
 (use-package diff-hl
+  :requires init-general
+  :after general
   :config
-  (global-diff-hl-mode))
+  (nmap
+    :prefix rc/leader
+    "t G" 'global-diff-hl-mode))
 
 (use-package gist)
 

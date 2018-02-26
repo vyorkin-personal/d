@@ -73,38 +73,32 @@
   :init
   ;; much faster than grep
   (setq
-    counsel-grep-base-command
-    "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+   counsel-grep-base-command
+   "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
   ;; projectile replacements
   (use-package counsel-projectile
     :demand t
     :config
-    ;; for kinesis
-    (nmap
-      :prefix rc/leader
-      "q" 'counsel-projectile-find-file
-      "a" 'counsel-projectile-switch-to-buffer)
-    ;; for macbook pro
     (nmap
       "C-q" 'counsel-projectile-find-file
       "C-a" 'counsel-projectile-switch-to-buffer))
   :config
   (nmap
-   :prefix rc/leader
-    "f" 'counsel-rg)
+    :prefix rc/leader
+    "f" 'counsel-rg
+    "h v" 'counsel-describe-variable
+    "h f" 'counsel-describe-function)
   (nmap
     "M-x" 'counsel-M-x
     "C-x C-r" 'find-file
-    "C-x d f" 'counsel-describe-function
-    "C-x d v" 'counsel-describe-variable
     "C-x C-f" 'counsel-find-file
     "C-x C-g" 'counsel-git-grep
     "C-x p" 'counsel-package)
   (nmap
-   :prefix rc/leader
-   rc/leader 'counsel-M-x
-   "T" 'counsel-load-theme
-   "j" 'counsel-bookmark))
+    :prefix rc/leader
+    rc/leader 'counsel-M-x
+    "T" 'counsel-load-theme
+    "j" 'counsel-bookmark))
 
 (use-package swiper
   :requires init-general

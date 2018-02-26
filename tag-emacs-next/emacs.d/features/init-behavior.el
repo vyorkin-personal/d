@@ -12,6 +12,12 @@
   (ws-butler-global-mode)
   :diminish ws-butler-mode)
 
+(use-package smooth-scrolling
+  ;; too slow
+  :disabled
+  :config
+  (smooth-scrolling-mode 1))
+
 (use-package aggressive-indent
   :config
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)

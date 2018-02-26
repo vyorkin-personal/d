@@ -65,12 +65,18 @@
 
 ;; visualizes cursor position
 (use-package beacon
+  :requires init-general
+  :after general
   :demand t
   :config
   (setq
-   beacon-color "#deff00"
+   beacon-color "#ff00ee"
    beacon-dont-blink-commands nil)
+  :config
   (beacon-mode 1)
+  (nmap
+    :prefix rc/leader
+    "t b" 'beacon-mode)
   :diminish beacon-mode)
 
 (use-package focus
@@ -118,8 +124,7 @@
   (add-hook 'prog-mode-hook #'rc/highlight-chars/setup))
 
 (use-package rainbow-blocks
-  :config
-  (add-hook 'clojure-mode-hook 'rainbow-blocks-mode))
+  :config)
 
 (use-package highlight-blocks
   :defer 0.2
@@ -148,14 +153,21 @@
      "+" "-" "*" "/" "=" ">" "<"
      "&&" "||" "%" "$" "#"))
   :config
-  (global-highlight-thing-mode)
-  :diminish)
+  ;; distracting
+  ;; (global-highlight-thing-mode)
+  (nmap
+    :prefix rc/leader
+    "t H" 'global-highlight-thing-mode)
+  :diminish highlight-thing-mode)
 
 ;; basically its the same as highlight-thing
+;; but seems to be smarter and less distracting
 (use-package idle-highlight-mode
-  :disabled
   :config
-  (add-hook 'prog-mode-hook 'idle-highlight-mode))
+  (add-hook 'prog-mode-hook 'idle-highlight-mode)
+  (nmap
+    :prefix rc/leader
+    "t H" 'idle-highlight-mode))
 
 (use-package highlight-leading-spaces
   :defer 0.8
@@ -235,9 +247,5 @@
     "t S t" 'smeargle
     "t S c" 'smeargle-commits
     "t S C" 'smeargle-clear))
-
-(use-package smooth-scrolling
-  :config
-  (smooth-scrolling-mode 1))
 
 (provide 'init-appearance)

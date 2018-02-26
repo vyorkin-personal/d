@@ -5,18 +5,14 @@
   :requires (init-quelpa init-general)
   :after general
   :init
-  (setq-default bmkp-last-as-first-bookmark-file nil)
+  (setq bookmark-version-control t)
+  (setq bookmark-save-flag 1)
   :config
-  (bookmark-bmenu-list)
   ;; uncomment if you prefer going straight to bookmarks
+  ;; (bookmark-bmenu-list)
   ;; (switch-to-buffer "*Bookmark List*")
   (nmap
     :prefix rc/leader
     "b" 'bookmark-set))
-
-(use-package bookmark+
-  :requires init-quelpa
-  :after (quelpa bookmark)
-  :quelpa (bookmark+ :fetcher github :repo "emacsmirror/bookmark-plus"))
 
 (provide 'init-bookmarks)

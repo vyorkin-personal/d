@@ -5,11 +5,11 @@
 (use-package general
   :config
   (general-define-key
-    "C-h" 'windmove-left
-    "C-l" 'windmove-right
-    "C-k" 'windmove-up
-    "C-j" 'windmove-down
-    "M-q" 'rc/server-shutdown)
+   "C-h" 'windmove-left
+   "C-l" 'windmove-right
+   "C-k" 'windmove-up
+   "C-j" 'windmove-down
+   "M-q" 'rc/server-shutdown)
   (general-evil-setup t)
   (nmap
     ;; swap : and ; to make colon commands
@@ -21,6 +21,9 @@
     "F" 'toggle-frame-fullscreen
     "v" 'split-window-horizontally
     "s" 'split-window-vertically
-    "p" 'list-processes))
+    "p" 'list-processes
+    "h k" 'describe-key-briefly
+    "h K" 'describe-key
+    "h m" 'describe-mode))
 
 (provide 'init-general)

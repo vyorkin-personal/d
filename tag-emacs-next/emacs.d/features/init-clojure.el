@@ -14,7 +14,7 @@
   (setq inferior-lisp-program "lein repl")
   :config
   (add-to-list 'org-babel-load-languages '(clojure . t))
-  (nmap 'clojure-mode
+  (nmap 'clojure-mode-map
     :prefix rc/leader
     "c s" 'cider-start-http-server
     "c r" 'cider-refresh

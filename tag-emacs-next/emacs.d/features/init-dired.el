@@ -98,8 +98,9 @@
     (setq dired-use-ls-dired nil))
 
   :config
-  (nmap
-    "-" 'dired-open)
+  (nmap 'dired-mode-map
+    "gg" 'evil-goto-first-line
+    "G" 'evil-goto-line)
   :diminish dired-mode)
 
 (use-package dired+
@@ -209,7 +210,7 @@
   (dired-rainbow-define
    log (:inherit default :italic t) ".*\\.log")
 
-                                        ; highlight executable files, but not directories
+  ;; highlight executable files, but not directories
   (dired-rainbow-define-chmod
    executable-unix "Green" "-[rw-]+x.*"))
 
@@ -252,7 +253,8 @@
      rc/dired-compressed-files-extensions
      rc/dired-image-files-extensions
      rc/dired-audio-files-extensions
-     rc/dired-video-files-extensions))
+     rc/dired-video-files-extensions
+     rc/dired-misc-files-extensions))
   :init
   (setq
    peep-dired-ignored-extensions rc/peep-dired/ignored-extensions
