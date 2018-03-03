@@ -11,33 +11,34 @@
     (run-hook-with-args-until-success 'rc/evil/esc-hook))
   :init
   (setq
-    ;; required by evil-collection
-    evil-want-integration nil
-    ;; to restore missing C-u in evil
-    evil-want-C-u-scroll t
-    evil-want-C-w-delete t
-    evil-want-fine-undo "No"
-    evil-want-visual-char-semi-exclusive t
-    evil-want-Y-yank-to-eol t
-    evil-magic t
-    evil-echo-state t
-    evil-indent-convert-tabs t
-    evil-ex-search-vim-style-regexp t
-    evil-overriding-maps nil
-    evil-ex-substitute-global t
-    ;; column range for ex commands
-    evil-ex-visual-char-range t
-    evil-insert-skip-empty-lines t
-    evil-search-module 'evil-search
-    evil-mode-line-format 'nil
-    ;; more vim-like behavior
-    evil-symbol-word-search t
-    ;; cursors
-    evil-default-cursor (face-background 'cursor nil t)
-    evil-normal-state-cursor 'box
-    evil-emacs-state-cursor `(,(face-foreground 'warning) box)
-    evil-insert-state-cursor 'bar
-    evil-visual-state-cursor 'box)
+   ;; required by evil-collection
+   evil-want-integration nil
+   ;; to restore missing C-u in evil
+   evil-want-C-u-scroll t
+   evil-want-C-w-delete t
+   evil-want-fine-undo "No"
+   evil-want-visual-char-semi-exclusive t
+   evil-want-Y-yank-to-eol t
+   evil-magic t
+   evil-want-abbrev-expand-on-insert-exit nil
+   evil-echo-state t
+   evil-indent-convert-tabs t
+   evil-ex-search-vim-style-regexp t
+   evil-overriding-maps nil
+   evil-ex-substitute-global t
+   ;; column range for ex commands
+   evil-ex-visual-char-range t
+   evil-insert-skip-empty-lines t
+   evil-search-module 'evil-search
+   evil-mode-line-format 'nil
+   ;; more vim-like behavior
+   evil-symbol-word-search t
+   ;; cursors
+   evil-default-cursor (face-background 'cursor nil t)
+   evil-normal-state-cursor 'box
+   evil-emacs-state-cursor `(,(face-foreground 'warning) box)
+   evil-insert-state-cursor 'bar
+   evil-visual-state-cursor 'box)
 
   :config
 
@@ -51,7 +52,12 @@
   ;; occur
   (evil-make-overriding-map occur-mode-map 'normal)
   (evil-set-initial-state 'occur-mode 'normal)
-  (advice-add 'evil-force-normal-state :after #'rc/evil/attach-esc-hook))
+  (advice-add 'evil-force-normal-state :after #'rc/evil/attach-esc-hook)
+  (nmap
+    "C-M-l" 'evil-window-increase-width
+    "C-M-h" 'evil-window-decrease-width
+    "C-M-k" 'evil-window-increase-height
+    "C-M-j" 'evil-window-decrease-height))
 
 (use-package evil-collection
   :after evil

@@ -5,7 +5,7 @@
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
   ;; (load-theme 'base16-grayscale-dark t)
-  ;; (load-theme 'base16-rebecca t)
+  (load-theme 'base16-rebecca t)
   ;; (load-theme 'base16-pop t)
   ;; (load-theme 'base16-tomorrow-night t)
   ;; (load-theme 'base16-twilight t)
@@ -17,6 +17,7 @@
 (use-package sublime-themes :defer t)
 
 (use-package doom-themes
+  :disabled
   :init
   (setq
    doom-themes-enable-bold nil
@@ -52,6 +53,7 @@
 (use-package material-theme :defer t)
 (use-package challenger-deep-theme :defer t) ;; ****
 (use-package ample-theme
+  :disabled
   :init
   (progn (load-theme 'ample t t)
          (load-theme 'ample-flat t t)
@@ -74,8 +76,11 @@
   :quelpa (deep-thought-theme :fetcher github :repo "emacsfodder/emacs-deep-thought-theme")
   :defer t)
 
+;; base16-unikitty-light ****
+
 (use-package theme-changer
+  :disabled
   :config
-  (change-theme 'doom-one 'bliss))
+  (change-theme 'base16-rebecca 'bliss))
 
 (provide 'init-themes)

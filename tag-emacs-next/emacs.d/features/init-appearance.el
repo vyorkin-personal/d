@@ -18,7 +18,8 @@
   (set-face-attribute
    'fringe nil
    :foreground (face-foreground 'default)
-   :background (face-background 'default)))
+   :background (face-background 'default))
+  (require 'init-font))
 
 (add-hook 'after-load-theme-hook #'rc/customize-appearance)
 

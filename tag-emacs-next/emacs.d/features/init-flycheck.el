@@ -9,6 +9,8 @@
    flycheck-disabled-checkers
    '(emacs-lisp-checkdoc javascript-jshint))
   (setq
+   flycheck-highlighting-mode 'lines
+   flycheck-indication-mode 'left-fringe
    flycheck-mode-line-prefix "fly"
    flycheck-javascript-eslint-executable "eslint_d")
   :config
@@ -17,10 +19,11 @@
   (add-to-list
    'display-buffer-alist
    `(,(rx bos "*fucking errors*" eos)
-     (display-buffer-reuse-window display-buffer-in-side-window)
-     (side . bottom)
+     (display-buffer-reuse-window
+      display-buffer-in-side-window)
+     (side            . bottom)
      (reusable-frames . visible)
-     (window-height . 0.33)))
+     (window-height   . 0.33)))
   (global-flycheck-mode 1)
   (nmap
     :prefix rc/leader
@@ -38,7 +41,16 @@
 (use-package flycheck-inline
   :after flycheck
   :demand t
+  :preface
+  (defun rc/flycheck-inline/toggle ()
+    (interactive)
+    (if (equal flycheck-display-errors-function 'flycheck-inline-error-messages)
+        (setq-local flycheck-display-errors-function 'flycheck-display-error-messages)
+      (flycheck-inline-enable)))
   :config
-  (add-hook 'flycheck-mode-hook 'flycheck-inline-enable))
+  (add-hook 'flycheck-mode-hook 'flycheck-inline-enable)
+  (nmap
+    :prefix rc/leader
+    "e t" #'rc/flycheck-inline/toggle))
 
 (provide 'init-flycheck)

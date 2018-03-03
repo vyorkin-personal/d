@@ -1,18 +1,29 @@
-(require 'init-utils)
-(require 'init-general)
-
-(use-package company-coq
-  :requires (init-utils init-general)
-  :after general
+(use-package proof-site
+  :load-path "lisp/PG/generic"
   :mode ("\\.v\\'" . coq-mode)
-  :preface
-  (defun rc/company-coq/setup ()
-    (company-coq-mode)
-    (enable-coq-pretty-symbols)
-    (sp-local-pair 'coq-mode "'" nil :actions nil))
   :init
-  (load (expand-lisp "PG/generic/proof-site"))
-  :config
-  (add-hook 'coq-mode-hook #'rc/company-coq/setup))
+  (use-package coq-mode
+    :ensure nil
+    :commands coq-mode
+    :init
+    (setq
+     company-coq-live-on-the-edge t
+     company-coq-disabled-features '()
+     company-coq-dynamic-autocompletion t)
+    (use-package company-coq
+      :commands company-coq-mode
+      :preface
+      (defun rc/company-coq/setup ()
+        (interactive)
+        (setq-local
+         prettify-symbols-alist
+         '((":=" . ?≜)
+           ("Proof." . ?∵)
+           ("Qed." . ?■)
+           ("Defined." . ?□)))
+        (sp-local-pair 'coq-mode "'" nil :actions nil)
+        (company-coq-mode)
+        (enable-coq-pretty-symbols)))
+    (add-hook 'coq-mode-hook #'rc/company-coq/setup)))
 
 (provide 'init-coq)

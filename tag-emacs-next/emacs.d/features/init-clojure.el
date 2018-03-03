@@ -16,9 +16,10 @@
   (add-to-list 'org-babel-load-languages '(clojure . t))
   (nmap 'clojure-mode-map
     :prefix rc/leader
-    "c s" 'cider-start-http-server
-    "c r" 'cider-refresh
-    "c u" 'cider-user-ns)
+    "C s" 'cider-start-http-server
+    "C r" 'cider-refresh
+    "C u" 'cider-user-ns
+    "C R" 'cider-restart)
   (use-package clojure-mode-extra-font-locking
     :init
     (font-lock-add-keywords

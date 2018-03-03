@@ -18,12 +18,12 @@
     ":" 'evil-repeat-find-char)
   (nmap
     :prefix rc/leader
-    "F" 'toggle-frame-fullscreen
+    "RET" 'toggle-frame-fullscreen
     "v" 'split-window-horizontally
     "s" 'split-window-vertically
     "p" 'list-processes
     "h k" 'describe-key-briefly
     "h K" 'describe-key
-    "h m" 'describe-mode))
+    "h M" 'describe-mode))
 
 (provide 'init-general)

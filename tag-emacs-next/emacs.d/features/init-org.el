@@ -6,6 +6,7 @@
   :requires (init-general init-navigation)
   :after (general counsel)
   :mode ("\\.org\\'" . org-mode)
+  :delight "org"
   :preface
   (defun rc/org/agenda-list (split)
     "Visit the org agenda, in the current window or a split"
@@ -94,6 +95,7 @@
     "C-c C-l" 'org-agenda-log-mode))
 
 (use-package org-super-agenda
+  :disabled
   :requires init-general
   :after (general org)
   :config
@@ -144,7 +146,8 @@
   :config
   (require 'evil-org-agenda)
   (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook #'rc/evil-org/setup))
+  (add-hook 'evil-org-mode-hook #'rc/evil-org/setup)
+  :diminish evil-org-mode)
 
 (use-package org-bullets
   :after org
