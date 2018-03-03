@@ -1,10 +1,9 @@
-{:repl {:plugins [[cider/cider-nrepl "0.14.0"]
-                  [refactor-nrepl "2.3.1"]]
-        :dependencies [[alembic "0.3.2"]
+{:repl {:dependencies [[alembic "0.3.2"]
                        [org.clojure/tools.namespace "0.2.11"]
                        [org.clojure/tools.nrepl "0.2.13"]]}}
 
-{:user {:plugins [[lein-dotenv "RELEASE"]
+{:user {:plugins [[cider/cider-nrepl "0.16.0"]
+                  [lein-dotenv "RELEASE"]
                   [lein-exec "0.3.7"]
                   [lein-pprint "1.2.0"]
                   [lein-ancient "0.6.0-SNAPSHOT"]
