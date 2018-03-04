@@ -4,8 +4,8 @@ alias docs='cd ~/Documents'
 
 # projects
 alias work='cd ~/projects/work'
-alias play='cd ~/projects/play'
-alias gith='cd ~/projects/github'
+alias p='cd ~/projects/play'
+alias g='cd ~/projects/github'
 
 # my
 alias dots='cd ~/.dotfiles'
