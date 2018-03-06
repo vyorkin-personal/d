@@ -54,7 +54,6 @@ Here is the things you should do manually.
 * Spotifree
 * Sketch
 * Adobe Photoshop, Illustrator, etc
-* Annotate
 * BeardedSpice
 * LittleSnitch
 * Texpad
