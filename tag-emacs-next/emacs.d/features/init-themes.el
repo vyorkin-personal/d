@@ -5,7 +5,7 @@
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
   ;; (load-theme 'base16-grayscale-dark t)
-  (load-theme 'base16-rebecca t)
+  ;; (load-theme 'base16-rebecca t)
   ;; (load-theme 'base16-pop t)
   ;; (load-theme 'base16-tomorrow-night t)
   ;; (load-theme 'base16-twilight t)
@@ -79,8 +79,7 @@
 ;; base16-unikitty-light ****
 
 (use-package theme-changer
-  :disabled
   :config
-  (change-theme 'base16-rebecca 'bliss))
+  (change-theme 'labburn 'labburn))
 
 (provide 'init-themes)

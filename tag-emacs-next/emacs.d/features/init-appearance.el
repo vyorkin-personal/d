@@ -66,6 +66,8 @@
 
 ;; visualizes cursor position
 (use-package beacon
+  ;; looks cool, but useless for me
+  :disabled
   :requires init-general
   :after general
   :demand t
@@ -81,6 +83,8 @@
   :diminish beacon-mode)
 
 (use-package focus
+  ;; I don't use it
+  :disabled
   :config
   (nmap
     :prefix rc/leader
@@ -93,6 +97,8 @@
   :diminish rainbow-delimiters-mode)
 
 (use-package color-identifiers-mode
+  ;; don't need it
+  :disabled
   :demand t
   :config
   (add-hook 'after-init-hook 'global-color-identifiers-mode)
@@ -125,6 +131,8 @@
   (add-hook 'prog-mode-hook #'rc/highlight-chars/setup))
 
 (use-package rainbow-blocks
+  ;; I don't like how it looks
+  :disabled
   :config)
 
 (use-package highlight-blocks
@@ -141,6 +149,8 @@
   :diminish highlight-blocks-mode)
 
 (use-package highlight-thing
+  ;; distracting
+  :disabled
   :defer 0.2
   :init
   (setq
@@ -154,7 +164,6 @@
      "+" "-" "*" "/" "=" ">" "<"
      "&&" "||" "%" "$" "#"))
   :config
-  ;; distracting
   ;; (global-highlight-thing-mode)
   (nmap
     :prefix rc/leader
@@ -195,11 +204,14 @@
   :diminish golden-ratio-mode)
 
 (use-package vi-tilde-fringe
+  :disabled
   :config
   (global-vi-tilde-fringe-mode)
   :diminish vi-tilde-fringe-mode)
 
 (use-package hl-todo
+  ;; I don't use TODO that much lol
+  :disabled
   :config
   (global-hl-todo-mode))
 

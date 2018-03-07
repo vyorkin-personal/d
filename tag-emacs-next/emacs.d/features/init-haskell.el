@@ -1,4 +1,5 @@
 (require 'init-osx)
+(require 'init-quelpa)
 (require 'init-general)
 (require 'init-company)
 (require 'init-org)
@@ -57,7 +58,19 @@
   :config
   (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion))
 
-(use-package hayoo)
+(use-package hayoo
+  :defer 2
+  :config
+  (nmap 'haskell-mode-map
+    :prefix rc/leader
+    "r" 'hayoo-query))
+
+(use-package hsearch-mode
+  :defer 2
+  :quelpa (hsearch-mode :fetcher github :repo "jschaf/hsearch")
+  (nmap 'haskell-mode-map
+    :prefix rc/leader
+    "i" 'hsearch))
 
 (use-package hindent
   ;; TODO: try
