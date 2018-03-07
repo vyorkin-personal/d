@@ -1,5 +1,12 @@
 # manually load heavy stuff if needed
 function x() {
+
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+
+# see output of `brew info nvm` for details
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
+
 if [[ `uname` == 'Darwin' ]] then
   # find a way to install them by zplug
   # https://github.com/littleq0903/gcloud-zsh-completion

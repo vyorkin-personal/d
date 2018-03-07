@@ -39,8 +39,8 @@ zplug "zsh-users/zsh-autosuggestions"
 # zsh-autosuggestions is designed to be unobtrusive)
 bindkey '^T' autosuggest-toggle
 
-zplug "k4rthik/git-cal", as:command
-zplug "mafredri/zsh-async", from:github
+# zplug "k4rthik/git-cal", as:command, defer:3
+# zplug "mafredri/zsh-async", from:github, defer:2
 
 # set the priority when loading
 # e.g., zsh-syntax-highlighting must be loaded
@@ -48,8 +48,8 @@ zplug "mafredri/zsh-async", from:github
 # (If the defer tag is given 2 or above, run after compinit command)
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git +rustup)
-PROMPT_GEOMETRY_COLORIZE_SYMBOL=false
+# GEOMETRY_PROMPT_PLUGINS=(virtualenv exec_time git +rustup)
+# PROMPT_GEOMETRY_COLORIZE_SYMBOL=false
 zplug "geometry-zsh/geometry"
 
 # zplug "cusxio/delta-prompt", use:delta.zsh
@@ -73,31 +73,31 @@ zplug "geometry-zsh/geometry"
 # zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="next time USE THE FUCKING ALIAS: "
-zplug "djui/alias-tips"
+zplug "djui/alias-tips", defer:3
 
-export EMOJI_CLI_KEYBIND="^v"
-zplug "b4b4r07/emoji-cli"
+# export EMOJI_CLI_KEYBIND="^v"
+# zplug "b4b4r07/emoji-cli", defer:3
 
 # zplug "tysonwolker/iterm-tab-colors"
-zplug "Seinh/git-prune"
-zplug "uvaes/fzf-marks"
-zplug "AlexisBRENON/oh-my-zsh-reminder"
-zplug "unixorn/tumult.plugin.zsh"
-zplug "dbz/zsh-kubernetes"
+# zplug "Seinh/git-prune", defer:3
+# zplug "uvaes/fzf-marks", defer:3
+# zplug "AlexisBRENON/oh-my-zsh-reminder", defer:3
+# zplug "unixorn/tumult.plugin.zsh", defer:3
+# zplug "dbz/zsh-kubernetes", defer:3
 
-zplug "denolfe/zsh-travis"
-zplug "rupa/z", use:z.sh
+# zplug "denolfe/zsh-travis", defer:3
+zplug "rupa/z", use:z.sh, defer:1
 
 # slow as fuck
 # zplug "iam4x/zsh-iterm-touchbar"
 
-zplug "Russell91/sshrc", from:github, as:command, use:"sshrc"
+# zplug "Russell91/sshrc", from:github, as:command, use:"sshrc", defer:3
 # zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 # zplug "gko/ssh-connect", use:ssh-connect.sh
 
 # completions
 
-zplug "lukechilds/zsh-better-npm-completion", defer:2
+# zplug "lukechilds/zsh-better-npm-completion", defer:2
 
 zplug "zplug/zplug", hook-build: "zplug --self-manage"
 
@@ -112,18 +112,12 @@ fi
 # source plugins and add commands to $PATH
 zplug load
 
-# see output of `brew info nvm` for details
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 export GOPATH="$HOME/go"
 export DYLD_LIBRARY_PATH=/usr/local/opt/capstone/lib/:$DYLD_LIBRARY_PATH
 
 export PATH="/usr/local/sbin:$HOME/bin:$HOME/.rbenv/bin:$HOME/.local/bin:/usr/local/opt/llvm/bin:/usr/local/i386elfgcc/bin/:/usr/local/x8664pcelfgcc/bin/:$HOME/Library/Python/3.6/bin:$PATH"
-
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
 # load custom functions & aliases
 source $HOME/.helpers/index
