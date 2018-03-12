@@ -112,6 +112,7 @@ brew 'ocaml'
 brew 'opam'
 brew 'coq'
 brew 'algol68g'
+brew 'smlnj'
 
 brew 'autoconf'
 brew 'automake'

@@ -50,7 +50,7 @@
   :config
   (intero-global-mode 1)
   (nmap 'intero-mode-map
-    "C-c C-r" 'intero-restart
+    "C-c r" 'intero-restart
     "M-l" 'intero-goto-definition)
   :delight "int")
 
@@ -68,6 +68,7 @@
 (use-package hsearch-mode
   :defer 2
   :quelpa (hsearch-mode :fetcher github :repo "jschaf/hsearch")
+  :config
   (nmap 'haskell-mode-map
     :prefix rc/leader
     "i" 'hsearch))

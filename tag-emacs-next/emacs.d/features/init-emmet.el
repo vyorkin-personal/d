@@ -7,6 +7,7 @@
   (defvar rc/emmet/modes
     '(sgml-mode-hook
       css-mode-hook
+      html-mode-hook
       jade-mode-hook))
   :commands emmet-mode
   :config

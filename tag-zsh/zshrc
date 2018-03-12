@@ -75,8 +75,8 @@ zplug "geometry-zsh/geometry"
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="next time USE THE FUCKING ALIAS: "
 zplug "djui/alias-tips", defer:3
 
-# export EMOJI_CLI_KEYBIND="^v"
-# zplug "b4b4r07/emoji-cli", defer:3
+export EMOJI_CLI_KEYBIND="^v"
+zplug "b4b4r07/emoji-cli", defer:3
 
 # zplug "tysonwolker/iterm-tab-colors"
 # zplug "Seinh/git-prune", defer:3

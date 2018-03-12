@@ -75,8 +75,13 @@
   (evil-collection-init))
 
 (use-package evil-escape
+  ;; I don't use it and it doesn't
+  ;; seem to respect the delay setting
+  :disabled
   :demand t
   :after evil
+  :init
+  (setq-default evil-escape-delay 0.5)
   :config
   (evil-escape-mode)
   :diminish evil-escape-mode)
@@ -138,7 +143,8 @@
       t))
   :demand t
   :config
-  (global-evil-mc-mode 1)
+  ;; TODO: conflicts with dired & evil-collection
+  (global-evil-mc-mode -1)
   (add-hook #'rc/evil/esc-hook #'rc/evil-mc/esc)
   :diminish evil-mc-mode)
 
@@ -206,12 +212,12 @@
   :defer 0.5
   :init
   (setq
-    vimish-fold-blank-fold-header "<...>"
-    vimish-fold-indication-mode 'right-fringe)
+   vimish-fold-blank-fold-header "<...>"
+   vimish-fold-indication-mode 'right-fringe)
   :config
-  (custom-set-faces
-   '(vimish-fold-mouse-face ((t (:box (:line-width 1 :color "light slate blue")))))
-   '(vimish-fold-overlay ((t (:box (:line-width 1 :color "dark slate blue"))))))
+  ;; (custom-set-faces
+  ;;  '(vimish-fold-mouse-face ((t (:box (:line-width 1 :color "light slate blue")))))
+  ;;  '(vimish-fold-overlay ((t (:box (:line-width 1 :color "dark slate blue"))))))
   (mmap
     :prefix "z"
     "f" 'vimish-fold

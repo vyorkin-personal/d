@@ -27,6 +27,8 @@
 
 (use-package bison-mode)
 
+(use-package toml-mode)
+
 (use-package editorconfig
   :config
   (editorconfig-mode 1))
