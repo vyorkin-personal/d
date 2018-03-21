@@ -38,6 +38,7 @@
    (executable-find "stack"))
   :ensure-system-package
   ((hasktags . "stack install hasktags")
+   (haskdogs . "stack install haskdogs")
    (hoogle . "stack install hoogle"))
   :mode
   (("\\.hs\\(c\\|-boot\\)?\\'" . haskell-mode)

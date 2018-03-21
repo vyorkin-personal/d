@@ -11,6 +11,11 @@ function fch() {
 }
 
 # generate haskell emacs tags
-function hd() {
+function hde() {
   haskdogs --hasktags-args --etags
+}
+
+# generate haskell vim tags
+function hdv() {
+  haskdogs --hasktags-args --ctags
 }
