@@ -9,7 +9,7 @@
    company-dabbrev-ignore-case nil
    company-dabbrev-code-ignore-case nil
    company-dabbrev-downcase nil
-   company-idle-delay 0.5
+   company-idle-delay 0.4
    company-minimum-prefix-length 1
    ;; company-show-numbers t
    ;; aligns annotation to the right hand side

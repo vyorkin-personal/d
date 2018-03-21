@@ -21,6 +21,7 @@
 (use-package bundler)
 
 (use-package rbenv
+  :ensure-system-package (rbenv . "gem install rbenv")
   :preface
   (defun rc/rbenv/modeline (current-ruby)
     (append

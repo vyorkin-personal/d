@@ -54,9 +54,9 @@
 
 ;; disassemble C/C++ code under cursor
 (use-package disaster
-  :requires init-general
   ;; here is why: https://github.com/jart/disaster/issues/13
   :disabled
+  :requires init-general
   :config
   :bind
   (:map c-mode-base-map
