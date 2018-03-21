@@ -31,6 +31,8 @@ Here is the things you should do manually.
 
 #### Non-free software
 
+I don't really use every single app listed below:
+
 * MindNode
 * 2Do
 * SnippetsLab
