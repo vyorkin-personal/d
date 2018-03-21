@@ -90,7 +90,7 @@
     "o" 'org-todo-list
     "O" 'counsel-org-goto-all
     "c" 'counsel-org-capture
-    "a" 'rc/org/agenda-list)
+    "A" 'rc/org/agenda-list)
   (mmap 'org-agenda-mode-map
     "C-c C-l" 'org-agenda-log-mode))
 
@@ -110,6 +110,7 @@
           (:name "important" :priority "A")
           (:name "scheduled earlier" :scheduled past))))
 
+;; unable to make it work
 ;; (use-package org-projectile
 ;;   :disabled
 ;;   :requires init-general

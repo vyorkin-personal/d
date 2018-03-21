@@ -49,6 +49,8 @@ set ruler                       " always display the current cursor position (ro
 set ttyfast                     " use fast terminal connection
 set shortmess=atIO              " use short messages, skip :intro, truncate file msg to fit on the cmd line
 
+set termguicolors
+
 " folding
 set foldnestmax=3               " deepest fold in 3 levels
 set foldcolumn=1                " column on the left that indicates open and closed folds
@@ -135,7 +137,7 @@ set nowritebackup               " don't write backups
 set background=dark
 
 if &background=="dark"
-  colorscheme Tomorrow-Night-Eighties
+  colorscheme lodestone
 else
   colorscheme tomorrow
 endif

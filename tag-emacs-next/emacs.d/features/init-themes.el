@@ -61,7 +61,7 @@
          (enable-theme 'ample-flat))
   :defer t)
 (use-package cyberpunk-theme :defer t)
-(use-package phoenix-dark-mono-theme :defer t)
+(use-package phoenix-dark-mono-theme)        ;; <<<
 (use-package phoenix-dark-pink-theme :defer t)
 (use-package cyberpunk-theme :defer t)
 (use-package blackboard-theme :defer t)      ;; ***
@@ -79,6 +79,7 @@
 ;; base16-unikitty-light ****
 
 (use-package theme-changer
+  :disabled
   :config
   (change-theme 'labburn 'labburn))
 
