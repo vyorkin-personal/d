@@ -187,12 +187,18 @@ Plug 'vim-scripts/vim-niji'
 Plug 'mitsuhiko/vim-python-combined'
 
 " haskell
-Plug 'eagletmt/ghcmod-vim'
-Plug 'neovimhaskell/haskell-vim'
-Plug 'hspec/hspec.vim'
-Plug 'eagletmt/neco-ghc'
-Plug 'nbouscal/vim-stylish-haskell'
+
+" Plug 'eagletmt/ghcmod-vim'
+" Plug 'neovimhaskell/haskell-vim'
+" Plug 'hspec/hspec.vim'
+" Plug 'eagletmt/neco-ghc'
+" Plug 'nbouscal/vim-stylish-haskell'
 " Plug 'dag/vim2hs'
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': './install.sh'
+    \ }
 
 " elm
 Plug 'lambdatoast/elm.vim'
