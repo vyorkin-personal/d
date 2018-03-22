@@ -100,6 +100,10 @@
     "T" 'counsel-load-theme
     "j" 'counsel-bookmark))
 
+(use-package counsel-etags
+  :requires init-general
+  :after (general counsel))
+
 (use-package swiper
   :requires init-general
   :after general
@@ -108,8 +112,8 @@
   (setq swiper-action-recenter t)
   :config
   (general-define-key
-    :keymaps 'swiper-map
-    "C-r" 'swiper-query-replace)
+   :keymaps 'swiper-map
+   "C-r" 'swiper-query-replace)
   (nmap
     "C-s" 'swiper))
 

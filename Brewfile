@@ -165,7 +165,7 @@ cask 'gyazo'
 cask 'ngrok'
 
 # cask 'emacs'  # fuck emacs, emacs-plus ftw
-# cask 'macvim' # fuck macvim, vimrc is ftw
+# cask 'macvim' # fuck macvim, vimrc ftw
 
 cask 'vimrc'
 cask 'visual-studio-code'

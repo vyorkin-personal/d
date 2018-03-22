@@ -39,7 +39,8 @@
              (javascript-mode "js" js)
              (eldoc-mode "eldoc" eldoc)
              ;; (hi-lock-mode "hi" hi-lock)
-             (auto-revert-mode "ar" autorevert))))
+             (auto-revert-mode "ar" autorevert)
+             (subword-mode "sw" subword))))
 
 (use-package diminish
   :config

@@ -81,6 +81,9 @@
     "C-c C-c" 'haskell-process-cabal-build
     "C-c c" 'haskell-process-cabal
     "C-c C-b" 'haskell-compile)
+  ;; interactive haskell
+  (nmap 'interactive-haskell-mode-map
+    "C-c C-s" 'haskell-interactive-switch)
   ;; stylish
   (nmap 'haskell-mode-map
     "C-c f" 'haskell-mode-stylish-buffer)
@@ -90,7 +93,8 @@
   ;; ghc-mod
   (nmap 'haskell-mode-map
     "C-c C-i" 'ghc-insert-module
-    "C-c I" 'ghc-initial-code-from-signature)
+    "C-c I" 'ghc-initial-code-from-signature
+    "C-c O" 'ghc-insert-template-or-signature)
   ;; company-ghc
   (nmap 'haskell-mode-map
     "C-c h" 'company-ghc-complete-by-hoogle
@@ -105,6 +109,9 @@
   :ensure-system-package
   ((hlint . "stack install hlint")
    (refactor . "stack install apply-refact"))
+  :diminish hlint-refactor-mode
+  :init
+  (add-hook 'haskell-mode-hook 'hlint-refactor-mode)
   :config
   (nmap 'haskell-mode-map
     :prefix rc/leader
@@ -121,6 +128,7 @@
     "h d" 'hasky-extensions-browse-docs))
 
 (use-package ghci-completion
+  :disabled
   :config
   (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion))
 
@@ -143,21 +151,25 @@
     :prefix rc/leader
     "i" 'hsearch))
 
-(use-package flycheck-stack
-  :after (flycheck haskell-mode)
-  :preface
-  (defun rc/flycheck-stack/setup ()
-    (flycheck-select-checker 'stack)
-    (flycheck-mode))
-  :config
-  (add-hook 'haskell-mode-hook #'rc/flycheck-stack/setup))
+;; (use-package flycheck-stack
+;;   :after (flycheck haskell-mode)
+;;   :preface
+;;   (defun rc/flycheck-stack/setup ()
+;;     (flycheck-select-checker 'stack)
+;;     (flycheck-mode))
+;;   :config
+;;   (add-hook 'haskell-mode-hook #'rc/flycheck-stack/setup))
 
 (use-package flycheck-haskell
-  :disabled
-  :require init-flycheck
+  :requires init-flycheck
   :after (haskell-mode flycheck)
   :config
   (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+
+(use-package flycheck-ghcmod
+  :disabled
+  :requires init-flycheck
+  :after (haskell-mode flycheck))
 
 (use-package intero
   :disabled

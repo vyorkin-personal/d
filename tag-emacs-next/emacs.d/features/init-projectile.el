@@ -31,6 +31,7 @@
    projectile-completion-system 'ivy
    ;; useful for very large projects
    projectile-enable-caching t
+   projectile-mode-line nil
    projectile-file-exists-remote-cache-expire (* 10 60)
    projectile-file-exists-local-cache-expire (* 5 60)
    projectile-require-project-root nil
