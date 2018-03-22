@@ -7,7 +7,7 @@
 
 (use-package hindent
   :ensure-system-package (hindent . "stack install hindent")
-  :delight "hi")
+  :diminish hindent-mode)
 
 (use-package ghc
   :if (executable-find "ghc"))
@@ -50,6 +50,7 @@
     (turn-on-haskell-indentation)
     (turn-on-haskell-unicode-input-method)
     (hindent-mode)
+    (subword-mode 1)
     (autoload 'ghc-init "ghc" nil t)
     (autoload 'ghc-debug "ghc" nil t)
     (ghc-init))
@@ -84,10 +85,8 @@
   (nmap 'haskell-mode-map
     "C-c f" 'haskell-mode-stylish-buffer)
   ;; hindent
-  (vmap 'haskell-mode-map
-    "C-c C-f" 'hindent-reformat-region)
-  (nmap 'haskell-mode-map
-    "C-c C-f" 'hindent-reformat-buffer)
+  ;; (vmap 'haskell-mode-map "C-c C-f" 'hindent-reformat-region)
+  ;; (nmap 'haskell-mode-map "C-c C-f" 'hindent-reformat-buffer)
   ;; ghc-mod
   (nmap 'haskell-mode-map
     "C-c C-i" 'ghc-insert-module
@@ -100,11 +99,34 @@
   (add-to-list 'org-babel-load-languages '(haskell . t))
   :delight "hs")
 
+(use-package hlint-refactor
+  :requires init-general
+  :after (general haskell-mode)
+  :ensure-system-package
+  ((hlint . "stack install hlint")
+   (refactor . "stack install apply-refact"))
+  :config
+  (nmap 'haskell-mode-map
+    :prefix rc/leader
+    "h r " 'hlint-refactor-refactor-at-point
+    "h b" 'hlint-refactor-refactor-buffer))
+
+(use-package hasky-extensions
+  :requires init-general
+  :after (general haskell-mode)
+  :config
+  (nmap 'haskell-mode-map
+    :prefix rc/leader
+    "h e" 'hasky-extensions
+    "h d" 'hasky-extensions-browse-docs))
+
 (use-package ghci-completion
   :config
   (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion))
 
 (use-package hayoo
+  :requires init-general
+  :after general
   :defer 2
   :config
   (nmap 'haskell-mode-map
@@ -122,8 +144,6 @@
     "i" 'hsearch))
 
 (use-package flycheck-stack
-  ;; TODO: try
-  :disabled
   :after (flycheck haskell-mode)
   :preface
   (defun rc/flycheck-stack/setup ()

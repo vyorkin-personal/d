@@ -7,7 +7,7 @@
   (setq
    yas-wrap-around-region t
    yas-indent-line t
-   yas-snippet-dirs '("~/.emacs.d/yasnippet-snippets"))
+   yas-snippet-dirs '("~/.emacs.d/yasnippet-snippets/snippets"))
   :config
   (yas-global-mode 1)
   :diminish yas-minor-mode)

@@ -4,6 +4,7 @@
  ;; auto refresh dired, but be quiet about it
  global-auto-revert-non-file-buffers t
  auto-revert-verbose nil
+ tags-revert-without-query 1
  delete-by-moving-to-trash t
  trash-directory "~/.emacs.d/trash")
 
