@@ -19,8 +19,8 @@
   (add-to-list
    'display-buffer-alist
    `(,(rx bos "*fucking errors*" eos)
-     (display-buffer-reuse-window
-      display-buffer-in-side-window)
+     ;; (display-buffer-reuse-window
+     ;;  display-buffer-in-side-window)
      (side            . bottom)
      (reusable-frames . visible)
      (window-height   . 0.33)))
@@ -39,6 +39,8 @@
   :diminish flycheck-mode)
 
 (use-package flycheck-inline
+  ;; Doesn't work well for long error stack traces
+  :disabled
   :after flycheck
   :demand t
   :preface
