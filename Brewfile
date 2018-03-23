@@ -124,6 +124,7 @@ brew 'gmp'
 brew 'cairo'
 brew 'mpfr'
 brew 'libmpc'
+brew 'icu4c'
 brew 'gcc'
 
 brew 'jenv'

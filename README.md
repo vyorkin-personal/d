@@ -77,7 +77,7 @@ mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_
 ##### Haskell
 
 ```
-stack install stylish-haskell
+stack install ghc-mod hindent stylish-haskell hlint hasktags haskdogs pointfree pointfull apply-refact codex hoogle
 ```
 
 #### Tmux
