@@ -4,6 +4,7 @@
   :defer 0.1
   :init
   (setq
+   paradox-github-token "5572ad3a003df76865d5a039b4a2152452c8aff9"
    paradox-execute-asynchronously t
    paradox-automatically-star t)
   :config
@@ -20,12 +21,19 @@
 
 (use-package use-package-ensure-system-package)
 
-(use-package use-package-chords
-  :config (key-chord-mode 1))
+;; (use-package use-package-chords
+;;   :config (key-chord-mode 1))
 
 (use-package server
   :config
   (unless (server-running-p)
     (server-start)))
+
+(use-package auto-package-update
+  :config
+  (setq
+   auto-package-update-delete-old-versions t
+   auto-package-update-interval 4)
+  (auto-package-update-maybe))
 
 (provide 'init-system)

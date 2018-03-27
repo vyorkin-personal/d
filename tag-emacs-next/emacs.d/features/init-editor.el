@@ -49,6 +49,8 @@
   :requires init-general
   :demand t
   :defer 1
+  :init
+  (setq winner-dont-bind-my-keys t)
   :config
   (winner-mode 1)
   :config

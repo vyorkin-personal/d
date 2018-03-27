@@ -9,11 +9,11 @@
 
   ;; set the price unit to use
   ;; default is "USD"
-  ; (setq coin-ticker-price-convert "RUB")
+  ;; (setq coin-ticker-price-convert "RUB")
 
   ;; set the symbol used to display prices (₽, €)
   ;; default is "$"
-  ; (setq coin-ticker-price-symbol "₽")
+  ;; (setq coin-ticker-price-symbol "₽")
 
   :config
   ;; enable coin-ticker-mode

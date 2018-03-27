@@ -33,9 +33,9 @@
 (toggle-frame-maximized)
 
 ;; toggle fullscreen later
-(run-with-idle-timer
-  2 nil
-  (lambda () (toggle-frame-fullscreen)))
+;; (run-with-idle-timer
+;;   2 nil
+;;   (lambda () (toggle-frame-fullscreen)))
 
 ;; use spaces instead of tabs everywhere
 (setq-default indent-tabs-mode nil)
@@ -79,18 +79,15 @@
 
 (set-window-buffer nil (current-buffer))
 
-;; scroll smoothly
-(setq
- scroll-margin 0
- scroll-conservatively 10000
- scroll-preserve-screen-position t)
+;; scroll smoothly (could be slow)
+;; (setq
+;;  scroll-margin 0
+;;  scroll-conservatively 10000
+;;  scroll-preserve-screen-position t)
 
 ;; show the current time
 ;; (setq display-time-24hr-format t)
 ;; (display-time-mode nil)
-
-;; show column number
-(column-number-mode t)
 
 ;; wrap text at 80 characters
 (setq-default fill-column 80)
@@ -98,9 +95,10 @@
 ;; enable automatic line breaking
 (auto-fill-mode t)
 
-;; cursor position
-(when window-system
-  (global-hl-line-mode t))
+;; cursor position (it is super-slow)
+;; (when window-system
+;;   (global-hl-line-mode t))
+
 (line-number-mode t)
 (column-number-mode t)
 

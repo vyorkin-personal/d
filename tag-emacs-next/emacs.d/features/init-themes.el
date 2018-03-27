@@ -5,6 +5,9 @@
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
   ;; (load-theme 'base16-grayscale-dark t)
+  ;; (load-theme 'base16-grayscale-light t)
+  ;; (load-theme 'base16-gruvbox-light-hard t)
+  ;; (load-theme 'base16-material-palenight t) ;; ****
   ;; (load-theme 'base16-rebecca t)
   ;; (load-theme 'base16-pop t)
   ;; (load-theme 'base16-tomorrow-night t)
@@ -17,14 +20,16 @@
 (use-package sublime-themes :defer t)
 
 (use-package doom-themes
-  :disabled
+  ;; :disabled
   :init
   (setq
-   doom-themes-enable-bold nil
+   doom-themes-enable-bold t
    doom-themes-enable-italic nil)
   :config
+  (load-theme 'doom-one t)
   ;; enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
   ;; corrects (and improves) org-mode's native fontification
   (doom-themes-org-config))
 
@@ -55,26 +60,27 @@
 (use-package ample-theme
   :disabled
   :init
-  (progn (load-theme 'ample t t)
-         (load-theme 'ample-flat t t)
-         (load-theme 'ample-light t t)
-         (enable-theme 'ample-flat))
+  (progn
+    (load-theme 'ample t t)
+    (load-theme 'ample-flat t t)
+    (load-theme 'ample-light t t)
+    (enable-theme 'ample-flat))
   :defer t)
 (use-package cyberpunk-theme :defer t)
-(use-package phoenix-dark-mono-theme)        ;; <<<
-(use-package phoenix-dark-pink-theme :defer t)
+(use-package phoenix-dark-mono-theme :defer t) ;; *** (like grayscale-dark)
+(use-package phoenix-dark-pink-theme :defer t) ;; **
 (use-package cyberpunk-theme :defer t)
-(use-package blackboard-theme :defer t)      ;; ***
-(use-package mustard-theme :defer t)         ;; ****
-(use-package labburn-theme :defer t)         ;; *****
-(use-package green-phosphor-theme :defer t)  ;; *****
-(use-package exotica-theme :defer t)         ;; **
-(use-package lush-theme :defer t)            ;; ****
+(use-package blackboard-theme :defer t)     ;; ***
+(use-package mustard-theme :defer t)        ;; ****
+(use-package labburn-theme :defer t)        ;; *****
+(use-package green-phosphor-theme :defer t) ;; *****
+(use-package exotica-theme :defer t)        ;; **
+(use-package lush-theme :defer t)           ;; ****
 
-(use-package deep-thought-theme
-  :disabled
-  :quelpa (deep-thought-theme :fetcher github :repo "emacsfodder/emacs-deep-thought-theme")
-  :defer t)
+;; (use-package deep-thought-theme
+;;   :disabled
+;;   :quelpa (deep-thought-theme :fetcher github :repo "emacsfodder/emacs-deep-thought-theme")
+;;   :defer t)
 
 ;; base16-unikitty-light ****
 

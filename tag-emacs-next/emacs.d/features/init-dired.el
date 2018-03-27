@@ -88,7 +88,7 @@
   (setq
    dired-omit-extensions
    '("CVS" "RCS" ".o" "~" ".bin" ".lbin" ".fasl" ".ufsl" ".a" ".ln" ".blg"
-     ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".fmt" ".tfm" ".class"
+     ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".fmt" ".tfm" ".class" ".DS_Store"
      ".fas" ".lib" ".x86f" ".sparcf" ".lo" ".la" ".toc" ".aux" ".cp" ".fn"
      ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs"
      ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cp" ".cps" ".fn" ".fns"
@@ -220,26 +220,6 @@
   :config
   (nmap 'dired-mode-map
     "," 'dired-narrow))
-
-(use-package dired-collapse
-  :after dired
-  :config
-  (add-hook 'dired-mode-hook 'dired-collapse-mode))
-
-;; highlights dired buffer like k
-(use-package dired-k
-  ;; dired+ looks better
-  :disabled
-  :requires init-general
-  :after (dired general)
-  :defer 1
-  :init
-  (setq
-   dired-k-padding 1
-   dired-k-human-readable t)
-  :config
-  (nmap 'dired-mode-map
-    "C-c C-k" 'dired-k))
 
 ;; peep at files in another window from dired buffers
 (use-package peep-dired

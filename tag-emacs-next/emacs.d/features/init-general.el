@@ -9,7 +9,10 @@
    "C-l" 'windmove-right
    "C-k" 'windmove-up
    "C-j" 'windmove-down
-   "M-q" 'rc/server-shutdown)
+   "M-q" 'rc/server-shutdown
+   "C-w" 'backward-kill-word
+   "C-x C-k" 'kill-region
+   "C-c C-k" 'kill-region)
   (general-evil-setup t)
   (nmap
     ;; swap : and ; to make colon commands

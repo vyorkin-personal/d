@@ -25,6 +25,7 @@
      (reusable-frames . visible)
      (window-height   . 0.33)))
   (global-flycheck-mode 1)
+  (unbind-key "C-j" flycheck-error-list-mode-map)
   (nmap
     :prefix rc/leader
     "e e" 'flycheck-list-errors

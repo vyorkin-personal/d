@@ -5,6 +5,7 @@
  global-auto-revert-non-file-buffers t
  auto-revert-verbose nil
  tags-revert-without-query 1
+ tags-add-tables nil
  delete-by-moving-to-trash t
  trash-directory "~/.emacs.d/trash")
 
@@ -12,12 +13,6 @@
   :config
   (ws-butler-global-mode)
   :diminish ws-butler-mode)
-
-(use-package smooth-scrolling
-  ;; too slow
-  :disabled
-  :config
-  (smooth-scrolling-mode 1))
 
 (use-package aggressive-indent
   :config
@@ -55,6 +50,6 @@
   :config
   (nmap
     :prefix rc/leader
-    "z" 'restart-emacs))
+    "Z" 'restart-emacs))
 
 (provide 'init-behavior)

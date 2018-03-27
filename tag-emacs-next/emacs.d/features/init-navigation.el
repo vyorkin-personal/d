@@ -84,6 +84,8 @@
       "C-a" 'counsel-projectile-switch-to-buffer))
   :config
   (nmap
+    "C-f" 'counsel-imenu)
+  (nmap
     :prefix rc/leader
     "f" 'counsel-rg
     "h v" 'counsel-describe-variable

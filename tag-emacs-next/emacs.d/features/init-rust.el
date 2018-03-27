@@ -1,6 +1,7 @@
 (require 'init-osx)
 (require 'init-general)
 (require 'init-company)
+(require 'init-lsp)
 (require 'init-flycheck)
 
 (use-package rust-mode
@@ -13,10 +14,10 @@
   (add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
   (add-to-list 'dash-at-point-mode-alist '(rust-mode . "rust"))
   (general-define-key
-    :keymaps 'rust-mode-map
-    "TAB" 'company-indent-or-complete-common
-    "C-c C-b" 'rust-compile
-    "C-c <tab>" 'rust-format-buffer))
+   :keymaps 'rust-mode-map
+   "TAB" 'company-indent-or-complete-common
+   "C-c C-b" 'rust-compile
+   "C-c <tab>" 'rust-format-buffer))
 
 ;; some of key bindings
 ;; are provided by evil-collection
@@ -59,6 +60,14 @@
   :defer 1
   :config
   (add-to-list 'company-backends 'company-racer))
+
+(use-package lsp-rust
+  :requires init-lsp
+  :after (lsp-mode rust-mode)
+  :init
+  (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
+  :config
+  (add-hook 'rust-mode-hook #'lsp-rust-enable))
 
 (use-package flycheck-rust
   :requires (init-flycheck rust-mode)

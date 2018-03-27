@@ -3,6 +3,8 @@
 (require 'init-company)
 
 (use-package fill-column-indicator
+  ;; doesn't work well with company-mode
+  :disabled
   :requires (init-general init-appearance init-company)
   :after (general company)
   :preface

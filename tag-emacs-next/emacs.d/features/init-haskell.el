@@ -1,36 +1,28 @@
 (require 'init-osx)
 (require 'init-quelpa)
 (require 'init-general)
+(require 'init-eldoc)
+(require 'init-projectile)
 (require 'init-company)
+(require 'init-lsp)
 (require 'init-org)
 (require 'init-flycheck)
 
-(use-package hindent
-  :ensure-system-package (hindent . "stack install hindent")
-  :diminish hindent-mode)
-
 (use-package ghc
   :if (executable-find "ghc"))
-
-(use-package company-ghc
-  :after ghc
-  :init
-  (setq company-ghc-show-info t)
-  :config
-  (add-to-list 'company-backends 'company-ghc))
 
 (use-package haskell-mode
   :requires
   (init-general
    init-osx
+   init-eldoc
    init-company
    init-org)
   :after
   (general
    company
+   eldoc
    ghc
-   company-ghc
-   hindent
    dash-at-point)
   :if
   (and
@@ -50,19 +42,21 @@
     (turn-on-haskell-indentation)
     (turn-on-haskell-unicode-input-method)
     (hindent-mode)
-    (subword-mode 1)
-    (autoload 'ghc-init "ghc" nil t)
-    (autoload 'ghc-debug "ghc" nil t)
-    (ghc-init))
+    ;; (subword-mode 1)
+    ;; (eldoc-overlay-mode)
+    (ghc-init)
+    (ghc-toggle-check-command))
   :init
   (setq
    haskell-process-log t
+   haskell-tags-on-save t
    haskell-process-suggest-remove-import-lines t
    haskell-process-auto-import-loaded-modules t
    haskell-process-type 'stack-ghci
-   haskell-compile-cabal-build-command "stack build"
-   haskell-tags-on-save t)
+   haskell-compile-cabal-build-command "stack build")
   :config
+  (autoload 'ghc-init "ghc" nil t)
+  (autoload 'ghc-debug "ghc" nil t)
   (add-hook 'haskell-mode-hook 'rc/haskell-mode/setup)
   ;; haskell
   (nmap 'haskell-mode-map
@@ -70,8 +64,8 @@
     "C-c C-s" 'haskell-interactive-switch
     "C-t" 'haskell-process-do-type
     "C-i" 'haskell-process-do-info
-    "C-c C-n C-c" 'haskell-process-cabal-build
-    "C-c C-n c" 'haskell-process-cabal
+    "C-c C-c" 'haskell-process-cabal-build
+    "C-c c" 'haskell-process-cabal
     "C-c C-b" 'haskell-compile
     "C-c C-u" 'haskell-navigate-imports)
   ;; cabal
@@ -82,41 +76,47 @@
     "C-c c" 'haskell-process-cabal
     "C-c C-b" 'haskell-compile)
   ;; interactive haskell
-  (nmap 'interactive-haskell-mode-map
-    "C-c C-s" 'haskell-interactive-switch)
-  ;; stylish
-  (nmap 'haskell-mode-map
-    "C-c f" 'haskell-mode-stylish-buffer)
-  ;; hindent
-  ;; (vmap 'haskell-mode-map "C-c C-f" 'hindent-reformat-region)
-  ;; (nmap 'haskell-mode-map "C-c C-f" 'hindent-reformat-buffer)
+  (require 'haskell-interactive-mode)
+  (unbind-key "C-j" haskell-interactive-mode-map)
+  (nmap 'haskell-interactive-mode-map
+    "C-c C-s" 'haskell-interactive-switch-back)
   ;; ghc-mod
   (nmap 'haskell-mode-map
     "C-c C-i" 'ghc-insert-module
     "C-c I" 'ghc-initial-code-from-signature
     "C-c O" 'ghc-insert-template-or-signature)
-  ;; company-ghc
+  ;; stylish
   (nmap 'haskell-mode-map
-    "C-c h" 'company-ghc-complete-by-hoogle
-    "C-c m" 'company-ghc-complete-in-module)
+    "C-c f" 'haskell-mode-stylish-buffer)
   (add-to-list 'dash-at-point-mode-alist '(haskell-mode . "h"))
   (add-to-list 'org-babel-load-languages '(haskell . t))
   :delight "hs")
 
-(use-package hlint-refactor
+(use-package lsp-haskell
+  ;; slow
+  :disabled
+  :requires (init-general init-lsp)
+  :after (lsp-mode general haskell-mode)
+  :config
+  (add-hook 'haskell-mode-hook #'lsp-haskell-enable))
+
+(use-package hindent
   :requires init-general
   :after (general haskell-mode)
-  :ensure-system-package
-  ((hlint . "stack install hlint")
-   (refactor . "stack install apply-refact"))
-  :diminish hlint-refactor-mode
-  :init
-  (add-hook 'haskell-mode-hook 'hlint-refactor-mode)
+  :ensure-system-package (hindent . "stack install hindent")
+  :config
+  (vmap 'haskell-mode-map "C-c C-f" 'hindent-reformat-region)
+  (nmap 'haskell-mode-map "C-c C-f" 'hindent-reformat-buffer)
+  :diminish hindent-mode)
+
+(use-package hasky-stack
+  :requires init-general
+  :after (general haskell-mode)
   :config
   (nmap 'haskell-mode-map
     :prefix rc/leader
-    "h r " 'hlint-refactor-refactor-at-point
-    "h b" 'hlint-refactor-refactor-buffer))
+    "h s" 'hasky-stack-execute
+    "h n" 'hasky-stack-new))
 
 (use-package hasky-extensions
   :requires init-general
@@ -127,10 +127,11 @@
     "h e" 'hasky-extensions
     "h d" 'hasky-extensions-browse-docs))
 
-(use-package ghci-completion
-  :disabled
+(use-package flycheck-haskell
+  :requires init-flycheck
+  :after (haskell-mode flycheck)
   :config
-  (add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion))
+  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (use-package hayoo
   :requires init-general
@@ -139,48 +140,6 @@
   :config
   (nmap 'haskell-mode-map
     :prefix rc/leader
-    "r" 'hayoo-query))
-
-(use-package hsearch-mode
-  ;; haskell-mode already provides that
-  :disabled
-  :defer 2
-  :quelpa (hsearch-mode :fetcher github :repo "jschaf/hsearch")
-  :config
-  (nmap 'haskell-mode-map
-    :prefix rc/leader
-    "i" 'hsearch))
-
-;; (use-package flycheck-stack
-;;   :after (flycheck haskell-mode)
-;;   :preface
-;;   (defun rc/flycheck-stack/setup ()
-;;     (flycheck-select-checker 'stack)
-;;     (flycheck-mode))
-;;   :config
-;;   (add-hook 'haskell-mode-hook #'rc/flycheck-stack/setup))
-
-(use-package flycheck-haskell
-  :requires init-flycheck
-  :after (haskell-mode flycheck)
-  :config
-  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
-
-(use-package flycheck-ghcmod
-  :disabled
-  :requires init-flycheck
-  :after (haskell-mode flycheck))
-
-(use-package intero
-  :disabled
-  :requires init-general
-  :after (general haskell-mode)
-  :if (executable-find "stack")
-  :config
-  (intero-global-mode 1)
-  (nmap 'intero-mode-map
-    "C-c r" 'intero-restart
-    "M-l" 'intero-goto-definition)
-  :delight "int")
+    "H" 'hayoo-query))
 
 (provide 'init-haskell)

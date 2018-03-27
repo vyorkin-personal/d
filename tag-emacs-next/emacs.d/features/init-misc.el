@@ -15,6 +15,14 @@
 (use-package 0xc)
 (use-package define-word)
 
+(use-package google-this
+  :diminish google-this-mode
+  :config
+  (google-this-mode 1)
+  (nmap
+    :prefix rc/leader
+    "g g" google-this-mode-submap))
+
 (use-package speed-type)
 
 ;; speed reading

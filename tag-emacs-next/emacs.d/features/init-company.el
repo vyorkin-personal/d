@@ -28,8 +28,14 @@
    "C-j" 'company-select-next-or-abort
    "C-k" 'company-select-previous-or-abort
    "C-o" 'company-other-backend
-   "C-d" 'company-show-doc-buffer)
+   "C-f" 'company-abort
+   "C-d" 'company-show-doc-buffer
+   "C-w" 'backward-kill-word)
   :diminish company-mode)
+
+;; (use-package company-box
+;;   :quelpa (company-box :fetcher github :repo "sebastiencs/company-box")
+;;   :hook (company-mode . company-box-mode))
 
 (use-package company-quickhelp
   :requires init-general
@@ -37,7 +43,7 @@
   :demand t
   :config
   (general-define-key
-    :keymaps 'company-active-map
-    "C-c h" 'company-quickhelp-manual-begin))
+   :keymaps 'company-active-map
+   "C-c h" 'company-quickhelp-manual-begin))
 
 (provide 'init-company)

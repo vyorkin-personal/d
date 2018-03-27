@@ -8,6 +8,7 @@ tap 'neovim/neovim'
 tap 'ethereum/ethereum'
 tap 'coursier/formulas'
 tap 'd12frosted/emacs-plus'
+# tap 'railwaycat/emacsmacport'
 
 brew 'rcm'
 brew 'mas'
@@ -83,7 +84,8 @@ brew 'fzf'
 
 brew 'mu'
 brew 'cl-lib'
-brew 'emacs-plus'
+# brew 'emacs-mac'
+brew 'emacs-plus', args: ['with-24bit-color', 'with-natural-title-bar', 'with-no-title-bars']
 brew 'neovim'
 brew 'vim', args: ['override-system-vi', 'with-lua', 'with-perl', 'with-python3', 'with-ruby']
 
