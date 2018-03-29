@@ -1,5 +1,6 @@
 (require 'init-general)
 (require 'init-company)
+(require 'init-hydra)
 (require 'init-flycheck)
 (require 'init-flyspell)
 
@@ -46,6 +47,9 @@
         '((ivy-switch-buffer . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
   (ivy-set-occur 'ivy-switch-buffer #'rc/ivy/switch-buffer-occur)
+  (nmap
+    :prefix rc/leader
+    "a" 'ivy-switch-buffer)
   (general-define-key
    :keymaps 'ivy-minibuffer-map
    "C-j" 'ivy-next-line
@@ -56,6 +60,16 @@
    "C-l" 'ivy-immediate-done
    "C-w" 'ivy-backward-kill-word)
   :diminish ivy-mode)
+
+(use-package ivy-rich
+  :after ivy
+  :init
+  (setq
+   ivy-virtual-abbreviate 'full
+   ivy-rich-path-style 'abbrev
+   ivy-rich-switch-buffer-align-virtual-buffer t)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))
 
 (use-package flyspell-correct-ivy
   :requires (init-general init-flyspell)
@@ -121,7 +135,11 @@
 
 (use-package ivy-hydra
   :requires init-hydra
-  :after hydra)
+  :after hydra
+  :config
+  (general-define-key
+   :keymaps 'ivy-minibuffer-map
+   "M-i" 'hydra-ivy/body))
 
 ;; (use-package ranger)
 
@@ -145,7 +163,5 @@
   (nmap
     :prefix rc/leader
     "n e" #'avy-flycheck-goto-error))
-
-(setq asdf 1)
 
 (provide 'init-navigation)

@@ -82,6 +82,7 @@
     "C-c C-s" 'haskell-interactive-switch-back)
   ;; ghc-mod
   (nmap 'haskell-mode-map
+    "C-c U" 'ghc-toggle-check-command
     "C-c C-i" 'ghc-insert-module
     "C-c I" 'ghc-initial-code-from-signature
     "C-c O" 'ghc-insert-template-or-signature)
