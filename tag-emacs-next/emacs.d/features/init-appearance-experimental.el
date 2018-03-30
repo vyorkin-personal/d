@@ -1,6 +1,34 @@
 (require 'init-quelpa)
 (require 'init-general)
 
+(use-package dimmer
+  ;; doesn't always work reliably
+  :disabled
+  :init
+  (setq-default dimmer-fraction 0.4)
+  :config
+  (dimmer-activate))
+
+;; visualizes cursor position
+(use-package beacon
+  ;; maybe slow (or not so)
+  ;; it works good without evil mode
+  :disabled
+  :requires init-general
+  :after general
+  :demand t
+  :custom
+  (beacon-color "#ff00ee")
+  (beacon-blink-when-window-scrolls nil)
+  (beacon-dont-blink-commands nil)
+  :config
+  (beacon-mode 1)
+  (nmap
+    :prefix rc/leader
+    "t b" 'beacon-mode)
+  :diminish beacon-mode)
+
+
 ;; basically its the same as highlight-thing
 ;; but seems to be smarter and less distracting
 (use-package idle-highlight-mode

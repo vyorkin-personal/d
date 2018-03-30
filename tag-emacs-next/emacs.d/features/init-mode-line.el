@@ -14,7 +14,8 @@
 (use-package spaceline-all-the-icons
   :after spaceline
   :custom
-  (spaceline-all-the-icons-separator-type 'slant)
+  ;; other separators may look broken (e.g. when scaling text)
+  (spaceline-all-the-icons-separator-type 'none)
   :config
   (spaceline-all-the-icons-theme)
   (spaceline-all-the-icons--setup-package-updates)

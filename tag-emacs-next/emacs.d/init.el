@@ -173,7 +173,7 @@
 (require 'init-idris)
 
 (require 'init-haskell)
-(require 'init-haskell-experimental)
+;; (require 'init-haskell-experimental)
 
 (require 'init-purescript)
 ;; (require 'init-elm)

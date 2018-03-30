@@ -55,12 +55,6 @@
   (global-page-break-lines-mode 1)
   :diminish page-break-lines-mode)
 
-(use-package dimmer
-  :init
-  (setq-default dimmer-fraction 0.4)
-  :config
-  (dimmer-activate))
-
 (use-package rainbow-delimiters
   :hook
   (prog-mode . rainbow-delimiters-mode)
@@ -98,21 +92,5 @@
   (add-to-list
    'all-the-icons-mode-icon-alist
    '(package-menu-mode all-the-icons-octicon "package" :v-adjust 0.0)))
-
-;; visualizes cursor position
-(use-package beacon
-  :requires init-general
-  :after general
-  :demand t
-  :custom
-  (beacon-color "#ff00ee")
-  (beacon-blink-when-window-scrolls nil)
-  (beacon-dont-blink-commands nil)
-  :config
-  (beacon-mode 1)
-  (nmap
-    :prefix rc/leader
-    "t b" 'beacon-mode)
-  :diminish beacon-mode)
 
 (provide 'init-appearance)

@@ -2,7 +2,11 @@
 (require 'init-general)
 
 (use-package eshell
-  :ensure nil)
+  :ensure nil
+  ;; :config
+  ;; (unbind-key "C-j" eshell-mode-map)
+  ;; (unbind-key "C-k" eshell-mode-map)
+  )
 
 (use-package em-smart
   :ensure nil

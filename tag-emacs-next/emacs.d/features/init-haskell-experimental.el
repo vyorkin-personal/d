@@ -4,6 +4,7 @@
 (require 'init-haskell)
 
 (use-package company-ghc
+  :disabled
   :requires (init-general init-haskell)
   :after (general ghc haskell-mode)
   :init

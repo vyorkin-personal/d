@@ -31,11 +31,7 @@
   :init
   (setq
    lsp-ui-flycheck-enable t
-   lsp-ui-peek-enable t
-   lsp-ui-doc-enable nil
-   lsp-ui-sideline-show-hover t
-   lsp-ui-sideline-show-symbol t
-   lsp-ui-sideline-enable t)
+   lsp-ui-doc-enable nil)
   :config
   (add-hook 'lsp-mode-hook #'rc/lsp-ui/setup)
   (add-hook 'lsp-after-open-hook #'lsp-enable-imenu)
@@ -52,14 +48,12 @@
     "k" 'lsp-ui-peek--select-prev))
 
 (use-package company-lsp
-  ;; slow
-  :disabled
   :requires init-company
   :after (lsp-mode company)
   :init
   (setq
    ;; don't filter results on the client side
-   company-transformers nil
+   ;; company-transformers nil
    company-lsp-cache-candidates t
    company-lsp-async t
    company-lsp-enable-snippet t)

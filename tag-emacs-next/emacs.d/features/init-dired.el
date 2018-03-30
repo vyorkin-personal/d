@@ -68,7 +68,6 @@
   :init
   ;; prevents dired from creating an annoying popup
   ;; when dired-find-alternate-file is called
-  (put 'dired-find-alternate-file 'disabled nil)
   (setq
    ;; if there is a dired buffer displayed in the next window,
    ;; use its current directory
@@ -100,12 +99,15 @@
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired nil))
   :config
+  (put 'dired-find-alternate-file 'disabled nil)
   (nmap
     :prefix rc/leader
     "j" 'dired-jump)
   (nmap 'dired-mode-map
     "gg" 'evil-goto-first-line
     "G" 'evil-goto-line)
+  :hook
+  (dired-mode . dired-hide-details-mode)
   :diminish dired-mode)
 
 (use-package diredfl

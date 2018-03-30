@@ -32,12 +32,12 @@
   ((hasktags . "stack install hasktags")
    (haskdogs . "stack install haskdogs")
    (hoogle . "stack install hoogle"))
-  :quelpa
-  (haskell-mode
-   :repo "pvmart/haskell-mode"
-   :branch "patch-haskell-process-extract-modules"
-   :fetcher github
-   :stable t)
+  ;; :quelpa
+  ;; (haskell-mode
+  ;;  :repo "pvmart/haskell-mode"
+  ;;  :branch "patch-haskell-process-extract-modules"
+  ;;  :fetcher github
+  ;;  :stable t)
   :mode
   (("\\.hs\\(c\\|-boot\\)?\\'" . haskell-mode)
    ("\\.lhs\\'" . literate-haskell-mode)
@@ -56,6 +56,7 @@
   (setq
    haskell-process-log t
    haskell-tags-on-save t
+   haskell-process-show-debug-tips nil
    haskell-process-suggest-remove-import-lines t
    haskell-process-auto-import-loaded-modules t
    haskell-process-type 'stack-ghci
@@ -103,8 +104,6 @@
   :delight "hs")
 
 (use-package lsp-haskell
-  ;; slow
-  :disabled
   :requires (init-general init-lsp)
   :after (lsp-mode general haskell-mode)
   :config
