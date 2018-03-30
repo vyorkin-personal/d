@@ -1,3 +1,5 @@
+(require 'init-quelpa)
+
 (use-package faces
   :ensure nil
   :custom
@@ -14,5 +16,9 @@
    "fontset-default"
    'cyrillic
    (font-spec :registry "iso10646-1" :script 'cyrillic)))
+
+(use-package font-lock+
+  :quelpa
+  (font-lock+ :repo "emacsmirror/font-lock-plus" :fetcher github))
 
 (provide 'init-font)

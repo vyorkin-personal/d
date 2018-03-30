@@ -10,13 +10,6 @@
 ;; y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(setq
- tramp-default-method "ssh"        ; faster than scp
- tramp-auto-save-directory "/tmp") ; disable autosave for tramp buffers
-
-;; allow minibuffer commands while in the minibuffer
-(setq enable-recursive-minibuffers t)
-
 ;; enable HideShow in programming modes,
 ;; useful for getting an overview of the code,
 ;; it works better in some languages and layouts than others

@@ -1,3 +1,4 @@
+(require 'init-appearance)
 (require 'init-general)
 (require 'init-company)
 (require 'init-hydra)
@@ -22,6 +23,10 @@
   (defun rc/ivy/switch-buffer-occur ()
     "Occur function for `ivy-switch-buffer' using `ibuffer'."
     (ibuffer nil (buffer-name) (list (cons 'name ivy--old-re))))
+  :custom
+  (ivy-count-format "%d/%d " "Show anzu-like counter")
+  ;; :custom-face
+  ;; (ivy-current-match ((t (:background "gray1"))))
   :init
   (setq
    ;; add 'recentf-mode' and bookmarks to 'ivy-switch-buffer'
@@ -35,8 +40,6 @@
    ivy-use-selectable-prompt t
    ;; wrap around ivy results
    ivy-wrap t
-   ;; don't count candidates
-   ivy-count-format ""
    ;; omit ^ at the beginning of regexp
    ivy-initial-inputs-alist nil)
   :config
@@ -61,15 +64,43 @@
    "C-w" 'ivy-backward-kill-word)
   :diminish ivy-mode)
 
+(use-package ivy-xref
+  :custom
+  (xref-show-xrefs-function #'ivy-xref-show-xrefs "Use Ivy to show xrefs"))
+
 (use-package ivy-rich
   :after ivy
+  :custom
+  (ivy-rich-switch-buffer-name-max-length 60 "Increase max length of buffer name.")
   :init
   (setq
    ivy-virtual-abbreviate 'full
    ivy-rich-path-style 'abbrev
    ivy-rich-switch-buffer-align-virtual-buffer t)
   :config
-  (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))
+  (dolist
+      (cmd
+       '(ivy-switch-buffer
+         ivy-switch-buffer-other-window
+         counsel-projectile-switch-to-buffer))
+    (ivy-set-display-transformer cmd #'ivy-rich-switch-buffer-transformer)))
+
+(use-package ibuffer-vc
+  :custom
+  (ibuffer-formats
+   '((mark modified read-only vc-status-mini " "
+           (name 18 18 :left :elide)
+           " "
+           (size 9 -1 :right)
+           " "
+           (mode 16 16 :left :elide)
+           " "
+           filename-and-process)) "include vc status info")
+  :hook
+  (ibuffer . (lambda ()
+               (ibuffer-vc-set-filter-groups-by-vc-root)
+               (unless (eq ibuffer-sorting-mode 'alphabetic)
+                 (ibuffer-do-sort-by-alphabetic)))))
 
 (use-package flyspell-correct-ivy
   :requires (init-general init-flyspell)
@@ -87,34 +118,39 @@
   :init
   ;; much faster than grep
   (setq
+   counsel-git-cmd "rg --files"
    counsel-grep-base-command
-   "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
-  ;; projectile replacements
-  (use-package counsel-projectile
-    :demand t
-    :config
-    (nmap
-      "C-q" 'counsel-projectile-find-file
-      "C-a" 'counsel-projectile-switch-to-buffer))
+   "rg -i -M 120 --no-heading --line-number --color never %s .")
   :config
   (nmap
     "C-f" 'counsel-imenu)
   (nmap
     :prefix rc/leader
     "f" 'counsel-rg
+    "F" 'counsel-fzf
     "h v" 'counsel-describe-variable
     "h f" 'counsel-describe-function)
+  (nmap "M-x" 'counsel-M-x)
   (nmap
-    "M-x" 'counsel-M-x
-    "C-x C-r" 'find-file
-    "C-x C-f" 'counsel-find-file
-    "C-x C-g" 'counsel-git-grep
-    "C-x p" 'counsel-package)
+    :prefix "C-x"
+    "C-r" 'find-file
+    "C-f" 'counsel-find-file
+    "C-g" 'counsel-git-grep
+    "p" 'counsel-package)
   (nmap
     :prefix rc/leader
     rc/leader 'counsel-M-x
     "T" 'counsel-load-theme
-    "j" 'counsel-bookmark))
+    "J" 'counsel-bookmark))
+
+;; projectile replacements
+(use-package counsel-projectile
+  :requires init-general
+  :after (counsel general)
+  :config
+  (nmap
+    "C-q" 'counsel-projectile-find-file
+    "C-a" 'counsel-projectile-switch-to-buffer))
 
 (use-package counsel-etags
   :requires init-general
@@ -143,6 +179,18 @@
 
 ;; (use-package ranger)
 
+(use-package ag
+  :ensure-system-package (ag . silversearcher-ag)
+  :custom
+  (ag-highlight-search t "Highlight the current search term."))
+
+(use-package dumb-jump
+  :custom
+  (dumb-jump-selector 'ivy)
+  (dumb-jump-prefer-searcher 'ag)
+  (nmap
+    "C-c C-j" 'dumb-jump-go))
+
 (use-package avy
   :requires init-general
   :demand t
@@ -152,6 +200,10 @@
     "c" 'avy-goto-char
     "w" 'avy-goto-word-1
     "l" 'avy-goto-line))
+
+(use-package avy-zap
+  :bind
+  ([remap zap-to-char] . avy-zap-to-char))
 
 (use-package avy-flycheck
   :requires (init-general init-flycheck)

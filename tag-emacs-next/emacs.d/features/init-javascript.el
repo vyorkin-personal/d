@@ -74,6 +74,11 @@
     (add-hook mode 'prettier-js-mode))
   :delight "pr")
 
+(use-package graphql-mode
+  :mode "\\.graphql\\'"
+  :custom
+  (graphql-url "http://localhost:8000/api/graphql/query"))
+
 (use-package company-tern
   :requires init-company
   :after (company tern)

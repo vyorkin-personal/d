@@ -3,13 +3,14 @@
 (require 'init-flycheck)
 (require 'init-org)
 
-(use-package clojure-mode :ensure t
+(use-package clojure-mode
   :requires (init-general init-company init-org)
   :after (general company org)
-  :mode (("\\.clj\\'" . clojure-mode)
-         ("\\.edn\\'" . clojure-mode)
-         ("\\.boot\\'" . clojure-mode)
-         ("\\.cljs.*\\'" . clojure-mode))
+  :mode
+  (("\\.clj\\'" . clojure-mode)
+   ("\\.edn\\'" . clojure-mode)
+   ("\\.boot\\'" . clojure-mode)
+   ("\\.cljs.*\\'" . clojure-mode))
   :init
   (setq inferior-lisp-program "lein repl")
   :config
@@ -20,16 +21,18 @@
     "C r" 'cider-refresh
     "C u" 'cider-user-ns
     "C R" 'cider-restart)
-  (use-package clojure-mode-extra-font-locking
-    :init
-    (font-lock-add-keywords
-     nil
-     '(("(\\(facts?\\)"
-        (1 font-lock-keyword-face))
-       ("(\\(background?\\)"
-        (1 font-lock-keyword-face)))))
   (define-clojure-indent (fact 1))
   (define-clojure-indent (facts 1)))
+
+(use-package clojure-mode-extra-font-locking
+  :after clojure-mode
+  :init
+  (font-lock-add-keywords
+   nil
+   '(("(\\(facts?\\)"
+      (1 font-lock-keyword-face))
+     ("(\\(background?\\)"
+      (1 font-lock-keyword-face)))))
 
 (use-package cider
   :after clojure-mode
@@ -46,6 +49,8 @@
   :config
   (add-hook 'cider-mode #'clojure-mode-hook)
   (add-hook 'eldoc-mode #'cider-mode-hook))
+
+(use-package kibit-helper)
 
 (use-package flycheck-clojure
   :requires init-flycheck

@@ -32,6 +32,12 @@
   ((hasktags . "stack install hasktags")
    (haskdogs . "stack install haskdogs")
    (hoogle . "stack install hoogle"))
+  :quelpa
+  (haskell-mode
+   :repo "pvmart/haskell-mode"
+   :branch "patch-haskell-process-extract-modules"
+   :fetcher github
+   :stable t)
   :mode
   (("\\.hs\\(c\\|-boot\\)?\\'" . haskell-mode)
    ("\\.lhs\\'" . literate-haskell-mode)
@@ -60,7 +66,8 @@
   (add-hook 'haskell-mode-hook 'rc/haskell-mode/setup)
   ;; haskell
   (nmap 'haskell-mode-map
-    "C-c C-o" 'haskell-process-load-or-reload
+    "C-c C-o" 'haskell-process-load-file
+    "C-c C-r" 'haskell-process-restart
     "C-c C-s" 'haskell-interactive-switch
     "C-t" 'haskell-process-do-type
     "C-i" 'haskell-process-do-info
@@ -71,6 +78,7 @@
   ;; cabal
   (nmap 'haskell-cabal-mode-map
     "C-c C-s" 'haskell-interactive-switch
+    "C-c C-r" 'haskell-process-restart
     "C-c C-l" 'haskell-interactive-mode-clear
     "C-c C-c" 'haskell-process-cabal-build
     "C-c c" 'haskell-process-cabal
@@ -79,7 +87,8 @@
   (require 'haskell-interactive-mode)
   (unbind-key "C-j" haskell-interactive-mode-map)
   (nmap 'haskell-interactive-mode-map
-    "C-c C-s" 'haskell-interactive-switch-back)
+    "C-c C-s" 'haskell-interactive-switch-back
+    "C-c C-r" 'haskell-process-restart)
   ;; ghc-mod
   (nmap 'haskell-mode-map
     "C-c U" 'ghc-toggle-check-command

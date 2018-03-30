@@ -40,10 +40,28 @@
 (use-package company-quickhelp
   :requires init-general
   :after company
-  :demand t
+  :custom
+  (company-quickhelp-delay 3)
   :config
   (general-define-key
    :keymaps 'company-active-map
    "C-c h" 'company-quickhelp-manual-begin))
+
+(use-package company-shell
+  :config
+  (add-to-list 'company-backends 'company-shell))
+
+(use-package company-emoji
+  ;; :ensure-system-package fonts-symbola
+  :config
+  (add-to-list 'company-backends 'company-emoji)
+  (set-fontset-font
+   t 'symbol
+   (font-spec
+    :family
+    (if (eq system-type 'darwin)
+        "Apple Color Emoji"
+      "Symbola"))
+   nil 'prepend))
 
 (provide 'init-company)

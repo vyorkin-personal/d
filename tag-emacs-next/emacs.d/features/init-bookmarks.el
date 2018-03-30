@@ -14,6 +14,6 @@
   ;; keybindings are set by evil-collection
   (nmap
     :prefix rc/leader
-    "b" 'bookmark-set))
+    "B" 'bookmark-set))
 
 (provide 'init-bookmarks)

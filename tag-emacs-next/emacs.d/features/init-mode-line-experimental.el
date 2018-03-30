@@ -1,3 +1,20 @@
+(use-package feebleline
+  ;; this one is cool
+  :disabled
+  :init
+  (setq
+   feebleline-mode-line-text
+   '(("%6s" ((format "%s,%s" (format-mode-line "%l") (current-column))))
+     (" : %s"
+      ((if (buffer-file-name) (buffer-file-name)
+         (buffer-name))) (face feebleline-bufname-face))
+     ("%s" ((if (and (buffer-file-name) (buffer-modified-p)) "*" "" ))
+      (face feebleline-asterisk-face))
+     (" | %s" ((feebleline-previous-buffer-name))
+      (face feebleline-previous-buffer-face))))
+  :config
+  (setq mode-line-format nil))
+
 (use-package smart-mode-line
   :disabled
   :config
@@ -37,5 +54,20 @@
     "Ensure that powerline's major mode names are delighted. See `delight-major-mode'."
     (let ((inhibit-mode-name-delight nil)) ad-do-it))
   (powerline-default-theme))
+
+(use-package moody
+  :disabled
+  :config
+  (let ((line (face-attribute 'mode-line :underline)))
+    (set-face-attribute 'mode-line          nil :overline   line)
+    (set-face-attribute 'mode-line-inactive nil :overline   line)
+    (set-face-attribute 'mode-line-inactive nil :underline  line)
+    (set-face-attribute 'mode-line          nil :box        nil)
+    (set-face-attribute 'mode-line-inactive nil :box        nil)
+    (set-face-attribute 'mode-line-inactive nil :background "#384047"))
+  (setq x-underline-at-descent-line t)
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode))
+
 
 (provide 'init-mode-line-experimental)

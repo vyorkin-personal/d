@@ -11,24 +11,6 @@
     :prefix rc/leader
     "t H" 'idle-highlight-mode))
 
-;; visualizes cursor position
-(use-package beacon
-  ;; looks cool, but useless for me
-  :disabled
-  :requires init-general
-  :after general
-  :demand t
-  :config
-  (setq
-   beacon-color "#ff00ee"
-   beacon-dont-blink-commands nil)
-  :config
-  (beacon-mode 1)
-  (nmap
-    :prefix rc/leader
-    "t b" 'beacon-mode)
-  :diminish beacon-mode)
-
 (use-package highlight-blocks
   ;; cool, but useless for me
   :disabled

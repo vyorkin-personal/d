@@ -1,31 +1,40 @@
 (require 'init-general)
 (require 'init-evil)
 (require 'init-editor)
+(require 'init-navigation)
+
+(use-package git-commit)
+
+(use-package magit
+  :after git-commit
+  :custom
+  (magit-completing-read-function 'ivy-completing-read "Force Ivy usage."))
 
 (use-package evil-magit
   :requires (init-general init-evil)
-  :after (evil fullframe)
+  :after (evil magit fullframe)
   :init
   (setq evil-magit-state 'normal)
   :config
   (fullframe magit-log-all quit-window)
   (fullframe magit-log-current quit-window)
   (nmap
-   :prefix rc/leader
-   "g w" 'magit-stage-file   ; "write"
-   "g r" 'magit-unstage-file ; "remove"
-   "g s" 'magit-status
-   "g d" 'magit-diff
-   "g f" 'magit-file-popup
-   "g c" 'magit-commit
-   "g l" 'magit-log
-   "g p" 'magit-push))
+    :prefix rc/leader
+    "g w" 'magit-stage-file   ; "write"
+    "g r" 'magit-unstage-file ; "remove"
+    "g s" 'magit-status
+    "g d" 'magit-diff
+    "g f" 'magit-file-popup
+    "g c" 'magit-commit
+    "g l" 'magit-log
+    "g p" 'magit-push))
 
 (use-package magithub
   :after magit
+  :custom
+  (magithub-clone-default-directory "~/github")
   :config
-  (magithub-feature-autoinject t)
-  (setq magithub-clone-default-directory "~/github"))
+  (magithub-feature-autoinject t))
 
 (use-package git-gutter
   :requires init-general
@@ -54,8 +63,15 @@
 (use-package gitconfig-mode)
 
 (use-package diff-hl
+  ;; its slow
+  :disabled
   :requires init-general
   :after general
+  :hook
+  ((magit-post-refresh . diff-hl-magit-post-refresh)
+   (prog-mode . diff-hl-mode)
+   (org-mode . diff-hl-mode)
+   (dired-mode . diff-hl-dired-mode))
   :config
   (nmap
     :prefix rc/leader

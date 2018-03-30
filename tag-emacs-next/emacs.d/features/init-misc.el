@@ -7,7 +7,6 @@
 ;; measure how many time you execute commands
 ;; see: http://blog.binchen.org/posts/how-to-be-extremely-efficient-in-emacs.html
 (use-package keyfreq
-  :demand t
   :config
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
@@ -22,6 +21,31 @@
   (nmap
     :prefix rc/leader
     "g g" google-this-mode-submap))
+
+(use-package atomic-chrome
+  :custom
+  (atomic-chrome-url-major-mode-alist
+   '(("reddit\\.com" . markdown-mode)
+     ("github\\.com" . gfm-mode)
+     ("redmine" . textile-mode))
+   "Major modes for URLs.")
+  :config
+  (atomic-chrome-start-server))
+
+(use-package net-utils
+  :config
+  (nmap
+    :prefix "C-c n"
+    "p" 'ping
+    "i" 'ifconfig
+    "w" 'iwconfig
+    "n" 'netstat
+    "p" 'ping
+    "a" 'arp
+    "r" 'route
+    "h" 'nslookup-host
+    "d" 'dig
+    "s" 'smbclient))
 
 (use-package speed-type)
 

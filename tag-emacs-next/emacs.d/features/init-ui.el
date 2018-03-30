@@ -1,7 +1,13 @@
-(when (fboundp 'tool-bar-mode)
+(use-package tool-bar
+  :ensure nil
+  :config
   (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
+
+(use-package scroll-bar
+  :ensure nil
+  :config
   (scroll-bar-mode -1))
+
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
@@ -9,10 +15,10 @@
 ;; but doing this on OS X simply makes it
 ;; update unreliably in GUI frames, so we make an exception
 (if (eq system-type 'darwin)
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (set-frame-parameter frame 'menu-bar-lines
-                                   (if (display-graphic-p frame) 1 0))))
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (set-frame-parameter frame 'menu-bar-lines
+                                     (if (display-graphic-p frame) 1 0))))
   (when (fboundp 'menu-bar-mode)
     (menu-bar-mode -1)))
 
@@ -32,21 +38,8 @@
 ;; start maximized
 (toggle-frame-maximized)
 
-;; toggle fullscreen later
-;; (run-with-idle-timer
-;;   2 nil
-;;   (lambda () (toggle-frame-fullscreen)))
-
-;; use spaces instead of tabs everywhere
-(setq-default indent-tabs-mode nil)
 ;; display tabs as 2 spaces
 (setq-default tab-width 2)
-
-;; disable *GNU Emacs* buffer on startup
-(setq inhibit-startup-screen t)
-
-(setq use-file-dialog nil)
-(setq use-dialog-box nil)
 
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -85,25 +78,22 @@
 ;;  scroll-conservatively 10000
 ;;  scroll-preserve-screen-position t)
 
-;; show the current time
-;; (setq display-time-24hr-format t)
-;; (display-time-mode nil)
+(use-package time
+  :ensure nil
+  :custom
+  (display-time-default-load-average nil)
+  (display-time-24hr-format t)
+  :config
+  (display-time-mode t))
 
 ;; wrap text at 80 characters
 (setq-default fill-column 80)
-
-;; enable automatic line breaking
-(auto-fill-mode t)
 
 ;; cursor position (it is super-slow)
 ;; (when window-system
 ;;   (global-hl-line-mode t))
 
-(line-number-mode t)
-(column-number-mode t)
-
 ;; cursor look
-(blink-cursor-mode -1)
 (setq cursor-type 'bar)
 (setq x-stretch-cursor t)
 

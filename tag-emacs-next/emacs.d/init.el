@@ -1,8 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
 ;; save customizations somewhere other than your initialization file
-(setq custom-file "~/.emacs-custom.el")
-(load custom-file)
+;; (setq custom-file "~/.emacs-custom.el")
+;; (load custom-file)
 
 (add-to-list 'load-path (expand-file-name "features" user-emacs-directory))
 
@@ -40,18 +40,21 @@
 (defconst *spell-check-support-enabled* nil)
 
 (require 'init-defaults)
-(require 'init-ui)
 
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.milkbox.net/packages/") t)
-;; include the org repository for completeness,
-;; but don't normally use it
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/"))
-;; elpy (emacs python dev env) packages
-;; (add-to-list 'package-archives
-;;              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+(setq
+ package-archives
+ `(,@package-archives
+   ("melpa" . "https://melpa.org/packages/")
+   ;; ("marmalade" . "https://marmalade-repo.org/packages/")
+   ("org" . "https://orgmode.org/elpa/")
+   ;; ("user42" . "https://download.tuxfamily.org/user42/elpa/packages/")
+   ;; ("emacswiki" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/emacswiki/")
+   ;; yet another ELPA archive
+   ;; ("sunrise" . "http://joseito.republika.pl/sunrise-commander/")
+   ;; elpy (emacs python dev env) packages
+   ;; ("elpy" . "http://jorgenschaefer.github.io/packages/")
+   ))
 
 ;; its ok to use both package-initialize and
 ;; use-package for a well behaved package:
@@ -66,10 +69,20 @@
 (eval-when-compile
   (require 'use-package))
 
+(put 'use-package 'lisp-indent-function 1)
+
 (setq
-  ;; install missing packages by default
-  use-package-always-ensure t
-  use-package-verbose nil)
+ ;; install missing packages by default
+ use-package-always-ensure t
+ use-package-verbose nil)
+
+(use-package system-packages
+  :custom
+  (system-packages-noconfirm t))
+
+(use-package use-package-ensure-system-package)
+
+(require 'init-ui)
 
 (use-package shut-up
   :config
@@ -83,6 +96,7 @@
 (require 'init-preload-local nil t)
 
 (require 'init-quelpa)
+(require 'init-common)
 (require 'init-font)
 (require 'init-general)
 (require 'init-evil)
@@ -116,9 +130,10 @@
 
 (require 'init-navigation)
 (require 'init-projectile)
+(require 'init-ivy-icons)
 (require 'init-lsp)
-(require 'init-git)
-;; (require 'init-shell)
+;; (require 'init-git)
+(require 'init-shell)
 (require 'init-undo-tree)
 (require 'init-neotree)
 ;; (require 'init-ssh)
@@ -178,8 +193,10 @@
 ;; (require 'init-prodigy)
 ;; (require 'init-rest)
 ;; (require 'init-irc)
+;; (require 'init-jabber)
+;; (require 'init-slack)
 ;; (require 'init-email)
-(require 'init-ticker)
+;; (require 'init-ticker)
 ;; (require 'init-transmission)
 ;; (require 'init-pomodoro)
 (require 'init-stats)

@@ -1,9 +1,13 @@
 (require 'init-general)
 (require 'init-navigation)
 
+;; (use-package org-plus-contrib)
+
 (use-package org
   :requires (init-general init-navigation)
   :after (general counsel)
+  ;; to be sure we have latest Org version
+  ;; :ensure org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
   :delight "org"
   :preface
@@ -18,6 +22,8 @@
     (save-excursion
       (beginning-of-line 0)
       (org-remove-empty-drawer-at "LOGBOOK" (point))))
+  :custom
+  (org-src-tab-acts-natively t)
   :init
   (setq
    ;; forces to mark all child tasks as DONE before
@@ -39,6 +45,7 @@
    ;; source blocks while editing
    org-src-fontify-natively t
    ;; noticeable ellipsis
+   ;; others: ▼,↴,⬎,⤷,…,⤵,⋱
    org-ellipsis "•••"
    ;; keep org files in Dropbox
    org-directory "~/Dropbox/org"
@@ -122,7 +129,22 @@
   :preface
   (defun rc/org-bullets/setup ()
     (org-bullets-mode 1))
+  :custom
+  ;; org-bullets-bullet-list
+  ;; default: "◉ ○ ✸ ✿"
+  ;; large: ♥ ● ◇ ✚ ✜ ☯ ◆ ♠ ♣ ♦ ☢ ❀ ◆ ◖ ▶
+  ;; Small: ► • ★ ▸
+  (org-bullets-bullet-list '("•"))
   :init
   (add-hook 'org-mode-hook #'rc/org-bullets/setup))
+
+(use-package htmlize
+  :custom
+  (org-html-htmlize-output-type 'css)
+  (org-html-htmlize-font-prefix "org-"))
+
+(use-package org-password-manager
+  :hook
+  (org-mode . org-password-manager-key-bindings))
 
 (provide 'init-org)

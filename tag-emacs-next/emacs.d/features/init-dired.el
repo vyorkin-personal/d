@@ -1,4 +1,5 @@
 (require 'init-quelpa)
+(require 'init-appearance)
 (require 'init-general)
 
 (defconst rc/dired-html-files-extensions
@@ -61,6 +62,9 @@
   :after general
   :ensure nil
   :commands (dired)
+  :custom
+  ;; do not bind C-x C-j since it's used by jabber.el
+  (dired-bind-jump nil)
   :init
   ;; prevents dired from creating an annoying popup
   ;; when dired-find-alternate-file is called
@@ -84,7 +88,6 @@
   (setq-default dired-omit-files "^\\.?#")
   ;; uncomment the line below if you want to hide dot files
   ;; (setq-default dired-omit-files (concat dired-omit-files "\\|^\\.[^\\.]"))
-
   (setq
    dired-omit-extensions
    '("CVS" "RCS" ".o" "~" ".bin" ".lbin" ".fasl" ".ufsl" ".a" ".ln" ".blg"
@@ -96,12 +99,25 @@
   ;; Mac OS ls command doesn't support "--dired" option
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired nil))
-
   :config
+  (nmap
+    :prefix rc/leader
+    "j" 'dired-jump)
   (nmap 'dired-mode-map
     "gg" 'evil-goto-first-line
     "G" 'evil-goto-line)
   :diminish dired-mode)
+
+(use-package diredfl
+  :after dired
+  :hook
+  (dired-mode . diredfl-mode))
+
+(use-package all-the-icons-dired
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
+
+(use-package dired-launch)
 
 (use-package dired+
   :requires init-quelpa
@@ -172,47 +188,6 @@
 (use-package dired-open
   :after (dired dired-hack-utils)
   :config)
-
-(use-package dired-rainbow
-  :after (dired dired-hack-utils)
-  :demand t
-
-  :preface
-
-  :config
-  (dired-rainbow-define dotfiles "gray" "\\..*")
-  (dired-rainbow-define html "#4e9a06" rc/dired-html-files-extensions)
-  (dired-rainbow-define styles "#cc31cc" rc/dired-styles-files-extensions)
-  (dired-rainbow-define xml "#b4fa70" rc/dired-xml-files-extensions)
-
-  (dired-rainbow-define document "#fce94f" rc/dired-document-files-extensions)
-  (dired-rainbow-define text "yellow green" rc/dired-text-files-extensions)
-  (dired-rainbow-define excel "#3465a4" ("xlsx"))
-  (dired-rainbow-define sh "green yellow" rc/dired-sh-files-extensions)
-
-  (dired-rainbow-define log "#c17d11" (".*\\.log"))
-  (dired-rainbow-define sourcefile "#fcaf3e" rc/dired-source-files-extensions)
-
-  (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
-  (dired-rainbow-define compressed "#ad7fa8" rc/dired-compressed-files-extensions)
-  (dired-rainbow-define packaged "#e6a8df" ("deb" "rpm"))
-  (dired-rainbow-define encrypted "LightBlue" ("gpg" "pgp"))
-  (dired-rainbow-define misc "gray50" rc/dired-misc-files-extensions)
-
-  ;; highlight executable files, but not directories
-  (dired-rainbow-define-chmod executable-unix "green" "-[rw-]+x.*")
-
-  (dired-rainbow-define image "#ff4b4b" rc/dired-image-files-extensions)
-  (dired-rainbow-define audio "#329ee8" rc/dired-audio-files-extensions)
-  (dired-rainbow-define video "#b3ccff" rc/dired-video-files-extensions)
-
-  ;; boring regexp due to lack of imagination
-  (dired-rainbow-define
-   log (:inherit default :italic t) ".*\\.log")
-
-  ;; highlight executable files, but not directories
-  (dired-rainbow-define-chmod
-   executable-unix "Green" "-[rw-]+x.*"))
 
 (use-package dired-narrow
   :requires init-general

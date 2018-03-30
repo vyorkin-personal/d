@@ -30,8 +30,12 @@
    "q" #'macrostep-collapse-all
    "e" #'macrostep-expand)
   (nmap
-   :keymaps 'emacs-lisp-mode-map
-   :prefix rc/leader
-   "m e" #'macrostep-expand))
+    :keymaps 'emacs-lisp-mode-map
+    :prefix rc/leader
+    "m e" #'macrostep-expand))
+
+(use-package autoinsert
+  :hook
+  (find-file . auto-insert))
 
 (provide 'init-elisp)

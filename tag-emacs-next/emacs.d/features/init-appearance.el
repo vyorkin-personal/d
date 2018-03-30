@@ -27,10 +27,6 @@
 
 (add-hook 'after-load-theme-hook #'rc/customize-appearance)
 
-(nmap
-  :prefix rc/leader
-  "`" 'rc/customize-appearance)
-
 (use-package delight
   :config
   (delight
@@ -44,16 +40,13 @@
      (javascript-mode "js" js)
      (eldoc-mode "eldoc" eldoc)
      ;; (hi-lock-mode "hi" hi-lock)
-     (auto-revert-mode "ar" autorevert)
      (subword-mode "sw" subword))))
 
 (use-package diminish
   :config
   (eval-after-load "purescript-indentation" '(diminish 'purescript-indentation-mode))
-  (eval-after-load "simple" '(diminish 'overwrite-mode))
   (eval-after-load "dired" '(diminish 'dired-omit-mode))
   (eval-after-load "hideshow" '(diminish 'hs-minor-mode))
-  (eval-after-load "autorevert" '(diminish 'auto-revert-mode))
   (eval-after-load "eldoc" '(diminish 'eldoc-mode))
   (eval-after-load "hi-lock" '(diminish 'hi-lock-mode)))
 
@@ -69,10 +62,18 @@
   (dimmer-activate))
 
 (use-package rainbow-delimiters
-  :demand t
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  :hook
+  (prog-mode . rainbow-delimiters-mode)
   :diminish rainbow-delimiters-mode)
+
+(use-package rainbow-identifiers
+  :hook
+  (prog-mode . rainbow-identifiers-mode)
+  :diminish rainbow-identifiers-mode)
+
+(use-package rainbow-mode
+  :diminish rainbow-mode
+  :hook prog-mode)
 
 (use-package highlight-leading-spaces
   :defer 0.8
@@ -91,5 +92,27 @@
   :config
   (add-hook 'lisp-mode-hook #'rc/highlight-chars/setup)
   (add-hook 'prog-mode-hook #'rc/highlight-chars/setup))
+
+(use-package all-the-icons
+  :config
+  (add-to-list
+   'all-the-icons-mode-icon-alist
+   '(package-menu-mode all-the-icons-octicon "package" :v-adjust 0.0)))
+
+;; visualizes cursor position
+(use-package beacon
+  :requires init-general
+  :after general
+  :demand t
+  :custom
+  (beacon-color "#ff00ee")
+  (beacon-blink-when-window-scrolls nil)
+  (beacon-dont-blink-commands nil)
+  :config
+  (beacon-mode 1)
+  (nmap
+    :prefix rc/leader
+    "t b" 'beacon-mode)
+  :diminish beacon-mode)
 
 (provide 'init-appearance)

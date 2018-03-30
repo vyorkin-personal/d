@@ -23,7 +23,6 @@
 
 ;; key bindings are provided by evil-collection
 (use-package which-key
-  :demand t
   :diminish which-key-mode
   :init
   (setq
@@ -39,6 +38,11 @@
   (which-key-mode)
   (with-eval-after-load 'evil-collection
     (add-to-list 'evil-collection-mode-list 'while-key)))
+
+(use-package free-keys
+  :commands free-keys)
+
+(use-package sudo-edit)
 
 (use-package try
   :defer t)

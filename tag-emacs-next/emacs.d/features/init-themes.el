@@ -37,6 +37,7 @@
 (use-package twilight-theme :defer t)
 (use-package gruber-darker-theme :defer t)
 (use-package monokai-theme :defer t)
+(use-package faff-theme :defer t)
 (use-package badwolf-theme :defer t)
 (use-package boron-theme :defer t)
 (use-package bliss-theme :defer t)
@@ -48,6 +49,7 @@
 (use-package hemisu-theme :defer t)
 (use-package paganini-theme :defer t)
 (use-package yoshi-theme :defer t)
+(use-package rebecca-theme :defer t) ;; *****
 (use-package moe-theme :defer t)
 (use-package arjen-grey-theme :defer t)
 (use-package darkmine-theme :defer t)
