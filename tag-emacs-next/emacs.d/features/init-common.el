@@ -94,6 +94,8 @@
 
 (use-package prog-mode
   :ensure nil
+  :init
+  (setq prettify-symbols-unprettify-at-point 'right-edge)
   :config
   ;; convert certain words into symbols, e.g. lambda becomes λ.
   (global-prettify-symbols-mode t))

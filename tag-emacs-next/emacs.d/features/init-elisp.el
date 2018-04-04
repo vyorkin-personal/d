@@ -17,6 +17,18 @@
 (use-package elisp-refs
   :after elisp-mode)
 
+(use-package auto-compile
+  :init
+  ;; prefer the newest version of file
+  (setq load-prefer-newer t)
+  ;; dont' display the Compile-Log buffer pop up when a file is being saved
+  (setq auto-compile-display-buffer nil)
+  ;; only show the number of compile warnings for the current file in the mode-line
+  (setq auto-compile-mode-line-counter t)
+  :config
+  (auto-compile-on-load-mode)
+  (auto-compile-on-save-mode))
+
 (use-package macrostep
   :requires init-general
   :after elisp-mode

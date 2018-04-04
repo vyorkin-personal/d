@@ -132,7 +132,7 @@
 (require 'init-projectile)
 (require 'init-ivy-icons)
 (require 'init-lsp)
-;; (require 'init-git)
+(require 'init-git)
 (require 'init-shell)
 (require 'init-undo-tree)
 (require 'init-neotree)

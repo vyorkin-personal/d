@@ -3,10 +3,7 @@
 (require 'init-editor)
 (require 'init-navigation)
 
-(use-package git-commit)
-
 (use-package magit
-  :after git-commit
   :custom
   (magit-completing-read-function 'ivy-completing-read "Force Ivy usage."))
 

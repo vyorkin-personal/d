@@ -112,6 +112,8 @@
   (nmap 'flyspell-mode-map
     "C-;" 'flyspell-correct-previous-word-generic))
 
+(use-package fzf)
+
 (use-package counsel
   :requires init-general
   :after general

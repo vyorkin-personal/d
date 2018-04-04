@@ -97,9 +97,6 @@
 (setq cursor-type 'bar)
 (setq x-stretch-cursor t)
 
-;; convert certain words into symbols, e.g. lambda becomes λ.
-(global-prettify-symbols-mode t)
-
 ;; turn-off tooltips on cursor hover-over
 (setq mode-line-default-help-echo nil)
 
