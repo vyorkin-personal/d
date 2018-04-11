@@ -109,6 +109,24 @@
   :config
   (add-hook 'haskell-mode-hook #'lsp-haskell-enable))
 
+(use-package hlint-refactor
+  :requires init-general
+  :after (general haskell-mode)
+  :ensure-system-package
+  ((hlint . "stack install hlint")
+   (refactor . "stack install apply-refact"))
+  :diminish hlint-refactor-mode
+  :commands
+  (hlint-refactor-refactor-buffer
+   hlint-refactor-refactor-at-point)
+  :init
+  (add-hook 'haskell-mode-hook 'hlint-refactor-mode)
+  :config
+  (nmap 'haskell-mode-map
+    :prefix rc/leader
+    "h r " 'hlint-refactor-refactor-at-point
+    "h b" 'hlint-refactor-refactor-buffer))
+
 (use-package hindent
   :requires init-general
   :after (general haskell-mode)

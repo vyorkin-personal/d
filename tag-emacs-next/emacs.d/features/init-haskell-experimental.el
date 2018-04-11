@@ -32,26 +32,6 @@
     :prefix rc/leader
     "i" 'hsearch))
 
-(use-package hlint-refactor
-  ;; doesn't work for me
-  :disabled
-  :requires init-general
-  :after (general haskell-mode)
-  :ensure-system-package
-  ((hlint . "stack install hlint")
-   (refactor . "stack install apply-refact"))
-  :diminish hlint-refactor-mode
-  :commands
-  (hlint-refactor-refactor-buffer
-   hlint-refactor-refactor-at-point)
-  :init
-  (add-hook 'haskell-mode-hook 'hlint-refactor-mode)
-  :config
-  (nmap 'haskell-mode-map
-    :prefix rc/leader
-    "h r " 'hlint-refactor-refactor-at-point
-    "h b" 'hlint-refactor-refactor-buffer))
-
 ;; (use-package flycheck-stack
 ;;   :after (flycheck haskell-mode)
 ;;   :preface
