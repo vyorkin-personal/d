@@ -1,4 +1,5 @@
 (require 'init-general)
+(require 'init-quelpa)
 
 ;; provides a simple system for tracking and
 ;; displaying the uptimes of emacs sessions
@@ -23,6 +24,11 @@
     "g g" google-this-mode-submap))
 
 (use-package atomic-chrome
+  :quelpa
+  (atomic-chrome
+   :fetcher github
+   :repo "dakrone/atomic-chrome"
+   :branch "add-server-running-check")
   :custom
   (atomic-chrome-url-major-mode-alist
    '(("reddit\\.com" . markdown-mode)
@@ -30,7 +36,8 @@
      ("redmine" . textile-mode))
    "Major modes for URLs.")
   :config
-  (atomic-chrome-start-server))
+  (when (not (atomic-chrome-server-running-p))
+    (atomic-chrome-start-server)))
 
 (use-package net-utils
   :config
