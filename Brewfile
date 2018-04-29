@@ -32,6 +32,7 @@ brew 'racket'
 brew 'scala'
 brew 'sbt'
 brew 'coursier/formulas/coursier', args: ['HEAD']
+brew 'swi-prolog'
 
 brew 'sdl2'
 brew 'sdl2_image'

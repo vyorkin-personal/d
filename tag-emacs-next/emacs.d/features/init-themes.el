@@ -20,13 +20,12 @@
 (use-package sublime-themes :defer t)
 
 (use-package doom-themes
-  ;; :disabled
   :init
   (setq
-   doom-themes-enable-bold t
+   doom-themes-enable-bold nil
    doom-themes-enable-italic nil)
   :config
-  (load-theme 'doom-one t)
+  (load-theme 'doom-dracula t)
   ;; enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)

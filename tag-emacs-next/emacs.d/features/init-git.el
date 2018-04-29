@@ -37,7 +37,7 @@
   :requires init-general
   :after general
   :config
-  (global-git-gutter-mode t)
+  ;; (global-git-gutter-mode t)
   ;; (git-gutter:linum-setup)
   (custom-set-variables
    '(git-gutter:update-interval 2)

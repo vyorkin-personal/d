@@ -115,10 +115,6 @@
   :hook
   (dired-mode . diredfl-mode))
 
-(use-package all-the-icons-dired
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
-
 (use-package dired-launch)
 
 (use-package dired+

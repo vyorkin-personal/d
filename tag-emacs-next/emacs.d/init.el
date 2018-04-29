@@ -130,7 +130,7 @@
 
 (require 'init-navigation)
 (require 'init-projectile)
-(require 'init-ivy-icons)
+;; (require 'init-ivy-icons)
 (require 'init-lsp)
 (require 'init-git)
 (require 'init-shell)

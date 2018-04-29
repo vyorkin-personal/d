@@ -33,6 +33,8 @@
     (turn-on-purescript-unicode-input-method)
     (turn-on-purescript-indentation))
   :init
+  ;; use the psc-ide server that is
+  ;; relative to npm bin directory
   (setq psc-ide-use-npm-bin t)
   :config
   (general-define-key
@@ -47,6 +49,12 @@
   :config
   (add-hook 'purescript-mode-hook 'inferior-psci-mode)
   :delight "psci")
+
+(setq
+ safe-local-variable-values
+ '((psc-ide-source-globs
+    "src/**/*.purs"
+    ".psc-package/cubeplan-*/*/*/src/**/*.purs")))
 
 ;; should be superseeded by psc-ide-mode's flycheck integration
 ;; https://github.com/dysinger/purescript-mode/pull/8
