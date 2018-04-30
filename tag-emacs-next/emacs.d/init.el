@@ -150,6 +150,8 @@
 
 ;; (require 'init-java)
 
+(require 'init-prolog)
+
 (require 'init-web)
 (require 'init-styles)
 (require 'init-typescript)
