@@ -24,6 +24,8 @@
     "g g" google-this-mode-submap))
 
 (use-package atomic-chrome
+  ;; Even the fork doesn't work for me
+  :disabled
   :quelpa
   (atomic-chrome
    :fetcher github

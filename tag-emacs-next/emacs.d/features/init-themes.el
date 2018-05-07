@@ -5,7 +5,8 @@
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
   ;; (load-theme 'base16-grayscale-dark t)
-  ;; (load-theme 'base16-grayscale-light t)
+  ; (load-theme 'base16-grayscale-light t)
+  ;; (load-theme 'base16-one-light t)
   ;; (load-theme 'base16-gruvbox-light-hard t)
   ;; (load-theme 'base16-material-palenight t) ;; ****
   ;; (load-theme 'base16-rebecca t)

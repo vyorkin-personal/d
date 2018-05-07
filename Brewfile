@@ -9,6 +9,7 @@ tap 'ethereum/ethereum'
 tap 'coursier/formulas'
 tap 'd12frosted/emacs-plus'
 tap 'jmhobbs/parrot'
+tap 'paritytech/paritytech'
 # tap 'railwaycat/emacsmacport'
 
 brew 'rcm'
@@ -34,6 +35,11 @@ brew 'sbt'
 brew 'coursier/formulas/coursier', args: ['HEAD']
 brew 'swi-prolog'
 brew 'mercury'
+
+brew 'parity', args: ['--devel']
+brew 'ethabi'
+brew 'ethkey'
+brew 'ethstore'
 
 brew 'sdl2'
 brew 'sdl2_image'
@@ -157,6 +163,7 @@ brew 'irssi'
 cask 'iterm2'
 cask 'nvalt'
 cask 'insomnia'
+cask 'basictex'
 
 cask 'virtualbox'
 cask 'vagrant'
