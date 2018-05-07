@@ -163,7 +163,7 @@ brew 'irssi'
 cask 'iterm2'
 cask 'nvalt'
 cask 'insomnia'
-cask 'basictex'
+cask 'mactex'
 
 cask 'virtualbox'
 cask 'vagrant'
