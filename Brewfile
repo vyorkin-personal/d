@@ -23,6 +23,7 @@ cask 'java6'
 # see https://rustup.rs/ to understand how rust is installed
 
 brew 'elixir'
+brew 'rebar3'
 brew 'python'
 brew 'python3'
 brew 'flow'
