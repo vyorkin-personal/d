@@ -1,4 +1,5 @@
 (require 'init-general)
+(require 'init-quelpa)
 (require 'init-flycheck)
 
 (use-package elixir-mode
@@ -48,6 +49,16 @@
                      (string-equal "exs" (file-name-extension buffer-file-name))
                      (string-equal "mix" (file-name-base buffer-file-name)))
                 (alchemist-hex-mode 1)))))
+
+(use-package elixir-format
+  :requires init-quelpa
+  :quelpa (elixir-format :fetcher github :repo "anildigital/mix-format.el")
+  :custom
+  (elixir-format-mix-path "/usr/local/bin/mix")
+  :config
+  (add-hook
+   'elixir-mode-hook
+   (lambda () (add-hook 'before-save-hook 'elixir-format-before-save))))
 
 (use-package flycheck-elixir
   :requires init-flycheck

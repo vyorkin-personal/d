@@ -150,6 +150,7 @@
 
 ;; (require 'init-java)
 
+(require 'init-tex)
 (require 'init-prolog)
 
 (require 'init-web)

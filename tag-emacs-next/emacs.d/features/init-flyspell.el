@@ -23,6 +23,8 @@
     "C-c i r" 'ispell-region))
 
 (use-package flyspell
+  ;; TODO: check & fix
+  :disabled
   :ensure nil
   :requires init-general
   :after (general ispell)
