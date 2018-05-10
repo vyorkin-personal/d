@@ -12,6 +12,13 @@
      alchemist-goto-elixir-source-dir "~/projects/github/elixir"
      alchemist-goto-erlang-source-dir "/usr/local/Cellar/erlang/19.2.3")
     :config
+    ;; additional key bingings is here
+    ;; https://github.com/emacs-evil/evil-collection/blob/master/evil-collection-alchemist.el
+    (evil-define-key 'normal alchemist-mode-map
+      (kbd "C-j") nil
+      (kbd "C-k") nil
+      (kbd "M-j") 'alchemist-goto-jump-to-next-def-symbol
+      (kbd "M-k") 'alchemist-goto-jump-to-previous-def-symbol)
     (nmap 'alchemist-mode-map
       :prefix rc/leader
       ;; elixir general key bindings
@@ -43,12 +50,13 @@
   :config
   (add-to-list 'dash-at-point-mode-alist '(elixir-mode . "ex"))
   (add-hook 'elixir-mode-hook 'alchemist-mode)
-  (add-hook 'elixir-mode-hook
-            (lambda ()
-              (when (and
-                     (string-equal "exs" (file-name-extension buffer-file-name))
-                     (string-equal "mix" (file-name-base buffer-file-name)))
-                (alchemist-hex-mode 1)))))
+  (add-hook
+   'elixir-mode-hook
+   (lambda ()
+     (when (and
+            (string-equal "exs" (file-name-extension buffer-file-name))
+            (string-equal "mix" (file-name-base buffer-file-name)))
+       (alchemist-hex-mode 1)))))
 
 (use-package elixir-format
   :requires init-quelpa

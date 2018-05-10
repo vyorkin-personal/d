@@ -36,6 +36,7 @@ brew 'sbt'
 brew 'coursier/formulas/coursier', args: ['HEAD']
 brew 'swi-prolog'
 brew 'mercury'
+brew 'fop'
 
 brew 'parity', args: ['--devel']
 brew 'ethabi'

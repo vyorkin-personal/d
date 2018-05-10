@@ -21,6 +21,8 @@ fi
 
 source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
+test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
+
 eval "$(rbenv init -)"
 eval "$(jenv init -)"
 
