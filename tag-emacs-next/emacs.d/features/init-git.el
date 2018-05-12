@@ -3,9 +3,9 @@
 (require 'init-editor)
 (require 'init-navigation)
 
-(use-package magit
-  :custom
-  (magit-completing-read-function 'ivy-completing-read "Force Ivy usage."))
+;; (use-package magit
+;;   :custom
+;;   (magit-completing-read-function 'ivy-completing-read "Force Ivy usage."))
 
 (use-package evil-magit
   :requires (init-general init-evil)
