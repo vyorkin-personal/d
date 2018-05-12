@@ -166,11 +166,11 @@
 ;; (require 'init-racket)
 ;; (require 'init-sml)
 ;; (require 'init-clojure)
-;; (require 'init-rust)
+(require 'init-rust)
 ;; (require 'init-scala)
 ;; (require 'init-ocaml)
 ;; (require 'init-reason)
-;; (require 'init-erlang)
+(require 'init-erlang)
 (require 'init-elixir)
 
 (require 'init-idris)
