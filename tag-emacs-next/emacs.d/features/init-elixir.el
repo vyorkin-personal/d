@@ -22,8 +22,8 @@
     (nmap 'alchemist-mode-map
       :prefix rc/leader
       ;; elixir general key bindings
-      "t" 'alchemist-mix-test
-      "T" 'alchemist-project-run-tests-for-current-file
+      "tt" 'alchemist-mix-test
+      "tf" 'alchemist-project-run-tests-for-current-file
       "," 'alchemist-test-toggle-test-report-display
       "h" 'alchemist-help-search-at-point
       "H" 'alchemist-help

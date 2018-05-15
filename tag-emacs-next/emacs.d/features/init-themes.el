@@ -4,8 +4,8 @@
   :config
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
-  ;; (load-theme 'base16-grayscale-dark t)
-  ; (load-theme 'base16-grayscale-light t)
+  (load-theme 'base16-grayscale-dark t)
+  ;; (load-theme 'base16-grayscale-light t)
   ;; (load-theme 'base16-one-light t)
   ;; (load-theme 'base16-gruvbox-light-hard t)
   ;; (load-theme 'base16-material-palenight t) ;; ****
@@ -21,6 +21,7 @@
 (use-package sublime-themes :defer t)
 
 (use-package doom-themes
+  :disabled
   :init
   (setq
    doom-themes-enable-bold nil
@@ -58,7 +59,7 @@
 (use-package liso-theme :defer t)
 (use-package jazz-theme :defer t)
 (use-package material-theme :defer t)
-(use-package challenger-deep-theme :defer t) ;; ****
+(use-package challenger-deep-theme :defer t) ;; ***
 (use-package ample-theme
   :disabled
   :init

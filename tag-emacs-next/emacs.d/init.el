@@ -153,6 +153,8 @@
 (require 'init-tex)
 (require 'init-prolog)
 
+(require 'init-ethereum)
+
 (require 'init-web)
 (require 'init-styles)
 (require 'init-typescript)

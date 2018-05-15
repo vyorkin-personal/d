@@ -175,6 +175,7 @@ Common crates that I use:
 * purescript-emmet
 * git-labelmaker
 * json-package
+* solium
 
 # Troubleshooting
 

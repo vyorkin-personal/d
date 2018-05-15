@@ -129,6 +129,7 @@ brew 'opam'
 brew 'coq'
 brew 'algol68g'
 brew 'smlnj'
+brew 'solidity'
 
 brew 'autoconf'
 brew 'automake'

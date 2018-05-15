@@ -1,2 +1,2 @@
 alias emd='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
-alias emc='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c --no-wait'
+alias emc='emacsclient -c --no-wait'
