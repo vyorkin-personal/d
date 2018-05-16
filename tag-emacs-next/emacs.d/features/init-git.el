@@ -22,6 +22,8 @@
     "g s" 'magit-status
     "g d" 'magit-diff
     "g f" 'magit-file-popup
+    "g b" 'magit-branch-checkout
+    "g g" 'magit-blame
     "g c" 'magit-commit
     "g l" 'magit-log
     "g p" 'magit-push))

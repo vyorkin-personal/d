@@ -4,6 +4,8 @@
 (use-package neotree
   :requires init-general
   :after general
+  :init
+  (setq neo-theme 'arrow)
   :config
   (nmap
     :prefix rc/leader
