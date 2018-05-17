@@ -19,8 +19,6 @@
   :config
   (add-to-list 'dash-at-point-mode-alist '(toml-mode . "toml")))
 
-(use-package nix-mode)
-
 (use-package ansible)
 
 (use-package arduino-mode)
