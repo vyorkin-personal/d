@@ -76,8 +76,6 @@
     (autoload 'lua-block-mode "lua-block" nil t)))
 
 (use-package dotenv-mode
-  :requires (init-osx)
-  :after dash-at-point
   :config
   (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode)))
 
