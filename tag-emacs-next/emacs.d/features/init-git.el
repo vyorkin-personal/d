@@ -25,7 +25,7 @@
     "g b" 'magit-branch-checkout
     "g g" 'magit-blame
     "g c" 'magit-commit
-    "g l" 'magit-log
+    "g l" 'magit-log-all
     "g p" 'magit-push))
 
 (use-package magithub
@@ -51,7 +51,9 @@
   (set-face-foreground 'git-gutter:added "light green")
   (set-face-foreground 'git-gutter:deleted "maroon3")
   (nmap
+
     :prefix rc/leader
+
     "t g" 'git-gutter-mode)
   :diminish git-gutter-mode)
 

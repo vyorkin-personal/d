@@ -18,10 +18,10 @@
   :quelpa (zoom-frm :fetcher github :repo "emacsmirror/zoom-frm")
   :config
   (nmap
-   "C-=" 'zoom-frm-in
-   "C--" 'zoom-frm-out
-   "<s-triple-wheel-up>" 'zoom-frm-in
-   "<s-triple-wheel-down>" 'zoom-frm-out))
+    "C-=" 'zoom-frm-in
+    "C--" 'zoom-frm-out
+    "<s-triple-wheel-up>" 'zoom-frm-in
+    "<s-triple-wheel-down>" 'zoom-frm-out))
 
 (use-package seethru
   :config

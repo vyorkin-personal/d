@@ -4,7 +4,7 @@
   :config
   ;; (load-theme 'base16-chalk t)
   ;; (load-theme 'base16-default-dark t)
-  (load-theme 'base16-grayscale-dark t)
+  ;; (load-theme 'base16-grayscale-dark t)
   ;; (load-theme 'base16-grayscale-light t)
   ;; (load-theme 'base16-one-light t)
   ;; (load-theme 'base16-gruvbox-light-hard t)
@@ -73,12 +73,12 @@
 (use-package phoenix-dark-mono-theme :defer t) ;; *** (like grayscale-dark)
 (use-package phoenix-dark-pink-theme :defer t) ;; **
 (use-package cyberpunk-theme :defer t)
-(use-package blackboard-theme :defer t)     ;; ***
-(use-package mustard-theme :defer t)        ;; ****
-(use-package labburn-theme :defer t)        ;; *****
+(use-package blackboard-theme :defer t) ;; ***
+(use-package mustard-theme :defer t) ;; ****
+(use-package labburn-theme) ;; *****
 (use-package green-phosphor-theme :defer t) ;; *****
-(use-package exotica-theme :defer t)        ;; **
-(use-package lush-theme :defer t)           ;; ****
+(use-package exotica-theme :defer t) ;; **
+(use-package lush-theme :defer t) ;; ****
 
 ;; (use-package deep-thought-theme
 ;;   :disabled
@@ -90,6 +90,6 @@
 (use-package theme-changer
   :disabled
   :config
-  (change-theme 'labburn 'labburn))
+  (change-theme 'base16-gruvbox-light-hard 'labburn))
 
 (provide 'init-themes)
