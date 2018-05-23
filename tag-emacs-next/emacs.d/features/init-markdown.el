@@ -1,11 +1,8 @@
-(require 'init-osx)
 (require 'init-appearance)
 (require 'init-general)
 (require 'init-smartparens)
 
 (use-package markdown-mode
-  :requires (init-osx)
-  :after dash-at-point
   :disabled
   :commands (markdown-mode gfm-mode)
   :mode
@@ -15,7 +12,6 @@
   :init
   (setq markdown-command "multimarkdown")
   :config
-  (add-to-list 'dash-at-point-mode-alist '(markdown-mode . "md"))
   :delight "md")
 
 (use-package markdown-mode+

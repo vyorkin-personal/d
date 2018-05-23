@@ -1,4 +1,3 @@
-(require 'init-osx)
 (require 'init-general)
 (require 'init-lsp)
 

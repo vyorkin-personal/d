@@ -1,18 +1,16 @@
-(require 'init-osx)
 (require 'init-general)
 (require 'init-company)
 (require 'init-lsp)
 (require 'init-flycheck)
 
 (use-package rust-mode
-  :requires (init-osx init-general init-company)
-  :after (company general dash-at-point)
+  :requires (init-general init-company)
+  :after (company general)
   :if (executable-find "rustc")
   :commands rust-mode
   :config
   ;; enable rust-mode for .lalrpop files
   (add-to-list 'auto-mode-alist '("\\.lalrpop\\'" . rust-mode))
-  (add-to-list 'dash-at-point-mode-alist '(rust-mode . "rust"))
   (general-define-key
    :keymaps 'rust-mode-map
    "TAB" 'company-indent-or-complete-common

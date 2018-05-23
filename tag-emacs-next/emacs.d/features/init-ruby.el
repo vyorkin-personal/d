@@ -1,16 +1,14 @@
-(require 'init-osx)
 (require 'init-general)
 (require 'init-appearance)
 (require 'init-company)
 (require 'init-projectile)
 
 (use-package robe
-  :requires (init-osx init-company)
-  :after (company dash-at-point)
+  :requires (init-company)
+  :after (company)
   :config
   (add-hook 'ruby-mode-hook 'robe-mode)
-  (add-to-list 'company-backends 'company-robe)
-  (add-to-list 'dash-at-point-mode-alist '(ruby-mode . "ruby")))
+  (add-to-list 'company-backends 'company-robe))
 
 (use-package rubocop
   :after robe

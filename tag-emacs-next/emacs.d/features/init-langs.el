@@ -1,23 +1,10 @@
-(require 'init-osx)
 (require 'init-appearance)
 
-(use-package nginx-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(nginx-mode . "nginx")))
+(use-package nginx-mode)
 
-(use-package d-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(d-mode . "d")))
+(use-package d-mode)
 
-(use-package toml-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(toml-mode . "toml")))
+(use-package toml-mode)
 
 (use-package ansible)
 
@@ -33,39 +20,20 @@
 
 (use-package peg)
 
-(use-package glsl-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(glsl-mode . "glsl")))
+(use-package glsl-mode)
 
-(use-package pug-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(pug-mode . "pug")))
+(use-package pug-mode)
 
-(use-package jade-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(jade-mode . "jade")))
+(use-package jade-mode)
 
-(use-package haml-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(haml-mode . "haml")))
+(use-package haml-mode)
 
 (use-package lua-mode
-  :requires (init-osx)
-  :after dash-at-point
   :if (executable-find "lua")
   :mode "\\.lua\\'"
   :init
   (setq lua-indent-level 2)
   :config
-  (add-to-list 'dash-at-point-mode-alist '(lua-mode . "lua"))
   (use-package lua-block
     :requires lua-mode init-quelpa
     :quelpa

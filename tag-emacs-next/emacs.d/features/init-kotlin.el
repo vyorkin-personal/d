@@ -1,11 +1,6 @@
-(require 'init-osx)
 (require 'init-flycheck)
 
-(use-package kotlin-mode
-  :requires (init-osx)
-  :after dash-at-point
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(kotlin-mode . "kot")))
+(use-package kotlin-mode)
 
 (use-package flycheck-kotlin
   :requires (init-flycheck)

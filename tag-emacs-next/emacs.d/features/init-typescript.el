@@ -1,26 +1,22 @@
-(require 'init-osx)
 (require 'init-company)
 (require 'init-general)
 (require 'init-flycheck)
 
 (use-package typescript-mode
-  :requires (init-osx init-flycheck)
+  :requires (init-flycheck)
   :after flycheck
   :init
   (setq
    typescript-indent-level 2
    flycheck-check-syntax-automatically '(save mode-enabled)
    flycheck-tslint-args . ("--type-check"))
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(typescript-mode . "ts"))
   :delight "ts")
 
 ;; most of key bindings
 ;; are provided by evil-collection
 (use-package tide
   :requires
-  (init-osx
-   init-general
+  (init-general
    init-flycheck
    init-company)
   :after

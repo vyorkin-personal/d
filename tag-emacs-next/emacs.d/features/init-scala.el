@@ -1,12 +1,8 @@
-(require 'init-osx)
 (require 'init-general)
 
 (use-package scala-mode
-  :requires init-osx
   :after general
-  :if (executable-find "scala")
-  :config
-  (add-to-list 'dash-at-point-mode-alist '(scala-mode . "scala")))
+  :if (executable-find "scala"))
 
 (use-package ensime
   :requires init-general

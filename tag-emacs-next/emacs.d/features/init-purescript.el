@@ -1,10 +1,9 @@
-(require 'init-osx)
 (require 'init-general)
 (require 'init-flycheck)
 
 (use-package purescript-mode
   :requires (init-general)
-  :after (general dash-at-point)
+  :after (general)
   ;; I use my forked version:
   ;; https://github.com/vyorkin-forks/purescript-mode/tree/bugfix/conflicting-quail-rules
   ;; with some conflicting quail rules disabled from the local path
@@ -20,8 +19,7 @@
   (require 'purescript-mode-autoloads)
   (add-to-list 'Info-default-directory-list "~/projects/github/purescript-mode/")
   (imap 'purescript-mode-map
-    "C-c C-e" 'rc/purescript-emmet)
-  (add-to-list 'dash-at-point-mode-alist '(purescript-mode . "purs")))
+    "C-c C-e" 'rc/purescript-emmet))
 
 (use-package psc-ide
   :requires init-general

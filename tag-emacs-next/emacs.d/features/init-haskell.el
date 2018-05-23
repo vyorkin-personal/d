@@ -1,4 +1,3 @@
-(require 'init-osx)
 (require 'init-quelpa)
 (require 'init-general)
 (require 'init-eldoc)
@@ -14,7 +13,6 @@
 (use-package haskell-mode
   :requires
   (init-general
-   init-osx
    init-eldoc
    init-company
    init-org)

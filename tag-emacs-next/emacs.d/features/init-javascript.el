@@ -1,4 +1,3 @@
-(require 'init-osx)
 (require 'init-company)
 
 (use-package tern
@@ -23,8 +22,6 @@
   :diminish npm-mode)
 
 (use-package js2-mode
-  :requires (init-osx)
-  :after dash-at-point
   :init
   ;; indent step is 2 spaces
   (setq-default js2-basic-offset 2)
@@ -40,7 +37,6 @@
   :commands js2-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-  (add-to-list 'dash-at-point-mode-alist '(js2-mode . "js"))
   :delight "js2")
 
 (use-package xref-js2

@@ -1,4 +1,3 @@
-(require 'init-osx)
 (require 'init-company)
 (require 'init-flycheck)
 
@@ -18,8 +17,6 @@
 
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'merlin-company-backend))
-
-(add-to-list 'dash-at-point-mode-alist '(merlin-mode . "ocaml"))
 
 (use-package flycheck-ocaml
   :requires init-flycheck
