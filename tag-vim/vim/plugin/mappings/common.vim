@@ -1,3 +1,6 @@
+" C-h fix https://github.com/christoomey/vim-tmux-navigator#it-doesnt-work-in-neovim-specifically-c-h
+nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
+
 " hate holding <Shift> every time I need to enter a cmd
 nn ; :
 nn : ;

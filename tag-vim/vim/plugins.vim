@@ -41,7 +41,7 @@ Plug 'idanarye/vim-merginal'
 Plug 'int3/vim-extradite'
 Plug 'gregsexton/gitv'
 Plug 'junegunn/gv.vim'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 
 " color schemes
 Plug 'chriskempson/base16-vim'
