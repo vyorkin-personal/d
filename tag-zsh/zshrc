@@ -12,9 +12,9 @@ bindkey -e
 
 export EDITOR=nvim
 
-source $HOME/.dotsecrets/secret_tokens
+. $HOME/.dotsecrets/secret_tokens
 
-# setxkbmap -option 'caps:ctrl_modifier'
+setxkbmap -option 'caps:ctrl_modifier'
 xcape -e 'Caps_Lock=Escape' -t 100
 
 # End of lines configured by zsh-newuser-install
@@ -30,7 +30,7 @@ autoload bashcompinit
 bashcompinit
 
 export ZPLUG_HOME=$HOME/.zplug
-source $ZPLUG_HOME/init.zsh
+. $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
@@ -109,7 +109,7 @@ zplug "zplug/zplug", hook-build: "zplug --self-manage"
 
 # install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
-  printf "install fucking plugins? [y/N]: "
+  printf "install plugins? [y/N]: "
   if read -q; then
     echo; zplug install
   fi
@@ -121,17 +121,18 @@ zplug load
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 export GOPATH="$HOME/go"
-export DYLD_LIBRARY_PATH=/usr/local/opt/capstone/lib/:$DYLD_LIBRARY_PATH
 
 path=(
   /usr/local/sbin
   $HOME/bin
-  $HOME/.rbenv/bin
   $HOME/.local/bin
   $path
 )
 
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
 # load custom functions & aliases
-source $HOME/.helpers/index
+. $HOME/.helpers/index
 
 export ERL_AFLAGS="-kernel shell_history enabled"
