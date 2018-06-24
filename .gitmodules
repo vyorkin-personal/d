@@ -43,9 +43,3 @@
 [submodule "config/nvim/UltiSnips"]
 	path = config/nvim/UltiSnips
 	url = https://github.com/vyorkin-personal/ultisnips-snippets.git
-[submodule "tag-emacs/emacs.d/yasnippet-snippets"]
-	path = tag-emacs/emacs.d/yasnippet-snippets
-	url = https://github.com/vyorkin-forks/yasnippet-snippets.git
-[submodule "tag-emacs-next/emacs.d/yasnippet-snippets"]
-	path = tag-emacs-next/emacs.d/yasnippet-snippets
-	url = https://github.com/vyorkin-forks/yasnippet-snippets.git
