@@ -1,4 +1,4 @@
 EXCLUDES="rcrc helpers install.sh Makefile Brewfile requirements.txt requirements3.txt LICENSE README.md"
-TAGS="macosx utils zsh tmux git emacs-next vim irc ruby python clojure haskell"
+TAGS="linux macosx utils zsh tmux git emacs-next vim irc ruby python clojure haskell"
 SYMLINK_DIRS="dotsecrets:* weechat:* tmux vim nvim rbenv/plugins yasnippet-snippets"
 COPY_ALWAYS="npmrc"

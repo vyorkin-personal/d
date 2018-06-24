@@ -169,13 +169,6 @@ endif
 
 " autocommands
 
-" save all changed buffers on focus lost
-"
-" augroup autosave
-"   autocmd!
-"   au FocusLost * :wa
-" augroup END
-
 " filetype detection
 augroup ftdetection
   autocmd!
