@@ -29,7 +29,7 @@ compinit
 autoload bashcompinit
 bashcompinit
 
-export ZPLUG_HOME=$HOME/.zplug
+export ZPLUG_HOME="$HOME/.zplug"
 . $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-completions"
@@ -133,6 +133,6 @@ path=(
 . $HOME/.asdf/completions/asdf.bash
 
 # load custom functions & aliases
-. $HOME/.helpers/index
+. $HOME/.dotfiles/helpers/index
 
 export ERL_AFLAGS="-kernel shell_history enabled"
