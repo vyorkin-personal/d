@@ -5,7 +5,7 @@
   :init
   (setq
    wakatime-api-key (getenv "WAKATIME_API_KEY")
-   wakatime-cli-path "/usr/local/bin/wakatime")
+   wakatime-cli-path "/usr/bin/wakatime")
   :config
   (global-wakatime-mode)
   :diminish wakatime-mode)

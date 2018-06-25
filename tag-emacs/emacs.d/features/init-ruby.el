@@ -19,6 +19,8 @@
 (use-package bundler)
 
 (use-package rbenv
+  ;; I use asfd
+  :disabled
   :ensure-system-package (rbenv . "gem install rbenv")
   :preface
   (defun rc/rbenv/modeline (current-ruby)

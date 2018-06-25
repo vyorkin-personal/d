@@ -20,8 +20,7 @@
   (general
    company
    eldoc
-   ghc
-   dash-at-point)
+   ghc)
   :if
   (and
    (executable-find "ghc")
@@ -97,7 +96,6 @@
   ;; stylish
   (nmap 'haskell-mode-map
     "C-c f" 'haskell-mode-stylish-buffer)
-  (add-to-list 'dash-at-point-mode-alist '(haskell-mode . "h"))
   (add-to-list 'org-babel-load-languages '(haskell . t))
   :delight "hs")
 

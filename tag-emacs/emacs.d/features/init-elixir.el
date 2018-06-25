@@ -48,7 +48,6 @@
       "R" 'alchemist-hex-releases
       "f" 'alchemist-hex-search))
   :config
-  (add-to-list 'dash-at-point-mode-alist '(elixir-mode . "ex"))
   (add-hook 'elixir-mode-hook 'alchemist-mode)
   (add-hook
    'elixir-mode-hook

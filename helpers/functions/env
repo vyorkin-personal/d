@@ -1,29 +1,31 @@
 # manually load heavy stuff if needed
 function x() {
 
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+[ -f $HOME/.fzf.zsh ] && . $HOME/.fzf.zsh
 
-# see output of `brew info nvm` for details
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
+if [[ `uname` == "Linux" ]] then
+  . /usr/share/nvm/init-nvm.sh
+fi
 
-if [[ `uname` == 'Darwin' ]] then
+if [[ `uname` == "Darwin" ]] then
+  # see output of `brew info nvm` for details
+  export NVM_DIR="$HOME/.nvm"
+  . "/usr/local/opt/nvm/nvm.sh"
+
   # find a way to install them by zplug
   # https://github.com/littleq0903/gcloud-zsh-completion
   # others: https://github.com/unixorn/awesome-zsh-plugins#even-more-completions
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+  . "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+  . "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
 
 if [ -f $HOME/.bashhub/bashhub.zsh ]; then
-    source $HOME/.bashhub/bashhub.zsh
+    . $HOME/.bashhub/bashhub.zsh
 fi
 
-source $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-
-eval "$(rbenv init -)"
-eval "$(jenv init -)"
+. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
 # added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+[ -f $HOME/.travis/travis.sh ] && . $HOME/.travis/travis.sh
+
 }

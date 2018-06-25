@@ -21,7 +21,7 @@
   (google-this-mode 1)
   (nmap
     :prefix rc/leader
-    "g g" google-this-mode-submap))
+    "G" google-this-mode-submap))
 
 (use-package atomic-chrome
   ;; Even the fork doesn't work for me
